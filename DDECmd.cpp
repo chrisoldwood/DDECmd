@@ -19,6 +19,12 @@
 #include "CmdLineArgs.hpp"
 
 ////////////////////////////////////////////////////////////////////////////////
+// Global variables.
+
+//! The application object.
+DDECmd g_app;
+
+////////////////////////////////////////////////////////////////////////////////
 // Local variables.
 
 static tstring s_appName(TXT("DDECmd"));
@@ -169,5 +175,8 @@ void DDECmd::showVersion()
 	// Display version etc.
 	tcout << std::endl;
 	tcout << s_appName << TXT(" v") << version << std::endl;
+	tcout << std::endl;
 	tcout << copyright << std::endl;
+	tcout << TXT("gort@cix.co.uk") << std::endl;
+	tcout << TXT("www.cix.co.uk/~gort") << std::endl;
 }

@@ -54,4 +54,7 @@ private:
 	void showVersion();
 };
 
+//! The application object.
+extern DDECmd g_app;
+
 #endif // DDECMD_HPP
