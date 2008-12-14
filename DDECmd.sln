@@ -15,35 +15,29 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "NCL", "..\Lib\NCL\NCL.vcpro
 	ProjectSection(ProjectDependencies) = postProject
 	EndProjectSection
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Legacy", "..\Lib\Legacy\Legacy.vcproj", "{AED77F84-49CF-4B84-B319-2D07025ECA06}"
-	ProjectSection(ProjectDependencies) = postProject
-	EndProjectSection
-EndProject
 Global
 	GlobalSection(DPCodeReviewSolutionGUID) = preSolution
 		DPCodeReviewSolutionGUID = {00000000-0000-0000-0000-000000000000}
 	EndGlobalSection
 	GlobalSection(SourceCodeControl) = preSolution
-		SccNumberOfProjects = 4
-		SccProjectUniqueName0 = ..\\Lib\\Core\\Core.vcproj
-		SccProjectName0 = \u0022$/Win32/Lib/Core\u0022,\u0020QWDAAAAA
-		SccLocalPath0 = ..\\Lib\\Core
-		SccProvider0 = MSSCCI:Microsoft\u0020Visual\u0020SourceSafe
+		SccNumberOfProjects = 5
+		SccLocalPath0 = .
 		CanCheckoutShared = true
-		SccProjectUniqueName1 = ..\\Lib\\WCL\\Wcl.vcproj
-		SccProjectName1 = \u0022$/Win32/Lib/WCL\u0022,\u0020HPAAAAAA
-		SccLocalPath1 = ..\\Lib\\WCL
-		SccProvider1 = MSSCCI:Microsoft\u0020Visual\u0020SourceSafe
+		SolutionUniqueID = {5BF3C830-4210-4FCE-A86A-741BF3C388F2}
+		SccProjectUniqueName1 = ..\\Lib\\Core\\Core.vcproj
+		SccProjectName1 = \u0022$/Win32/Lib/Core\u0022,\u0020QWDAAAAA
+		SccLocalPath1 = ..\\Lib\\Core
 		CanCheckoutShared = true
-		SccProjectUniqueName2 = ..\\Lib\\NCL\\NCL.vcproj
-		SccProjectName2 = \u0022$/Win32/Lib/NCL\u0022,\u0020JRCAAAAA
-		SccLocalPath2 = ..\\Lib\\NCL
-		SccProvider2 = MSSCCI:Microsoft\u0020Visual\u0020SourceSafe
+		SccProjectUniqueName2 = ..\\Lib\\WCL\\Wcl.vcproj
+		SccProjectName2 = \u0022$/Win32/Lib/WCL\u0022,\u0020HPAAAAAA
+		SccLocalPath2 = ..\\Lib\\WCL
 		CanCheckoutShared = true
-		SccProjectUniqueName3 = ..\\Lib\\Legacy\\Legacy.vcproj
-		SccProjectName3 = \u0022$/Win32/Lib/Legacy\u0022,\u0020JHEAAAAA
-		SccLocalPath3 = ..\\Lib\\Legacy
-		SccProvider3 = MSSCCI:Microsoft\u0020Visual\u0020SourceSafe
+		SccProjectUniqueName3 = ..\\Lib\\NCL\\NCL.vcproj
+		SccProjectName3 = \u0022$/Win32/Lib/NCL\u0022,\u0020JRCAAAAA
+		SccLocalPath3 = ..\\Lib\\NCL
+		CanCheckoutShared = true
+		SccProjectUniqueName4 = DDECmd.vcproj
+		SccLocalPath4 = .
 		CanCheckoutShared = true
 	EndGlobalSection
 	GlobalSection(SolutionConfiguration) = preSolution
@@ -69,10 +63,6 @@ Global
 		{FAB8D717-85EC-4896-B5DC-FDF0A0B67C92}.Debug.Build.0 = Debug|Win32
 		{FAB8D717-85EC-4896-B5DC-FDF0A0B67C92}.Release.ActiveCfg = Release|Win32
 		{FAB8D717-85EC-4896-B5DC-FDF0A0B67C92}.Release.Build.0 = Release|Win32
-		{AED77F84-49CF-4B84-B319-2D07025ECA06}.Debug.ActiveCfg = Debug|Win32
-		{AED77F84-49CF-4B84-B319-2D07025ECA06}.Debug.Build.0 = Debug|Win32
-		{AED77F84-49CF-4B84-B319-2D07025ECA06}.Release.ActiveCfg = Release|Win32
-		{AED77F84-49CF-4B84-B319-2D07025ECA06}.Release.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 	EndGlobalSection
