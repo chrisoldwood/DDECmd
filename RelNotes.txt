@@ -1,5 +1,5 @@
-Version 1.0
-===========
+Version 0.8 Alpha
+=================
 
 - First public release.
 
@@ -7,4 +7,4 @@ Version 1.0
 Chris Oldwood 
 (gort@cix.co.uk)
 
-21st October 2008
+13th November 2008
