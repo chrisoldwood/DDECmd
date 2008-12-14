@@ -4,6 +4,10 @@
 	Version="7.10"
 	Name="DDECmd"
 	ProjectGUID="{521103EC-E75A-42A4-A144-67489D2C04C3}"
+	SccProjectName="SAK"
+	SccAuxPath="SAK"
+	SccLocalPath="SAK"
+	SccProvider="SAK"
 	Keyword="Win32Proj">
 	<Platforms>
 		<Platform
@@ -126,9 +130,6 @@
 			ReferencedProjectIdentifier="{790BC113-52FB-4565-8968-79B8B011C520}"
 			Name="Core"/>
 		<ProjectReference
-			ReferencedProjectIdentifier="{AED77F84-49CF-4B84-B319-2D07025ECA06}"
-			Name="Legacy"/>
-		<ProjectReference
 			ReferencedProjectIdentifier="{FAB8D717-85EC-4896-B5DC-FDF0A0B67C92}"
 			Name="NCL"/>
 		<ProjectReference
@@ -220,6 +221,9 @@
 			Filter="rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx"
 			UniqueIdentifier="{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}">
 			<File
+				RelativePath=".\App.ico">
+			</File>
+			<File
 				RelativePath=".\App.rcv">
 			</File>
 			<File
@@ -229,6 +233,9 @@
 		<Filter
 			Name="HelpFile"
 			Filter="">
+			<File
+				RelativePath=".\HelpFile\DDECmd.html">
+			</File>
 		</Filter>
 		<File
 			RelativePath=".\ReadMe.txt">
