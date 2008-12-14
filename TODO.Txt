@@ -1,0 +1,7 @@
+- Record & Playback commands.
+
+- Launch helpfile on --help.
+
+- Value formatting, e.g. trimming, item name, timestamp
+
+- Install shortcurt for the manual.
