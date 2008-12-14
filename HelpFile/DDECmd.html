@@ -1,0 +1,184 @@
+<!doctype html public "-//w3c//dtd xhtml 1.0 strict//en" "http://www.w3.org/tr/xhtml1/dtd/xhtml1-strict.dtd">
+<html>
+
+<head>
+<title>DDE Command Manual</title>
+<meta name="author" content="Chris Oldwood">
+<style>
+body	{ font-family: Verdana, Arial; font-size: 10pt }
+table	{ border-collapse: collapse }
+th		{ font-family: Verdana, Arial; font-size: 10pt; border: 1px solid black }
+td		{ font-family: Verdana, Arial; font-size: 10pt; border: 1px solid black; vertical-align: top; padding: 5px }
+</style>
+</head>
+
+<body>
+
+<h3 align="center">DDE Command v0.8 Alpha</h3>
+
+<a name="Introduction"></a>
+<h5>Introduction</h5>
+
+<p>
+This is a command line (aka console) based tool for querying text data from DDE
+servers. It is the counterpart to my much older GUI based tool called DDE Query,
+which is available here, <a href="http://www.cix.co.uk/~gort/win32.htm#DDEQuery">http://www.cix.co.uk/~gort/win32.htm#DDEQuery</a>.
+</p>
+
+<a name="Commands"></a>
+<h5>Commands</h5>
+
+<p>
+The tool supports all the major DDE command types, such as XTYP_REQUEST,
+XTYP_ADVSTART, XTYP_POKE & XTYP_EXECUTE via similarly named commands. The basic
+format for invoking DDE Command is to run it with a command type and then
+provide any arguments using switches, e.g.
+</p>
+<pre>
+C:\> ddecmd command --option1 value1 --option2 value2
+</pre>
+<p>
+The arguments can be specified using either Windows style (e.g. /option) or the
+more common style (e.g. --option). Each switch has both a short name and a
+longer name and you can see the list of all supported commands using "ddecmd -?".
+Each command has its own help topic that describes it and lists the switches
+that are applicable to it, e.g. ddecmd request -?.
+</p>
+
+<a name="ServersCommand"></a>
+<h5>The Servers Command</h5>
+
+<p>
+This command invokes the XTYP_WILDCONNECT transaction type to list the running
+DDE servers and their supported topics. This transaction type is not always
+supported by servers, and is included more for development use. The output is
+one server and topic per line, separated by a '|', the normal separator used
+for DDE Links, e.g.
+</p>
+<pre>
+C:\>ddecmd servers
+Excel|System
+Excel|[Book1]Sheet3
+Excel|[Book1]Sheet2
+Excel|[Book1]Sheet1
+</pre>
+
+<a name="RequestCommand"></a>
+<h5>The Request Command</h5>
+
+<p>
+The request command is used to retrieve the value for one or more items from
+the server. This is the XTYP_REQUEST transaction type. The items must all be
+from the same server as only a single server and topic can be specified. 
+</p>
+<pre>
+C:\>ddecmd request --server REUTER --topic IDN_RWS --item "GBP=,BID ASK" --item "EUR=,BID ASK"
++1.9058 +1.9062
++1.2981 +1.2982
+</pre>
+<p>
+By default the request assumes CF_TEXT (i.e. ANSI text) for the value format,
+but this can be overridden by using the --format switch. See below for the format
+names.
+</p>
+
+<a name="AdviseCommand"></a>
+<h5>The Advise Command</h5>
+
+<p>
+To set up one or more advise loops with the server use the advise command. This
+allows you to monitor the updates for a number of items. This corresponds to the
+XTYP_ADVSTART transaction type. The same basic switches that are used with the
+request command can also be used with this one. However, unlike the other
+commands, this causes ddecmd to run indefinitely and so can only be stopped by
+pressing Ctrl+C. 
+</p>
+<pre>
+C:\>ddecmd advise -s REUTER -t IDN_RWS -i "GBP=,BID ASK" -i "EUR=,BID ASK"
++1.9060 +1.9062
++1.2981 +1.2986
++1.2980 +1.2982
++1.9059 +1.9064
++1.2978 +1.2983
++1.2982 +1.2984
++1.9059 +1.9062
+&lt;CTRL+C&gt;
+</pre>
+
+<a name="PokeCommand"></a>
+<h5>The Poke Command</h5>
+
+<p>
+The poke command allows you to set a value for an item on servers that support
+it. Unlike the previous request and advise commands you can only set the value
+for a single item and that value will be passed in CF_TEXT format.
+</p>
+<pre>
+C:\>ddecmd poke -s excel -t [book1]sheet1 -i R1C1 --value "test"
+</pre>
+
+<a name="ExecuteCommand"></a>
+<h5>The Execute Command</h5>
+
+<p>
+The final transaction type supported is XTYP_EXECUTE via the execute command.
+This is used to send a command string to a server.
+</p>
+<pre>
+C:\>ddecmd execute -s excel -t [book1]sheet1 --command "[App.Minimize]"
+</pre>
+
+<a name="ClipboardFormats"></a>
+<h5>Clipboard Formats</h5>
+
+<p>
+<table>
+<tr>
+<th>Format</th>
+<th>Description</th>
+</tr>
+<tr>
+<td>CF_TEXT</td>
+<td>ANSI text.</td>
+</tr>
+<tr>
+<td>CF_UNICODETEXT</td>
+<td>Unicode text.</td>
+</tr>
+</table>
+</p>
+
+<hr>
+
+<a name="Warranty"></a>
+<h5>License & Warranty</h5>
+
+<p>
+This application is freeware - you get what you pay for, nothing more, nothing
+less.
+</p>
+
+<a name="SourceCode"></a>
+<h5>Source Code</h5>
+
+<p>
+The full source code (C++) is available from my web site listed below.
+</p>
+
+<a name="Contact"></a>
+<h5>Contact Details</h5>
+
+<p>
+Using the --version switch will also display my contact details. Please check the
+web site for updates.
+</p><p>
+Email: <a href="mailto://gort@cix.co.uk">gort@cix.co.uk</a><br>
+Web: <a href="http://www.cix.co.uk/~gort">www.cix.co.uk/~gort</a><br>
+</p><p>
+Chris Oldwood<br>
+13th November 2008<br>
+</p>
+
+</body>
+
+</html>
