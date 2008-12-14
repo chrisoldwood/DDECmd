@@ -7,9 +7,6 @@
 #include <tchar.h>
 #include "DDECmd.hpp"
 
-//! The application.
-static DDECmd g_app;
-
 ////////////////////////////////////////////////////////////////////////////////
 //! The process entry point.
 

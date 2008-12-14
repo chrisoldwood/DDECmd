@@ -86,21 +86,8 @@ int PokeCmd::doExecute()
 
 	// Set the value.
 	std::string ansiValue(T2A(value.c_str()));
-	CDDEData    ddevalue(
 
-	conv->
-
-	for (ItemConstIter it = items.begin(); it != items.end(); ++it)
-	{
-		const tstring& item = *it;
-
-		CDDEData value = conv->Request(item.c_str(), format);
-		
-		if (format != CF_UNICODETEXT)
-			tcout << value.GetString(ANSI_TEXT) << std::endl;
-		else
-			tcout << value.GetString(UNICODE_TEXT) << std::endl;
-	}
+	conv->Poke(item.c_str(), CF_TEXT, ansiValue.data(), ansiValue.length());
 
 	return EXIT_SUCCESS;
 }

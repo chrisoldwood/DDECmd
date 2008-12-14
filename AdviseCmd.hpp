@@ -12,11 +12,13 @@
 #endif
 
 #include "Command.hpp"
+#include <NCL/DefDDEClientListener.hpp>
 
 ////////////////////////////////////////////////////////////////////////////////
 //! The DDE command used to listen for updates the items.
 
-class AdviseCmd : public Command
+class AdviseCmd : public Command,
+				  public CDefDDEClientListener
 {
 public:
 	//! Constructor.
@@ -38,6 +40,13 @@ private:
 
 	//! The implementation of the command.
 	virtual int doExecute();
+
+	//
+	// IDDEClientListener Methods.
+	//
+
+	//! Handle a link being updated.
+	virtual void OnAdvise(CDDELink* link, const CDDEData* value);
 };
 
 #endif // APP_ADVISECMD_HPP
