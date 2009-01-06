@@ -36,6 +36,7 @@ static Core::CmdLineSwitch s_switches[] =
 {
 	{ USAGE,	TXT("?"),	NULL,			Core::CmdLineSwitch::ONCE,	Core::CmdLineSwitch::NONE,	NULL,	TXT("Display the program options syntax")	},
 	{ VERSION,	TXT("v"),	TXT("version"),	Core::CmdLineSwitch::ONCE,	Core::CmdLineSwitch::NONE,	NULL,	TXT("Display the program version")			},
+	{ HELP,		TXT("h"),	TXT("help"),	Core::CmdLineSwitch::ONCE,	Core::CmdLineSwitch::NONE,	NULL,	TXT("Display the manual")					},
 };
 static size_t s_switchCount = ARRAY_SIZE(s_switches);
 
@@ -71,7 +72,7 @@ int DDECmd::run(int argc, tchar* argv[])
 	{
 		m_parser.Parse(argc, argv, Core::CmdLineParser::ALLOW_ANY_FORMAT);
 
-		// Request for general help?
+		// Request for command line syntax?
 		if (m_parser.IsSwitchSet(USAGE))
 		{
 			showUsage();
@@ -81,6 +82,12 @@ int DDECmd::run(int argc, tchar* argv[])
 		else if (m_parser.IsSwitchSet(VERSION))
 		{
 			showVersion();
+			return EXIT_SUCCESS;
+		}
+		// Request for the manual?
+		else if (m_parser.IsSwitchSet(HELP))
+		{
+			showManual();
 			return EXIT_SUCCESS;
 		}
 		// Empty.
@@ -179,4 +186,12 @@ void DDECmd::showVersion()
 	tcout << copyright << std::endl;
 	tcout << TXT("gort@cix.co.uk") << std::endl;
 	tcout << TXT("www.cix.co.uk/~gort") << std::endl;
+}
+
+////////////////////////////////////////////////////////////////////////////////
+//! Display the manual.
+
+void DDECmd::showManual()
+{
+	::ShellExecute(NULL, NULL, CPath::ApplicationDir() / TXT("DDECmd.mht"), NULL, NULL, SW_SHOW);
 }

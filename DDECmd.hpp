@@ -52,6 +52,9 @@ private:
 
 	//! Display the program version.
 	void showVersion();
+
+	//! Display the manual.
+	void showManual();
 };
 
 //! The application object.
