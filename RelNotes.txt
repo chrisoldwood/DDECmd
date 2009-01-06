@@ -1,10 +1,11 @@
-Version 0.8 Alpha
-=================
+Version 1.0
+===========
 
-- First public release.
+- Unicode text handling supported on XTYP_REQUEST and XTYP_ADVSTART.
+- Handles XTYP_REQUEST, XTYP_ADVSTART, XTYP_POKE and XTYP_EXECUTE transaction types.
 
 
 Chris Oldwood 
-(gort@cix.co.uk)
+[gort@cix.co.uk]
 
-13th November 2008
+15th December 2008

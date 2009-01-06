@@ -1,4 +1,4 @@
-DDE Command v0.8
+DDE Command v1.0
 ================
 
 
@@ -33,4 +33,4 @@ Web:   http://www.cix.co.uk/~gort
 
 Chris Oldwood 
 
-13th November 2008
+15th December 2008
