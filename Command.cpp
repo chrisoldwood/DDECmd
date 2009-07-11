@@ -32,19 +32,19 @@ Command::~Command()
 int Command::execute()
 {
 	// Parse the command line.
-	m_parser.Parse(m_argc, m_argv);
+	m_parser.parse(m_argc, m_argv);
 
-	if (m_parser.GetUnnamedArgs().size() != 1)
+	if (m_parser.getUnnamedArgs().size() != 1)
 		throw Core::CmdLineException(TXT("Only one DDE command can be specified"));
 
 	// Request for command help?
-	if (m_parser.IsSwitchSet(USAGE))
+	if (m_parser.isSwitchSet(USAGE))
 	{
 		tcout << getDescription() << std::endl;
 		tcout << std::endl;
 		tcout << getUsage() << std::endl;
 		tcout << std::endl;
-		tcout << m_parser.FormatSwitches(Core::CmdLineParser::UNIX);
+		tcout << m_parser.formatSwitches(Core::CmdLineParser::UNIX);
 		
 		return EXIT_SUCCESS;
 	}

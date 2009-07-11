@@ -62,23 +62,23 @@ const tchar* PokeCmd::getUsage()
 int PokeCmd::doExecute()
 {
 	// Validate the command line arguments.
-	if (!m_parser.IsSwitchSet(SERVER))
+	if (!m_parser.isSwitchSet(SERVER))
 		throw Core::CmdLineException(TXT("No DDE server name specified [--server]"));
 
-	if (!m_parser.IsSwitchSet(TOPIC))
+	if (!m_parser.isSwitchSet(TOPIC))
 		throw Core::CmdLineException(TXT("No DDE server topic specified [--topic]"));
 
-	if (!m_parser.IsSwitchSet(ITEM))
+	if (!m_parser.isSwitchSet(ITEM))
 		throw Core::CmdLineException(TXT("No item specified [--item]"));
 
-	if (!m_parser.IsSwitchSet(VALUE))
+	if (!m_parser.isSwitchSet(VALUE))
 		throw Core::CmdLineException(TXT("No value specified [--value]"));
 
 	// Extract command line argument values.
-	tstring server = m_parser.GetSwitchValue(SERVER);
-	tstring topic  = m_parser.GetSwitchValue(TOPIC);
-	tstring item   = m_parser.GetSwitchValue(ITEM);
-	tstring value  = m_parser.GetSwitchValue(VALUE);
+	tstring server = m_parser.getSwitchValue(SERVER);
+	tstring topic  = m_parser.getSwitchValue(TOPIC);
+	tstring item   = m_parser.getSwitchValue(ITEM);
+	tstring value  = m_parser.getSwitchValue(VALUE);
 
 	// Open the conversation.
 	CDDEClient client;

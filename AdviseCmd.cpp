@@ -71,29 +71,29 @@ int AdviseCmd::doExecute()
 	typedef Core::CmdLineParser::StringVector::const_iterator ItemConstIter;
 
 	// Validate the command line arguments.
-	if (!m_parser.IsSwitchSet(SERVER))
+	if (!m_parser.isSwitchSet(SERVER))
 		throw Core::CmdLineException(TXT("No DDE server name specified [--server]"));
 
-	if (!m_parser.IsSwitchSet(TOPIC))
+	if (!m_parser.isSwitchSet(TOPIC))
 		throw Core::CmdLineException(TXT("No DDE server topic specified [--topic]"));
 
-	if (!m_parser.IsSwitchSet(ITEM))
+	if (!m_parser.isSwitchSet(ITEM))
 		throw Core::CmdLineException(TXT("No item(s) specified [--item]"));
 
 	tstring formatName = TXT("CF_TEXT");
 
 	// Extract command line argument values.
-	tstring server = m_parser.GetSwitchValue(SERVER);
-	tstring topic  = m_parser.GetSwitchValue(TOPIC);
-	const Core::CmdLineParser::StringVector& items = m_parser.GetNamedArgs().find(ITEM)->second;
+	tstring server = m_parser.getSwitchValue(SERVER);
+	tstring topic  = m_parser.getSwitchValue(TOPIC);
+	const Core::CmdLineParser::StringVector& items = m_parser.getNamedArgs().find(ITEM)->second;
 
-	if (m_parser.IsSwitchSet(FORMAT))
-		formatName = m_parser.GetSwitchValue(FORMAT);
+	if (m_parser.isSwitchSet(FORMAT))
+		formatName = m_parser.getSwitchValue(FORMAT);
 
 	uint format = CClipboard::FormatHandle(formatName.c_str());
 
 	if (format == NULL)
-		throw Core::InvalidArgException(Core::Fmt(TXT("Invalid clipboard format '%s'"), formatName.c_str()));
+		throw Core::InvalidArgException(Core::fmt(TXT("Invalid clipboard format '%s'"), formatName.c_str()));
 
 	// Open the conversation.
 	CDDEClient client;

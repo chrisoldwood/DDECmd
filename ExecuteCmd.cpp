@@ -59,19 +59,19 @@ const tchar* ExecuteCmd::getUsage()
 int ExecuteCmd::doExecute()
 {
 	// Validate the command line arguments.
-	if (!m_parser.IsSwitchSet(SERVER))
+	if (!m_parser.isSwitchSet(SERVER))
 		throw Core::CmdLineException(TXT("No DDE server name specified [--server]"));
 
-	if (!m_parser.IsSwitchSet(TOPIC))
+	if (!m_parser.isSwitchSet(TOPIC))
 		throw Core::CmdLineException(TXT("No DDE server topic specified [--topic]"));
 
-	if (!m_parser.IsSwitchSet(COMMAND))
+	if (!m_parser.isSwitchSet(COMMAND))
 		throw Core::CmdLineException(TXT("No command string specified [--command]"));
 
 	// Extract command line argument values.
-	tstring server  = m_parser.GetSwitchValue(SERVER);
-	tstring topic   = m_parser.GetSwitchValue(TOPIC);
-	tstring command = m_parser.GetSwitchValue(COMMAND);
+	tstring server  = m_parser.getSwitchValue(SERVER);
+	tstring topic   = m_parser.getSwitchValue(TOPIC);
+	tstring command = m_parser.getSwitchValue(COMMAND);
 
 	// Open the conversation and send the command.
 	CDDEClient client;

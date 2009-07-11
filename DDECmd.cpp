@@ -70,22 +70,22 @@ int DDECmd::run(int argc, tchar* argv[])
 	}
 	else
 	{
-		m_parser.Parse(argc, argv, Core::CmdLineParser::ALLOW_ANY_FORMAT);
+		m_parser.parse(argc, argv, Core::CmdLineParser::ALLOW_ANY_FORMAT);
 
 		// Request for command line syntax?
-		if (m_parser.IsSwitchSet(USAGE))
+		if (m_parser.isSwitchSet(USAGE))
 		{
 			showUsage();
 			return EXIT_SUCCESS;
 		}
 		// Request for version?
-		else if (m_parser.IsSwitchSet(VERSION))
+		else if (m_parser.isSwitchSet(VERSION))
 		{
 			showVersion();
 			return EXIT_SUCCESS;
 		}
 		// Request for the manual?
-		else if (m_parser.IsSwitchSet(HELP))
+		else if (m_parser.isSwitchSet(HELP))
 		{
 			showManual();
 			return EXIT_SUCCESS;
@@ -132,7 +132,7 @@ CommandPtr DDECmd::createCommand(int argc, tchar* argv[])
 		return CommandPtr(new ExecuteCmd(argc, argv));
 	}
 
-	throw Core::CmdLineException(Core::Fmt(TXT("Unknown DDE command: '%s'"), command));
+	throw Core::CmdLineException(Core::fmt(TXT("Unknown DDE command: '%s'"), command));
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -162,7 +162,7 @@ void DDECmd::showUsage()
 
 	tcout << TXT("Non-command options:-") << std::endl;
 	tcout << std::endl;
-	tcout << m_parser.FormatSwitches(Core::CmdLineParser::UNIX);
+	tcout << m_parser.formatSwitches(Core::CmdLineParser::UNIX);
 }
 
 ////////////////////////////////////////////////////////////////////////////////
