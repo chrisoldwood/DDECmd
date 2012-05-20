@@ -5,7 +5,6 @@
 
 #include "Common.hpp"
 #include "DDECmd.hpp"
-#include <Core/tiostream.hpp>
 #include <WCL/Path.hpp>
 #include <WCL/VerInfoReader.hpp>
 #include <Core/CmdLineException.hpp>
@@ -35,8 +34,9 @@ static tstring s_appName(TXT("DDECmd"));
 static Core::CmdLineSwitch s_switches[] = 
 {
 	{ USAGE,	TXT("?"),	NULL,			Core::CmdLineSwitch::ONCE,	Core::CmdLineSwitch::NONE,	NULL,	TXT("Display the program options syntax")	},
+	{ USAGE,	TXT("h"),	TXT("help"),	Core::CmdLineSwitch::ONCE,	Core::CmdLineSwitch::NONE,	NULL,	TXT("Display the program options syntax")	},
 	{ VERSION,	TXT("v"),	TXT("version"),	Core::CmdLineSwitch::ONCE,	Core::CmdLineSwitch::NONE,	NULL,	TXT("Display the program version")			},
-	{ HELP,		TXT("h"),	TXT("help"),	Core::CmdLineSwitch::ONCE,	Core::CmdLineSwitch::NONE,	NULL,	TXT("Display the manual")					},
+	{ MANUAL,	NULL,		TXT("manual"),	Core::CmdLineSwitch::ONCE,	Core::CmdLineSwitch::NONE,	NULL,	TXT("Display the manual")					},
 };
 static size_t s_switchCount = ARRAY_SIZE(s_switches);
 
@@ -58,7 +58,7 @@ DDECmd::~DDECmd()
 ////////////////////////////////////////////////////////////////////////////////
 //! Run the application.
 
-int DDECmd::run(int argc, tchar* argv[])
+int DDECmd::run(int argc, tchar* argv[], tistream& /*in*/, tostream& out, tostream& /*err*/)
 {
 	// Command specified?
 	if ( (argc > 1) && ((argv[1][0] != TXT('/')) && (argv[1][0] != TXT('-'))) )
@@ -75,17 +75,17 @@ int DDECmd::run(int argc, tchar* argv[])
 		// Request for command line syntax?
 		if (m_parser.isSwitchSet(USAGE))
 		{
-			showUsage();
+			showUsage(out);
 			return EXIT_SUCCESS;
 		}
 		// Request for version?
 		else if (m_parser.isSwitchSet(VERSION))
 		{
-			showVersion();
+			showVersion(out);
 			return EXIT_SUCCESS;
 		}
 		// Request for the manual?
-		else if (m_parser.isSwitchSet(HELP))
+		else if (m_parser.isSwitchSet(MANUAL))
 		{
 			showManual();
 			return EXIT_SUCCESS;
@@ -138,37 +138,37 @@ CommandPtr DDECmd::createCommand(int argc, tchar* argv[])
 ////////////////////////////////////////////////////////////////////////////////
 //! Display the program options syntax.
 
-void DDECmd::showUsage()
+void DDECmd::showUsage(tostream& out)
 {
-	tcout << std::endl;
-	tcout << TXT("USAGE: ") << s_appName << (" <command> [options] ...") << std::endl;
-	tcout << std::endl;
+	out << std::endl;
+	out << TXT("USAGE: ") << s_appName << (" <command> [options] ...") << std::endl;
+	out << std::endl;
 
 	size_t width = 16;
 
-	tcout << TXT("where <command> is one of:-") << std::endl;
-	tcout << std::endl;
-	tcout << TXT("servers") << tstring(width-7, TXT(' ')) << ("List the running servers and their topics") << std::endl;
-	tcout << TXT("request") << tstring(width-7, TXT(' ')) << ("Retrieve the value for one or more items") << std::endl;
-	tcout << TXT("advise")  << tstring(width-6, TXT(' ')) << ("Listen for updates to one or more items") << std::endl;
-	tcout << TXT("poke")    << tstring(width-4, TXT(' ')) << ("Set the value for a single item") << std::endl;
-	tcout << TXT("execute") << tstring(width-7, TXT(' ')) << ("Send a command for execution") << std::endl;
-	tcout << std::endl;
+	out << TXT("where <command> is one of:-") << std::endl;
+	out << std::endl;
+	out << TXT("servers") << tstring(width-7, TXT(' ')) << ("List the running servers and their topics") << std::endl;
+	out << TXT("request") << tstring(width-7, TXT(' ')) << ("Retrieve the value for one or more items") << std::endl;
+	out << TXT("advise")  << tstring(width-6, TXT(' ')) << ("Listen for updates to one or more items") << std::endl;
+	out << TXT("poke")    << tstring(width-4, TXT(' ')) << ("Set the value for a single item") << std::endl;
+	out << TXT("execute") << tstring(width-7, TXT(' ')) << ("Send a command for execution") << std::endl;
+	out << std::endl;
 
-	tcout << TXT("For help on an individual command use:-") << std::endl;
-	tcout << std::endl;
-	tcout << TXT("DDECmd <command> -?") << std::endl;
-	tcout << std::endl;
+	out << TXT("For help on an individual command use:-") << std::endl;
+	out << std::endl;
+	out << TXT("DDECmd <command> -?") << std::endl;
+	out << std::endl;
 
-	tcout << TXT("Non-command options:-") << std::endl;
-	tcout << std::endl;
-	tcout << m_parser.formatSwitches(Core::CmdLineParser::UNIX);
+	out << TXT("Non-command options:-") << std::endl;
+	out << std::endl;
+	out << m_parser.formatSwitches(Core::CmdLineParser::UNIX);
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 //! Display the program version.
 
-void DDECmd::showVersion()
+void DDECmd::showVersion(tostream& out)
 {
 	// Extract details from the resources.
 	tstring filename  = CPath::Application();
@@ -180,12 +180,12 @@ void DDECmd::showVersion()
 #endif
 
 	// Display version etc.
-	tcout << std::endl;
-	tcout << s_appName << TXT(" v") << version << std::endl;
-	tcout << std::endl;
-	tcout << copyright << std::endl;
-	tcout << TXT("gort@cix.co.uk") << std::endl;
-	tcout << TXT("www.cix.co.uk/~gort") << std::endl;
+	out << std::endl;
+	out << s_appName << TXT(" v") << version << std::endl;
+	out << std::endl;
+	out << copyright << std::endl;
+	out << TXT("gort@cix.co.uk") << std::endl;
+	out << TXT("www.cix.co.uk/~gort") << std::endl;
 }
 
 ////////////////////////////////////////////////////////////////////////////////

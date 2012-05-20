@@ -24,7 +24,7 @@ enum CmdLineArgType
 	FORMAT		= 5,	//!< The clipboard format.
 	VALUE		= 6,	//!< The value to set.
 	COMMAND		= 7,	//!< The command to execute.
-	HELP		= 8,	//!< Show the manual.
+	MANUAL		= 8,	//!< Show the manual.
 };
 
 #endif // APP_CMDLINEARGS_HPP

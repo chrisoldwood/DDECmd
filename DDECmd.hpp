@@ -32,10 +32,10 @@ protected:
 	//
 
 	//! Run the application.
-	virtual int run(int argc, tchar* argv[]);
+	virtual int run(int argc, tchar* argv[], tistream& in, tostream& out, tostream& err);
 
 	//! Display the program options syntax.
-	virtual void showUsage();
+	virtual void showUsage(tostream& out);
 
 private:
 	//
@@ -51,7 +51,7 @@ private:
 	CommandPtr createCommand(int argc, tchar* argv[]); // throw(CmdLineException)
 
 	//! Display the program version.
-	void showVersion();
+	void showVersion(tostream& out);
 
 	//! Display the manual.
 	void showManual();
