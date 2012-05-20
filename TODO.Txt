@@ -1,3 +1,5 @@
 - Record & Playback commands.
 
 - Value formatting, e.g. trimming, item name, timestamp
+
+- Copy over changes from WMICmd::run and Command.cpp.
