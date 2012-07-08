@@ -21,7 +21,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 //! The table of command specific command line switches.
 
-static Core::CmdLineSwitch s_switches[] = 
+static Core::CmdLineSwitch s_switches[] =
 {
 	{ USAGE,	TXT("?"),	NULL,			Core::CmdLineSwitch::ONCE,	Core::CmdLineSwitch::NONE,		NULL,			TXT("Display the command syntax")	},
 	{ SERVER,	TXT("s"),	TXT("server"),	Core::CmdLineSwitch::ONCE,	Core::CmdLineSwitch::SINGLE,	TXT("server"),	TXT("The DDE Server name")			},
@@ -92,7 +92,7 @@ int AdviseCmd::doExecute()
 
 	uint format = CClipboard::FormatHandle(formatName.c_str());
 
-	if (format == NULL)
+	if (format == CF_NONE)
 		throw Core::InvalidArgException(Core::fmt(TXT("Invalid clipboard format '%s'"), formatName.c_str()));
 
 	// Open the conversation.

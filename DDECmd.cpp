@@ -16,6 +16,7 @@
 #include "PokeCmd.hpp"
 #include "ExecuteCmd.hpp"
 #include "CmdLineArgs.hpp"
+#include <ostream>
 
 ////////////////////////////////////////////////////////////////////////////////
 // Global variables.
@@ -31,7 +32,7 @@ static tstring s_appName(TXT("DDECmd"));
 ////////////////////////////////////////////////////////////////////////////////
 //! The table of command line switches.
 
-static Core::CmdLineSwitch s_switches[] = 
+static Core::CmdLineSwitch s_switches[] =
 {
 	{ USAGE,	TXT("?"),	NULL,			Core::CmdLineSwitch::ONCE,	Core::CmdLineSwitch::NONE,	NULL,	TXT("Display the program options syntax")	},
 	{ USAGE,	TXT("h"),	TXT("help"),	Core::CmdLineSwitch::ONCE,	Core::CmdLineSwitch::NONE,	NULL,	TXT("Display the program options syntax")	},
@@ -171,7 +172,7 @@ void DDECmd::showUsage(tostream& out)
 void DDECmd::showVersion(tostream& out)
 {
 	// Extract details from the resources.
-	tstring filename  = CPath::Application();
+	tstring filename  = CPath::Application().c_str();
 	tstring version   = WCL::VerInfoReader::GetStringValue(filename, WCL::VerInfoReader::PRODUCT_VERSION);
 	tstring copyright = WCL::VerInfoReader::GetStringValue(filename, WCL::VerInfoReader::LEGAL_COPYRIGHT);
 
