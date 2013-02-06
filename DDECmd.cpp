@@ -59,7 +59,7 @@ DDECmd::~DDECmd()
 ////////////////////////////////////////////////////////////////////////////////
 //! Run the application.
 
-int DDECmd::run(int argc, tchar* argv[], tistream& /*in*/, tostream& out, tostream& /*err*/)
+int DDECmd::run(int argc, tchar* argv[], tistream& /*in*/, tostream& out, tostream& err)
 {
 	// Command specified?
 	if ( (argc > 1) && ((argv[1][0] != TXT('/')) && (argv[1][0] != TXT('-'))) )
@@ -67,7 +67,7 @@ int DDECmd::run(int argc, tchar* argv[], tistream& /*in*/, tostream& out, tostre
 		// Get command and execute.
 		CommandPtr command = createCommand(argc, argv);
 
-		command->execute();
+		command->execute(out, err);
 	}
 	else
 	{
@@ -88,7 +88,7 @@ int DDECmd::run(int argc, tchar* argv[], tistream& /*in*/, tostream& out, tostre
 		// Request for the manual?
 		else if (m_parser.isSwitchSet(MANUAL))
 		{
-			showManual();
+			showManual(err);
 			return EXIT_SUCCESS;
 		}
 		// Empty.
@@ -176,6 +176,10 @@ void DDECmd::showVersion(tostream& out)
 	tstring version   = WCL::VerInfoReader::GetStringValue(filename, WCL::VerInfoReader::PRODUCT_VERSION);
 	tstring copyright = WCL::VerInfoReader::GetStringValue(filename, WCL::VerInfoReader::LEGAL_COPYRIGHT);
 
+#ifdef ANSI_BUILD
+	version += TXT(" [ANSI]");
+#endif
+
 #ifdef _DEBUG
 	version += TXT(" [Debug]");
 #endif
@@ -192,7 +196,25 @@ void DDECmd::showVersion(tostream& out)
 ////////////////////////////////////////////////////////////////////////////////
 //! Display the manual.
 
-void DDECmd::showManual()
+void DDECmd::showManual(tostream& err)
 {
-	::ShellExecute(NULL, NULL, CPath::ApplicationDir() / TXT("DDECmd.mht"), NULL, NULL, SW_SHOW);
+	// Look for .mht based helpfile first.
+	tstring helpfile_mht = s_appName + TXT(".mht");
+	CPath   fullpath_mht = CPath::ApplicationDir() / helpfile_mht.c_str();
+
+	if (fullpath_mht.Exists())
+	{
+		::ShellExecute(NULL, NULL, fullpath_mht.c_str(), NULL, NULL, SW_SHOW);
+	}
+
+	// Fall back to .html based helpfile.
+	tstring helpfile_html = s_appName + TXT(".html");
+	CPath   fullpath_html = CPath::ApplicationDir() / helpfile_html.c_str();
+
+	if (fullpath_html.Exists())
+	{
+		::ShellExecute(NULL, NULL, fullpath_html, NULL, NULL, SW_SHOW);
+	}
+
+	err << TXT("ERROR: Manual missing - '") << fullpath_html.c_str() << TXT("'") << std::endl;
 }

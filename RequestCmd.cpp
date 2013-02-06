@@ -14,6 +14,7 @@
 #include <WCL/Clipboard.hpp>
 #include <Core/StringUtils.hpp>
 #include <NCL/DDEData.hpp>
+#include <WCL/StringIO.hpp>
 
 ////////////////////////////////////////////////////////////////////////////////
 //! The table of command specific command line switches.
@@ -21,6 +22,7 @@
 static Core::CmdLineSwitch s_switches[] =
 {
 	{ USAGE,	TXT("?"),	NULL,			Core::CmdLineSwitch::ONCE,	Core::CmdLineSwitch::NONE,		NULL,			TXT("Display the command syntax")	},
+	{ USAGE,	NULL,		TXT("help"),	Core::CmdLineSwitch::ONCE,	Core::CmdLineSwitch::NONE,		NULL,			TXT("Display the command syntax")	},
 	{ SERVER,	TXT("s"),	TXT("server"),	Core::CmdLineSwitch::ONCE,	Core::CmdLineSwitch::SINGLE,	TXT("server"),	TXT("The DDE Server name")			},
 	{ TOPIC,	TXT("t"),	TXT("topic"), 	Core::CmdLineSwitch::ONCE,	Core::CmdLineSwitch::SINGLE,	TXT("topic"),	TXT("The DDE Server topic")			},
 	{ ITEM,		TXT("i"),	TXT("item"), 	Core::CmdLineSwitch::MANY,	Core::CmdLineSwitch::MULTIPLE,	TXT("item"),	TXT("The item name(s)")				},
@@ -62,7 +64,7 @@ const tchar* RequestCmd::getUsage()
 ////////////////////////////////////////////////////////////////////////////////
 //! The implementation of the command.
 
-int RequestCmd::doExecute()
+int RequestCmd::doExecute(tostream& out, tostream& /*err*/)
 {
 	// Type aliases.
 	typedef Core::CmdLineParser::StringVector::const_iterator ItemConstIter;
@@ -104,9 +106,9 @@ int RequestCmd::doExecute()
 		CDDEData value = conv->Request(item.c_str(), format);
 
 		if (format != CF_UNICODETEXT)
-			tcout << value.GetString(ANSI_TEXT) << std::endl;
+			out << value.GetString(ANSI_TEXT) << std::endl;
 		else
-			tcout << value.GetString(UNICODE_TEXT) << std::endl;
+			out << value.GetString(UNICODE_TEXT) << std::endl;
 	}
 
 	return EXIT_SUCCESS;

@@ -70,6 +70,8 @@
 		</Linker>
 		<Unit filename="AdviseCmd.cpp" />
 		<Unit filename="AdviseCmd.hpp" />
+		<Unit filename="AdviseSink.cpp" />
+		<Unit filename="AdviseSink.hpp" />
 		<Unit filename="App.ico" />
 		<Unit filename="App.rcv" />
 		<Unit filename="CmdLineArgs.hpp" />
@@ -95,6 +97,7 @@
 		<Unit filename="ServersCmd.hpp" />
 		<Unit filename="Setup.ini" />
 		<Unit filename="TODO.Txt" />
+		<Unit filename="TestScript.cmd" />
 		<Unit filename="pch.cpp" />
 		<Unit filename="resource.h" />
 		<Extensions>

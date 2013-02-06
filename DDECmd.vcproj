@@ -142,6 +142,9 @@
 				RelativePath=".\AdviseCmd.cpp">
 			</File>
 			<File
+				RelativePath=".\AdviseSink.cpp">
+			</File>
+			<File
 				RelativePath=".\Command.cpp">
 			</File>
 			<File
@@ -184,6 +187,9 @@
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}">
 			<File
 				RelativePath=".\AdviseCmd.hpp">
+			</File>
+			<File
+				RelativePath=".\AdviseSink.hpp">
 			</File>
 			<File
 				RelativePath=".\CmdLineArgs.hpp">
@@ -242,6 +248,9 @@
 		</File>
 		<File
 			RelativePath=".\Setup.ini">
+		</File>
+		<File
+			RelativePath=".\TestScript.cmd">
 		</File>
 		<File
 			RelativePath=".\TODO.Txt">

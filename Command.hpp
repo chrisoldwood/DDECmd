@@ -12,6 +12,7 @@
 #endif
 
 #include <Core/CmdLineParser.hpp>
+#include <Core/tiosfwd.hpp>
 
 ////////////////////////////////////////////////////////////////////////////////
 //! The base class for all commands.
@@ -27,7 +28,7 @@ public:
 	//
 
 	//! Execute the command.
-	virtual int execute();
+	virtual int execute(tostream& out, tostream& err);
 
 protected:
 	//! Type aliases.
@@ -54,7 +55,7 @@ protected:
 	virtual const tchar* getUsage() = 0;
 
 	//! The implementation of the command.
-	virtual int doExecute() = 0;
+	virtual int doExecute(tostream& out, tostream& err) = 0;
 };
 
 //! The default Command smart-pointer type.

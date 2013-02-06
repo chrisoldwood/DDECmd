@@ -9,13 +9,15 @@
 #include <NCL/DDEClient.hpp>
 #include <WCL/StrArray.hpp>
 #include "CmdLineArgs.hpp"
+#include <WCL/StringIO.hpp>
 
 ////////////////////////////////////////////////////////////////////////////////
 //! The table of command specific command line switches.
 
 static Core::CmdLineSwitch s_switches[] = 
 {
-	{ USAGE,	TXT("?"),	NULL,	Core::CmdLineSwitch::ONCE,	Core::CmdLineSwitch::NONE,	NULL,	TXT("Display the command syntax")	},
+	{ USAGE,	TXT("?"),	NULL,			Core::CmdLineSwitch::ONCE,	Core::CmdLineSwitch::NONE,		NULL,			TXT("Display the command syntax")	},
+	{ USAGE,	NULL,		TXT("help"),	Core::CmdLineSwitch::ONCE,	Core::CmdLineSwitch::NONE,		NULL,			TXT("Display the command syntax")	},
 };
 static size_t s_switchCount = ARRAY_SIZE(s_switches);
 
@@ -53,7 +55,7 @@ const tchar* ServersCmd::getUsage()
 ////////////////////////////////////////////////////////////////////////////////
 //! The implementation of the command.
 
-int ServersCmd::doExecute()
+int ServersCmd::doExecute(tostream& out, tostream& /*err*/)
 {
 	CDDEClient client;
 
@@ -64,7 +66,7 @@ int ServersCmd::doExecute()
 
 	// Display results.
 	for (size_t i = 0, size = servers.Size(); i != size; ++i)
-		tcout << servers[i] << TXT("|") << topics[i] << std::endl;
+		out << servers[i] << TXT("|") << topics[i] << std::endl;
 
 	return EXIT_SUCCESS;
 }

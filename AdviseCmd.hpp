@@ -17,8 +17,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 //! The DDE command used to listen for updates the items.
 
-class AdviseCmd : public Command,
-				  public CDefDDEClientListener
+class AdviseCmd : public Command
 {
 public:
 	//! Constructor.
@@ -39,14 +38,7 @@ private:
 	virtual const tchar* getUsage();
 
 	//! The implementation of the command.
-	virtual int doExecute();
-
-	//
-	// IDDEClientListener Methods.
-	//
-
-	//! Handle a link being updated.
-	virtual void OnAdvise(CDDELink* link, const CDDEData* value);
+	virtual int doExecute(tostream& out, tostream& err);
 };
 
 #endif // APP_ADVISECMD_HPP

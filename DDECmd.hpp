@@ -54,7 +54,7 @@ private:
 	void showVersion(tostream& out);
 
 	//! Display the manual.
-	void showManual();
+	void showManual(tostream& err);
 };
 
 //! The application object.

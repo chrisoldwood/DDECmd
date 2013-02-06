@@ -29,7 +29,7 @@ Command::~Command()
 ////////////////////////////////////////////////////////////////////////////////
 //! Execute the command.
 
-int Command::execute()
+int Command::execute(tostream& out, tostream& err)
 {
 	// Parse the command line.
 	m_parser.parse(m_argc, m_argv);
@@ -40,15 +40,15 @@ int Command::execute()
 	// Request for command help?
 	if (m_parser.isSwitchSet(USAGE))
 	{
-		tcout << getDescription() << std::endl;
-		tcout << std::endl;
-		tcout << getUsage() << std::endl;
-		tcout << std::endl;
-		tcout << m_parser.formatSwitches(Core::CmdLineParser::UNIX);
+		out << getDescription() << std::endl;
+		out << std::endl;
+		out << getUsage() << std::endl;
+		out << std::endl;
+		out << m_parser.formatSwitches(Core::CmdLineParser::UNIX);
 		
 		return EXIT_SUCCESS;
 	}
 
 	// Execute it.
-	return doExecute();
+	return doExecute(out, err);
 }

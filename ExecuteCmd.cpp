@@ -16,6 +16,7 @@
 static Core::CmdLineSwitch s_switches[] = 
 {
 	{ USAGE,	TXT("?"),	NULL,			Core::CmdLineSwitch::ONCE,	Core::CmdLineSwitch::NONE,		NULL,			TXT("Display the command syntax")	},
+	{ USAGE,	NULL,		TXT("help"),	Core::CmdLineSwitch::ONCE,	Core::CmdLineSwitch::NONE,		NULL,			TXT("Display the command syntax")	},
 	{ SERVER,	TXT("s"),	TXT("server"),	Core::CmdLineSwitch::ONCE,	Core::CmdLineSwitch::SINGLE,	TXT("server"),	TXT("The DDE Server name")			},
 	{ TOPIC,	TXT("t"),	TXT("topic"), 	Core::CmdLineSwitch::ONCE,	Core::CmdLineSwitch::SINGLE,	TXT("topic"),	TXT("The DDE Server topic")			},
 	{ COMMAND,	TXT("c"),	TXT("command"),	Core::CmdLineSwitch::ONCE,	Core::CmdLineSwitch::SINGLE,	TXT("command"),	TXT("The command to execute")		},
@@ -56,7 +57,7 @@ const tchar* ExecuteCmd::getUsage()
 ////////////////////////////////////////////////////////////////////////////////
 //! The implementation of the command.
 
-int ExecuteCmd::doExecute()
+int ExecuteCmd::doExecute(tostream& /*out*/, tostream& /*err*/)
 {
 	// Validate the command line arguments.
 	if (!m_parser.isSwitchSet(SERVER))

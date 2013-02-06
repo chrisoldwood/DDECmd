@@ -18,6 +18,7 @@
 static Core::CmdLineSwitch s_switches[] = 
 {
 	{ USAGE,	TXT("?"),	NULL,			Core::CmdLineSwitch::ONCE,	Core::CmdLineSwitch::NONE,		NULL,			TXT("Display the command syntax")	},
+	{ USAGE,	NULL,		TXT("help"),	Core::CmdLineSwitch::ONCE,	Core::CmdLineSwitch::NONE,		NULL,			TXT("Display the command syntax")	},
 	{ SERVER,	TXT("s"),	TXT("server"),	Core::CmdLineSwitch::ONCE,	Core::CmdLineSwitch::SINGLE,	TXT("server"),	TXT("The DDE Server name")			},
 	{ TOPIC,	TXT("t"),	TXT("topic"), 	Core::CmdLineSwitch::ONCE,	Core::CmdLineSwitch::SINGLE,	TXT("topic"),	TXT("The DDE Server topic")			},
 	{ ITEM,		TXT("i"),	TXT("item"), 	Core::CmdLineSwitch::ONCE,	Core::CmdLineSwitch::SINGLE,	TXT("item"),	TXT("The item name(s)")				},
@@ -59,7 +60,7 @@ const tchar* PokeCmd::getUsage()
 ////////////////////////////////////////////////////////////////////////////////
 //! The implementation of the command.
 
-int PokeCmd::doExecute()
+int PokeCmd::doExecute(tostream& /*out*/, tostream& /*err*/)
 {
 	// Validate the command line arguments.
 	if (!m_parser.isSwitchSet(SERVER))

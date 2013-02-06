@@ -13,10 +13,9 @@
 #include <NCL/DDECltConvPtr.hpp>
 #include <WCL/Clipboard.hpp>
 #include <Core/StringUtils.hpp>
-#include <NCL/DDEData.hpp>
-#include <NCL/DDELink.hpp>
 #include <WCL/ConsoleApp.hpp>
 #include "DDECmd.hpp"
+#include "AdviseSink.hpp"
 
 ////////////////////////////////////////////////////////////////////////////////
 //! The table of command specific command line switches.
@@ -24,6 +23,7 @@
 static Core::CmdLineSwitch s_switches[] =
 {
 	{ USAGE,	TXT("?"),	NULL,			Core::CmdLineSwitch::ONCE,	Core::CmdLineSwitch::NONE,		NULL,			TXT("Display the command syntax")	},
+	{ USAGE,	NULL,		TXT("help"),	Core::CmdLineSwitch::ONCE,	Core::CmdLineSwitch::NONE,		NULL,			TXT("Display the command syntax")	},
 	{ SERVER,	TXT("s"),	TXT("server"),	Core::CmdLineSwitch::ONCE,	Core::CmdLineSwitch::SINGLE,	TXT("server"),	TXT("The DDE Server name")			},
 	{ TOPIC,	TXT("t"),	TXT("topic"), 	Core::CmdLineSwitch::ONCE,	Core::CmdLineSwitch::SINGLE,	TXT("topic"),	TXT("The DDE Server topic")			},
 	{ ITEM,		TXT("i"),	TXT("item"), 	Core::CmdLineSwitch::MANY,	Core::CmdLineSwitch::MULTIPLE,	TXT("item"),	TXT("The item name(s)")				},
@@ -65,7 +65,7 @@ const tchar* AdviseCmd::getUsage()
 ////////////////////////////////////////////////////////////////////////////////
 //! The implementation of the command.
 
-int AdviseCmd::doExecute()
+int AdviseCmd::doExecute(tostream& out, tostream& /*err*/)
 {
 	// Type aliases.
 	typedef Core::CmdLineParser::StringVector::const_iterator ItemConstIter;
@@ -100,7 +100,8 @@ int AdviseCmd::doExecute()
 	DDE::CltConvPtr conv(client.CreateConversation(server.c_str(), topic.c_str()));
 
 	// Start listening for updates.
-	client.AddListener(this);
+	AdviseSink sink(out);
+	client.AddListener(&sink);
 
 	// Create the links...
 	for (ItemConstIter it = items.begin(); it != items.end(); ++it)
@@ -115,17 +116,4 @@ int AdviseCmd::doExecute()
 		::WaitMessage();
 
 	return EXIT_SUCCESS;
-}
-
-////////////////////////////////////////////////////////////////////////////////
-//! Handle a link being updated.
-
-void AdviseCmd::OnAdvise(CDDELink* link, const CDDEData* value)
-{
-	if (link->Format() != CF_UNICODETEXT)
-		tcout << value->GetString(ANSI_TEXT) << std::endl;
-	else
-		tcout << value->GetString(UNICODE_TEXT) << std::endl;
-
-	tcout.flush();
 }

@@ -37,7 +37,7 @@ private:
 	virtual const tchar* getUsage();
 
 	//! The implementation of the command.
-	virtual int doExecute();
+	virtual int doExecute(tostream& out, tostream& err);
 };
 
 #endif // APP_SERVERSCMD_HPP
