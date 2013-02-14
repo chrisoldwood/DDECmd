@@ -1,3 +1,5 @@
-- Record & Playback commands.
+- Record & Playback commands (need to escape data).
 
-- Value formatting, e.g. trimming, item name, timestamp
+- Value formatting, e.g. timestamp
+
+- Request using link format.
