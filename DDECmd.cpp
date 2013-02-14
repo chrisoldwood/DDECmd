@@ -25,11 +25,6 @@
 DDECmd g_app;
 
 ////////////////////////////////////////////////////////////////////////////////
-// Local variables.
-
-static tstring s_appName(TXT("DDECmd"));
-
-////////////////////////////////////////////////////////////////////////////////
 //! The table of command line switches.
 
 static Core::CmdLineSwitch s_switches[] =
@@ -65,7 +60,7 @@ int DDECmd::run(int argc, tchar* argv[], tistream& /*in*/, tostream& out, tostre
 	if ( (argc > 1) && ((argv[1][0] != TXT('/')) && (argv[1][0] != TXT('-'))) )
 	{
 		// Get command and execute.
-		CommandPtr command = createCommand(argc, argv);
+		WCL::ConsoleCmdPtr command = createCommand(argc, argv);
 
 		command->execute(out, err);
 	}
@@ -104,7 +99,7 @@ int DDECmd::run(int argc, tchar* argv[], tistream& /*in*/, tostream& out, tostre
 ////////////////////////////////////////////////////////////////////////////////
 //! Create the Comand object.
 
-CommandPtr DDECmd::createCommand(int argc, tchar* argv[])
+WCL::ConsoleCmdPtr DDECmd::createCommand(int argc, tchar* argv[])
 {
 	ASSERT(argc > 1);
 
@@ -114,35 +109,43 @@ CommandPtr DDECmd::createCommand(int argc, tchar* argv[])
 	// Create command.
 	if (tstricmp(command, TXT("servers")) == 0)
 	{
-		return CommandPtr(new ServersCmd(argc, argv));
+		return WCL::ConsoleCmdPtr(new ServersCmd(argc, argv));
 	}
 	else if (tstricmp(command, TXT("request")) == 0)
 	{
-		return CommandPtr(new RequestCmd(argc, argv));
+		return WCL::ConsoleCmdPtr(new RequestCmd(argc, argv));
 	}
 	else if (tstricmp(command, TXT("advise")) == 0)
 	{
-		return CommandPtr(new AdviseCmd(argc, argv));
+		return WCL::ConsoleCmdPtr(new AdviseCmd(argc, argv));
 	}
 	else if (tstricmp(command, TXT("poke")) == 0)
 	{
-		return CommandPtr(new PokeCmd(argc, argv));
+		return WCL::ConsoleCmdPtr(new PokeCmd(argc, argv));
 	}
 	else if (tstricmp(command, TXT("execute")) == 0)
 	{
-		return CommandPtr(new ExecuteCmd(argc, argv));
+		return WCL::ConsoleCmdPtr(new ExecuteCmd(argc, argv));
 	}
 
 	throw Core::CmdLineException(Core::fmt(TXT("Unknown DDE command: '%s'"), command));
 }
 
 ////////////////////////////////////////////////////////////////////////////////
+//! Get the name of the application.
+
+tstring DDECmd::applicationName() const
+{
+	return TXT("DDECmd");
+}
+
+////////////////////////////////////////////////////////////////////////////////
 //! Display the program options syntax.
 
-void DDECmd::showUsage(tostream& out)
+void DDECmd::showUsage(tostream& out) const
 {
 	out << std::endl;
-	out << TXT("USAGE: ") << s_appName << (" <command> [options] ...") << std::endl;
+	out << TXT("USAGE: ") << applicationName() << (" <command> [options] ...") << std::endl;
 	out << std::endl;
 
 	size_t width = 16;
@@ -164,57 +167,4 @@ void DDECmd::showUsage(tostream& out)
 	out << TXT("Non-command options:-") << std::endl;
 	out << std::endl;
 	out << m_parser.formatSwitches(Core::CmdLineParser::UNIX);
-}
-
-////////////////////////////////////////////////////////////////////////////////
-//! Display the program version.
-
-void DDECmd::showVersion(tostream& out)
-{
-	// Extract details from the resources.
-	tstring filename  = CPath::Application().c_str();
-	tstring version   = WCL::VerInfoReader::GetStringValue(filename, WCL::VerInfoReader::PRODUCT_VERSION);
-	tstring copyright = WCL::VerInfoReader::GetStringValue(filename, WCL::VerInfoReader::LEGAL_COPYRIGHT);
-
-#ifdef ANSI_BUILD
-	version += TXT(" [ANSI]");
-#endif
-
-#ifdef _DEBUG
-	version += TXT(" [Debug]");
-#endif
-
-	// Display version etc.
-	out << std::endl;
-	out << s_appName << TXT(" v") << version << std::endl;
-	out << std::endl;
-	out << copyright << std::endl;
-	out << TXT("gort@cix.co.uk") << std::endl;
-	out << TXT("www.cix.co.uk/~gort") << std::endl;
-}
-
-////////////////////////////////////////////////////////////////////////////////
-//! Display the manual.
-
-void DDECmd::showManual(tostream& err)
-{
-	// Look for .mht based helpfile first.
-	tstring helpfile_mht = s_appName + TXT(".mht");
-	CPath   fullpath_mht = CPath::ApplicationDir() / helpfile_mht.c_str();
-
-	if (fullpath_mht.Exists())
-	{
-		::ShellExecute(NULL, NULL, fullpath_mht.c_str(), NULL, NULL, SW_SHOW);
-	}
-
-	// Fall back to .html based helpfile.
-	tstring helpfile_html = s_appName + TXT(".html");
-	CPath   fullpath_html = CPath::ApplicationDir() / helpfile_html.c_str();
-
-	if (fullpath_html.Exists())
-	{
-		::ShellExecute(NULL, NULL, fullpath_html, NULL, NULL, SW_SHOW);
-	}
-
-	err << TXT("ERROR: Manual missing - '") << fullpath_html.c_str() << TXT("'") << std::endl;
 }

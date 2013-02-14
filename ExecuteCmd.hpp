@@ -11,12 +11,12 @@
 #pragma once
 #endif
 
-#include "Command.hpp"
+#include <WCL/ConsoleCmd.hpp>
 
 ////////////////////////////////////////////////////////////////////////////////
 //! The DDE command used to send a string for execution by the server.
 
-class ExecuteCmd : public Command
+class ExecuteCmd : public WCL::ConsoleCmd
 {
 public:
 	//! Constructor.

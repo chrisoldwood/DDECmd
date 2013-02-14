@@ -27,7 +27,7 @@ static size_t s_switchCount = ARRAY_SIZE(s_switches);
 //! Constructor.
 
 ExecuteCmd::ExecuteCmd(int argc, tchar* argv[])
-	: Command(s_switches, s_switches+s_switchCount, argc, argv)
+	: WCL::ConsoleCmd(s_switches, s_switches+s_switchCount, argc, argv, USAGE)
 {
 }
 

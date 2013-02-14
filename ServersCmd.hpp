@@ -11,12 +11,12 @@
 #pragma once
 #endif
 
-#include "Command.hpp"
+#include <WCL/ConsoleCmd.hpp>
 
 ////////////////////////////////////////////////////////////////////////////////
 //! The command used to list the running servers and topics.
 
-class ServersCmd : public Command
+class ServersCmd : public WCL::ConsoleCmd
 {
 public:
 	//! Constructor.

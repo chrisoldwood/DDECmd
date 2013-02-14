@@ -11,12 +11,12 @@
 #pragma once
 #endif
 
-#include "Command.hpp"
+#include <WCL/ConsoleCmd.hpp>
 
 ////////////////////////////////////////////////////////////////////////////////
 //! The DDE command used to set a value for an item.
 
-class PokeCmd : public Command
+class PokeCmd : public WCL::ConsoleCmd
 {
 public:
 	//! Constructor.

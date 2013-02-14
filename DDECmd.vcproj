@@ -145,9 +145,6 @@
 				RelativePath=".\AdviseSink.cpp">
 			</File>
 			<File
-				RelativePath=".\Command.cpp">
-			</File>
-			<File
 				RelativePath=".\DDECmd.cpp">
 			</File>
 			<File
@@ -193,9 +190,6 @@
 			</File>
 			<File
 				RelativePath=".\CmdLineArgs.hpp">
-			</File>
-			<File
-				RelativePath=".\Command.hpp">
 			</File>
 			<File
 				RelativePath=".\Common.hpp">

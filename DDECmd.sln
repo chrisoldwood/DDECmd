@@ -15,6 +15,13 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "NCL", "..\Lib\NCL\NCL.vcpro
 	ProjectSection(ProjectDependencies) = postProject
 	EndProjectSection
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Test", "Test\Test.vcproj", "{A45C5206-309C-4F36-974C-182B27AE3F1B}"
+	ProjectSection(ProjectDependencies) = postProject
+		{790BC113-52FB-4565-8968-79B8B011C520} = {790BC113-52FB-4565-8968-79B8B011C520}
+		{FAB8D717-85EC-4896-B5DC-FDF0A0B67C92} = {FAB8D717-85EC-4896-B5DC-FDF0A0B67C92}
+		{9B0335B6-93BE-4604-8497-27431874D758} = {9B0335B6-93BE-4604-8497-27431874D758}
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(DPCodeReviewSolutionGUID) = preSolution
 		DPCodeReviewSolutionGUID = {00000000-0000-0000-0000-000000000000}
@@ -63,6 +70,10 @@ Global
 		{FAB8D717-85EC-4896-B5DC-FDF0A0B67C92}.Debug.Build.0 = Debug|Win32
 		{FAB8D717-85EC-4896-B5DC-FDF0A0B67C92}.Release.ActiveCfg = Release|Win32
 		{FAB8D717-85EC-4896-B5DC-FDF0A0B67C92}.Release.Build.0 = Release|Win32
+		{A45C5206-309C-4F36-974C-182B27AE3F1B}.Debug.ActiveCfg = Debug|Win32
+		{A45C5206-309C-4F36-974C-182B27AE3F1B}.Debug.Build.0 = Debug|Win32
+		{A45C5206-309C-4F36-974C-182B27AE3F1B}.Release.ActiveCfg = Release|Win32
+		{A45C5206-309C-4F36-974C-182B27AE3F1B}.Release.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 	EndGlobalSection

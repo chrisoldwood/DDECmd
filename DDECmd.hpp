@@ -12,7 +12,7 @@
 #endif
 
 #include <WCL/ConsoleApp.hpp>
-#include "Command.hpp"
+#include <WCL/ConsoleCmd.hpp>
 
 ////////////////////////////////////////////////////////////////////////////////
 //! The application.
@@ -34,8 +34,11 @@ protected:
 	//! Run the application.
 	virtual int run(int argc, tchar* argv[], tistream& in, tostream& out, tostream& err);
 
+	//! Get the name of the application.
+	virtual tstring applicationName() const;
+
 	//! Display the program options syntax.
-	virtual void showUsage(tostream& out);
+	virtual void showUsage(tostream& out) const;
 
 private:
 	//
@@ -48,13 +51,7 @@ private:
 	//
 
 	//! Create the Comand object.
-	CommandPtr createCommand(int argc, tchar* argv[]); // throw(CmdLineException)
-
-	//! Display the program version.
-	void showVersion(tostream& out);
-
-	//! Display the manual.
-	void showManual(tostream& err);
+	WCL::ConsoleCmdPtr createCommand(int argc, tchar* argv[]); // throw(CmdLineException)
 };
 
 //! The application object.

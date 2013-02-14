@@ -75,8 +75,6 @@
 		<Unit filename="App.ico" />
 		<Unit filename="App.rcv" />
 		<Unit filename="CmdLineArgs.hpp" />
-		<Unit filename="Command.cpp" />
-		<Unit filename="Command.hpp" />
 		<Unit filename="Common.hpp" />
 		<Unit filename="DDECmd.cpp" />
 		<Unit filename="DDECmd.hpp" />
