@@ -16,6 +16,7 @@
 #include <WCL/ConsoleApp.hpp>
 #include "DDECmd.hpp"
 #include "AdviseSink.hpp"
+#include <NCL/DDELink.hpp>
 
 ////////////////////////////////////////////////////////////////////////////////
 //! The table of command specific command line switches.
@@ -28,6 +29,7 @@ static Core::CmdLineSwitch s_switches[] =
 	{ TOPIC,	TXT("t"),	TXT("topic"), 	Core::CmdLineSwitch::ONCE,	Core::CmdLineSwitch::SINGLE,	TXT("topic"),	TXT("The DDE Server topic")			},
 	{ ITEM,		TXT("i"),	TXT("item"), 	Core::CmdLineSwitch::MANY,	Core::CmdLineSwitch::MULTIPLE,	TXT("item"),	TXT("The item name(s)")				},
 	{ FORMAT,	TXT("f"),	TXT("format"),	Core::CmdLineSwitch::ONCE,	Core::CmdLineSwitch::SINGLE,	TXT("format"),	TXT("The clipboard format to use")	},
+	{ LINK,		TXT("l"),	TXT("link"),	Core::CmdLineSwitch::ONCE,	Core::CmdLineSwitch::SINGLE,	TXT("link"),	TXT("The DDE link")					},
 };
 static size_t s_switchCount = ARRAY_SIZE(s_switches);
 
@@ -35,7 +37,7 @@ static size_t s_switchCount = ARRAY_SIZE(s_switches);
 //! Constructor.
 
 AdviseCmd::AdviseCmd(int argc, tchar* argv[])
-	: Command(s_switches, s_switches+s_switchCount, argc, argv)
+	: WCL::ConsoleCmd(s_switches, s_switches+s_switchCount, argc, argv, USAGE)
 {
 }
 
@@ -68,24 +70,41 @@ const tchar* AdviseCmd::getUsage()
 int AdviseCmd::doExecute(tostream& out, tostream& /*err*/)
 {
 	// Type aliases.
+	typedef std::vector<tstring> Items;
 	typedef Core::CmdLineParser::StringVector::const_iterator ItemConstIter;
 
-	// Validate the command line arguments.
-	if (!m_parser.isSwitchSet(SERVER))
-		throw Core::CmdLineException(TXT("No DDE server name specified [--server]"));
+	tstring server;
+	tstring topic;
+	Items   items;
 
-	if (!m_parser.isSwitchSet(TOPIC))
-		throw Core::CmdLineException(TXT("No DDE server topic specified [--topic]"));
+	// Validate and extract the command line arguments.
+	if (m_parser.isSwitchSet(LINK))
+	{
+		tstring link = m_parser.getSwitchValue(LINK);
+		tstring item;
 
-	if (!m_parser.isSwitchSet(ITEM))
-		throw Core::CmdLineException(TXT("No item(s) specified [--item]"));
+		if (!CDDELink::ParseLink(link, server, topic, item))
+			throw Core::InvalidArgException(Core::fmt(TXT("Invalid DDE link format '%s'"), link.c_str()));
+
+		items.push_back(item);
+	}
+	else
+	{
+		if (!m_parser.isSwitchSet(SERVER))
+			throw Core::CmdLineException(TXT("No DDE server name specified [--server]"));
+
+		if (!m_parser.isSwitchSet(TOPIC))
+			throw Core::CmdLineException(TXT("No DDE server topic specified [--topic]"));
+
+		if (!m_parser.isSwitchSet(ITEM))
+			throw Core::CmdLineException(TXT("No item(s) specified [--item]"));
+
+		server = m_parser.getSwitchValue(SERVER);
+		topic  = m_parser.getSwitchValue(TOPIC);
+		items  = m_parser.getNamedArgs().find(ITEM)->second;
+	}
 
 	tstring formatName = TXT("CF_TEXT");
-
-	// Extract command line argument values.
-	tstring server = m_parser.getSwitchValue(SERVER);
-	tstring topic  = m_parser.getSwitchValue(TOPIC);
-	const Core::CmdLineParser::StringVector& items = m_parser.getNamedArgs().find(ITEM)->second;
 
 	if (m_parser.isSwitchSet(FORMAT))
 		formatName = m_parser.getSwitchValue(FORMAT);
@@ -95,12 +114,14 @@ int AdviseCmd::doExecute(tostream& out, tostream& /*err*/)
 	if (format == CF_NONE)
 		throw Core::InvalidArgException(Core::fmt(TXT("Invalid clipboard format '%s'"), formatName.c_str()));
 
+	const bool labelValues = (items.size() > 1);
+
 	// Open the conversation.
 	CDDEClient client;
 	DDE::CltConvPtr conv(client.CreateConversation(server.c_str(), topic.c_str()));
 
 	// Start listening for updates.
-	AdviseSink sink(out);
+	AdviseSink sink(out, labelValues);
 	client.AddListener(&sink);
 
 	// Create the links...
@@ -111,9 +132,12 @@ int AdviseCmd::doExecute(tostream& out, tostream& /*err*/)
 		conv->CreateLink(item.c_str(), format);
 	}
 
+	CMsgThread& thread = g_app.mainThread();
+	CEvent&     abortEvent = g_app.getAbortEvent();
+
 	// Pump messages until the user presses Ctrl-C.
-	while (!g_app.abort() && g_app.mainThread().ProcessMsgQueue())
-		::WaitMessage();
+	while (!abortEvent.IsSignalled() && thread.ProcessMsgQueue())
+		thread.WaitForMessageOrSignal(abortEvent.Handle());
 
 	return EXIT_SUCCESS;
 }

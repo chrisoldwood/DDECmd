@@ -25,6 +25,7 @@ enum CmdLineArgType
 	VALUE		= 6,	//!< The value to set.
 	COMMAND		= 7,	//!< The command to execute.
 	MANUAL		= 8,	//!< Show the manual.
+	LINK		= 9,	//!< The DDE link.
 };
 
 #endif // APP_CMDLINEARGS_HPP

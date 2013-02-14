@@ -11,12 +11,12 @@
 #pragma once
 #endif
 
-#include "Command.hpp"
+#include <WCL/ConsoleCmd.hpp>
 
 ////////////////////////////////////////////////////////////////////////////////
 //! The DDE command to request the value for one or more items.
 
-class RequestCmd : public Command
+class RequestCmd : public WCL::ConsoleCmd
 {
 public:
 	//! Constructor.

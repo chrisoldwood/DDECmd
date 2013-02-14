@@ -21,7 +21,7 @@ class AdviseSink : public CDefDDEClientListener
 {
 public:
 	//! Constructor.
-	AdviseSink(tostream& out);
+	AdviseSink(tostream& out, bool labelValues);
 
 	//! Destructor.
 	~AdviseSink();
@@ -30,7 +30,8 @@ private:
 	//
 	// Members.
 	//
-	tostream&	m_out;	//!< The output stream.
+	tostream&	m_out;			//!< The output stream.
+	bool		m_labelValues;	//!< Display the item name.
 
 	//
 	// IDDEClientListener Methods.

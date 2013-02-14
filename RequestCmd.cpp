@@ -15,6 +15,7 @@
 #include <Core/StringUtils.hpp>
 #include <NCL/DDEData.hpp>
 #include <WCL/StringIO.hpp>
+#include <NCL/DDELink.hpp>
 
 ////////////////////////////////////////////////////////////////////////////////
 //! The table of command specific command line switches.
@@ -27,6 +28,7 @@ static Core::CmdLineSwitch s_switches[] =
 	{ TOPIC,	TXT("t"),	TXT("topic"), 	Core::CmdLineSwitch::ONCE,	Core::CmdLineSwitch::SINGLE,	TXT("topic"),	TXT("The DDE Server topic")			},
 	{ ITEM,		TXT("i"),	TXT("item"), 	Core::CmdLineSwitch::MANY,	Core::CmdLineSwitch::MULTIPLE,	TXT("item"),	TXT("The item name(s)")				},
 	{ FORMAT,	TXT("f"),	TXT("format"),	Core::CmdLineSwitch::ONCE,	Core::CmdLineSwitch::SINGLE,	TXT("format"),	TXT("The clipboard format to use")	},
+	{ LINK,		TXT("l"),	TXT("link"),	Core::CmdLineSwitch::ONCE,	Core::CmdLineSwitch::SINGLE,	TXT("link"),	TXT("The DDE link")					},
 };
 static size_t s_switchCount = ARRAY_SIZE(s_switches);
 
@@ -34,7 +36,7 @@ static size_t s_switchCount = ARRAY_SIZE(s_switches);
 //! Constructor.
 
 RequestCmd::RequestCmd(int argc, tchar* argv[])
-	: Command(s_switches, s_switches+s_switchCount, argc, argv)
+	: WCL::ConsoleCmd(s_switches, s_switches+s_switchCount, argc, argv, USAGE)
 {
 }
 
@@ -67,24 +69,41 @@ const tchar* RequestCmd::getUsage()
 int RequestCmd::doExecute(tostream& out, tostream& /*err*/)
 {
 	// Type aliases.
+	typedef std::vector<tstring> Items;
 	typedef Core::CmdLineParser::StringVector::const_iterator ItemConstIter;
 
-	// Validate the command line arguments.
-	if (!m_parser.isSwitchSet(SERVER))
-		throw Core::CmdLineException(TXT("No DDE server name specified [--server]"));
+	tstring server;
+	tstring topic;
+	Items   items;
 
-	if (!m_parser.isSwitchSet(TOPIC))
-		throw Core::CmdLineException(TXT("No DDE server topic specified [--topic]"));
+	// Validate and extract the command line arguments.
+	if (m_parser.isSwitchSet(LINK))
+	{
+		tstring link = m_parser.getSwitchValue(LINK);
+		tstring item;
 
-	if (!m_parser.isSwitchSet(ITEM))
-		throw Core::CmdLineException(TXT("No item(s) specified [--item]"));
+		if (!CDDELink::ParseLink(link, server, topic, item))
+			throw Core::InvalidArgException(Core::fmt(TXT("Invalid DDE link format '%s'"), link.c_str()));
+
+		items.push_back(item);
+	}
+	else
+	{
+		if (!m_parser.isSwitchSet(SERVER))
+			throw Core::CmdLineException(TXT("No DDE server name specified [--server]"));
+
+		if (!m_parser.isSwitchSet(TOPIC))
+			throw Core::CmdLineException(TXT("No DDE server topic specified [--topic]"));
+
+		if (!m_parser.isSwitchSet(ITEM))
+			throw Core::CmdLineException(TXT("No item(s) specified [--item]"));
+
+		server = m_parser.getSwitchValue(SERVER);
+		topic  = m_parser.getSwitchValue(TOPIC);
+		items  = m_parser.getNamedArgs().find(ITEM)->second;
+	}
 
 	tstring formatName = TXT("CF_TEXT");
-
-	// Extract command line argument values.
-	tstring server = m_parser.getSwitchValue(SERVER);
-	tstring topic  = m_parser.getSwitchValue(TOPIC);
-	const Core::CmdLineParser::StringVector& items = m_parser.getNamedArgs().find(ITEM)->second;
 
 	if (m_parser.isSwitchSet(FORMAT))
 		formatName = m_parser.getSwitchValue(FORMAT);
@@ -93,6 +112,8 @@ int RequestCmd::doExecute(tostream& out, tostream& /*err*/)
 
 	if (format == CF_NONE)
 		throw Core::InvalidArgException(Core::fmt(TXT("Invalid clipboard format '%s'"), formatName.c_str()));
+
+	const bool labelValues = (items.size() > 1);
 
 	// Open the conversation.
 	CDDEClient client;
@@ -103,12 +124,17 @@ int RequestCmd::doExecute(tostream& out, tostream& /*err*/)
 	{
 		const tstring& item = *it;
 
-		CDDEData value = conv->Request(item.c_str(), format);
+		CDDEData ddeValue = conv->Request(item.c_str(), format);
 
-		if (format != CF_UNICODETEXT)
-			out << value.GetString(ANSI_TEXT) << std::endl;
-		else
-			out << value.GetString(UNICODE_TEXT) << std::endl;
+		if (labelValues)
+			out << item << ": ";
+
+		TextFormat stringFormat = (format != CF_UNICODETEXT) ? ANSI_TEXT : UNICODE_TEXT;
+		tstring    stringValue = ddeValue.GetString(stringFormat).c_str();
+
+		Core::trim(stringValue);
+
+		out << stringValue << std::endl;
 	}
 
 	return EXIT_SUCCESS;

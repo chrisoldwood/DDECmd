@@ -11,13 +11,13 @@
 #pragma once
 #endif
 
-#include "Command.hpp"
+#include <WCL/ConsoleCmd.hpp>
 #include <NCL/DefDDEClientListener.hpp>
 
 ////////////////////////////////////////////////////////////////////////////////
 //! The DDE command used to listen for updates the items.
 
-class AdviseCmd : public Command
+class AdviseCmd : public WCL::ConsoleCmd
 {
 public:
 	//! Constructor.
