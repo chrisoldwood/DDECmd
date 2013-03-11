@@ -128,9 +128,15 @@
 			<File
 				RelativePath=".\Test.cpp">
 			</File>
+			<File
+				RelativePath=".\ValueFormatterTests.cpp">
+			</File>
 			<Filter
 				Name="Impl"
 				Filter="">
+				<File
+					RelativePath="..\ValueFormatter.cpp">
+				</File>
 			</Filter>
 		</Filter>
 		<Filter

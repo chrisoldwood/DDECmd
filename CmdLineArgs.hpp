@@ -26,6 +26,8 @@ enum CmdLineArgType
 	COMMAND		= 7,	//!< The command to execute.
 	MANUAL		= 8,	//!< Show the manual.
 	LINK		= 9,	//!< The DDE link.
+	NO_TRIM		= 10,	//!< Don't trim whitespace around the value.
+	OUT_FMT		= 11,	//!< The output format.
 };
 
 #endif // APP_CMDLINEARGS_HPP

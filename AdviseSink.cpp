@@ -9,13 +9,14 @@
 #include <NCL/DDEData.hpp>
 #include <WCL/StringIO.hpp>
 #include <Core/StringUtils.hpp>
+#include "ValueFormatter.hpp"
 
 ////////////////////////////////////////////////////////////////////////////////
 //! Default constructor.
 
-AdviseSink::AdviseSink(tostream& out, bool labelValues)
+AdviseSink::AdviseSink(tostream& out, const ValueFormatter& formatter)
 	: m_out(out)
-	, m_labelValues(labelValues)
+	, m_formatter(formatter)
 {
 }
 
@@ -31,15 +32,11 @@ AdviseSink::~AdviseSink()
 
 void AdviseSink::OnAdvise(CDDELink* link, const CDDEData* value)
 {
+	tstring    item = link->Item().c_str();
 	TextFormat stringFormat = (link->Format() != CF_UNICODETEXT) ? ANSI_TEXT : UNICODE_TEXT;
 	tstring    stringValue = value->GetString(stringFormat).c_str();
 
-	Core::trim(stringValue);
-
-	if (m_labelValues)
-		m_out << link->Item() << ": ";
-
-	m_out << stringValue << std::endl;
+	m_out << m_formatter.format(item, stringValue) << std::endl;
 
 	m_out.flush();
 }

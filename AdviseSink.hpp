@@ -14,6 +14,9 @@
 #include <Core/tiosfwd.hpp>
 #include <NCL/DefDDEClientListener.hpp>
 
+// Forward declarations.
+class ValueFormatter;
+
 ////////////////////////////////////////////////////////////////////////////////
 //!	The sink used to handle updates from the DDE server.
 
@@ -21,7 +24,7 @@ class AdviseSink : public CDefDDEClientListener
 {
 public:
 	//! Constructor.
-	AdviseSink(tostream& out, bool labelValues);
+	AdviseSink(tostream& out, const ValueFormatter& formatter);
 
 	//! Destructor.
 	~AdviseSink();
@@ -30,8 +33,8 @@ private:
 	//
 	// Members.
 	//
-	tostream&	m_out;			//!< The output stream.
-	bool		m_labelValues;	//!< Display the item name.
+	tostream&				m_out;			//!< The output stream.
+	const ValueFormatter&	m_formatter;	//!< The value formatter.
 
 	//
 	// IDDEClientListener Methods.

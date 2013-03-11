@@ -17,6 +17,7 @@
 #include "DDECmd.hpp"
 #include "AdviseSink.hpp"
 #include <NCL/DDELink.hpp>
+#include "ValueFormatter.hpp"
 
 ////////////////////////////////////////////////////////////////////////////////
 //! The table of command specific command line switches.
@@ -30,6 +31,8 @@ static Core::CmdLineSwitch s_switches[] =
 	{ ITEM,		TXT("i"),	TXT("item"), 	Core::CmdLineSwitch::MANY,	Core::CmdLineSwitch::MULTIPLE,	TXT("item"),	TXT("The item name(s)")				},
 	{ FORMAT,	TXT("f"),	TXT("format"),	Core::CmdLineSwitch::ONCE,	Core::CmdLineSwitch::SINGLE,	TXT("format"),	TXT("The clipboard format to use")	},
 	{ LINK,		TXT("l"),	TXT("link"),	Core::CmdLineSwitch::ONCE,	Core::CmdLineSwitch::SINGLE,	TXT("link"),	TXT("The DDE link")					},
+	{ NO_TRIM,	TXT("nt"),	TXT("no-trim"),	Core::CmdLineSwitch::ONCE,	Core::CmdLineSwitch::NONE,		NULL,			TXT("Don't trim whitespace")		},
+	{ OUT_FMT,	TXT("of"),	TXT("output-format"),	Core::CmdLineSwitch::ONCE,	Core::CmdLineSwitch::SINGLE,	TXT("format"),	TXT("The output format (%i,%v,%t)")	},
 };
 static size_t s_switchCount = ARRAY_SIZE(s_switches);
 
@@ -114,14 +117,21 @@ int AdviseCmd::doExecute(tostream& out, tostream& /*err*/)
 	if (format == CF_NONE)
 		throw Core::InvalidArgException(Core::fmt(TXT("Invalid clipboard format '%s'"), formatName.c_str()));
 
-	const bool labelValues = (items.size() > 1);
+	const bool trimValue = !m_parser.isSwitchSet(NO_TRIM);
+	tstring    valueFormat = (items.size() == 1) ? ValueFormatter::DEFAULT_SINGLE_ITEM_FORMAT
+												 : ValueFormatter::DEFAULT_MULTI_ITEM_FORMAT;
+
+	if (m_parser.isSwitchSet(OUT_FMT))
+		valueFormat = m_parser.getSwitchValue(OUT_FMT);
+
+	const ValueFormatter formatter(valueFormat, trimValue);
 
 	// Open the conversation.
 	CDDEClient client;
 	DDE::CltConvPtr conv(client.CreateConversation(server.c_str(), topic.c_str()));
 
 	// Start listening for updates.
-	AdviseSink sink(out, labelValues);
+	AdviseSink sink(out, formatter);
 	client.AddListener(&sink);
 
 	// Create the links...

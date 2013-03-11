@@ -177,6 +177,9 @@
 			<File
 				RelativePath=".\ServersCmd.cpp">
 			</File>
+			<File
+				RelativePath=".\ValueFormatter.cpp">
+			</File>
 		</Filter>
 		<Filter
 			Name="Header Files"
@@ -211,6 +214,9 @@
 			</File>
 			<File
 				RelativePath=".\ServersCmd.hpp">
+			</File>
+			<File
+				RelativePath=".\ValueFormatter.hpp">
 			</File>
 		</Filter>
 		<Filter

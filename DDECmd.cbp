@@ -96,6 +96,8 @@
 		<Unit filename="Setup.ini" />
 		<Unit filename="TODO.Txt" />
 		<Unit filename="TestScript.cmd" />
+		<Unit filename="ValueFormatter.cpp" />
+		<Unit filename="ValueFormatter.hpp" />
 		<Unit filename="pch.cpp" />
 		<Unit filename="resource.h" />
 		<Extensions>
