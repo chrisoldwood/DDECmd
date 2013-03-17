@@ -63,7 +63,7 @@ const tchar* RequestCmd::getDescription()
 
 const tchar* RequestCmd::getUsage()
 {
-	return TXT("USAGE: DDECmd request --server <server> --topic <topic> --item <item> ... [--format <format>]");
+	return TXT("USAGE: DDECmd request [--server <server> --topic <topic> --item <item> ... | --link <link>] [options...]");
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -71,6 +71,8 @@ const tchar* RequestCmd::getUsage()
 
 int RequestCmd::doExecute(tostream& out, tostream& /*err*/)
 {
+	ASSERT(m_parser.getUnnamedArgs().at(0) == TXT("request"));
+
 	// Type aliases.
 	typedef std::vector<tstring> Items;
 	typedef Core::CmdLineParser::StringVector::const_iterator ItemConstIter;
@@ -82,6 +84,9 @@ int RequestCmd::doExecute(tostream& out, tostream& /*err*/)
 	// Validate and extract the command line arguments.
 	if (m_parser.isSwitchSet(LINK))
 	{
+		if (m_parser.isSwitchSet(SERVER) || m_parser.isSwitchSet(TOPIC) || m_parser.isSwitchSet(ITEM))
+			throw Core::CmdLineException(TXT("The --link switch cannot be mixed with --server, --topic & --item"));
+
 		tstring link = m_parser.getSwitchValue(LINK);
 		tstring item;
 
@@ -92,6 +97,8 @@ int RequestCmd::doExecute(tostream& out, tostream& /*err*/)
 	}
 	else
 	{
+		ASSERT(!m_parser.isSwitchSet(LINK));
+
 		if (!m_parser.isSwitchSet(SERVER))
 			throw Core::CmdLineException(TXT("No DDE server name specified [--server]"));
 
@@ -123,7 +130,13 @@ int RequestCmd::doExecute(tostream& out, tostream& /*err*/)
 	if (m_parser.isSwitchSet(OUT_FMT))
 		valueFormat = m_parser.getSwitchValue(OUT_FMT);
 
-	const ValueFormatter formatter(valueFormat, trimValue);
+	tstring dateFormat = ValueFormatter::DEFAULT_DATE_FORMAT;
+	tstring timeFormat = ValueFormatter::DEFAULT_TIME_FORMAT;
+
+	const ValueFormatter formatter(valueFormat, trimValue, dateFormat, timeFormat);
+
+	// Test the formatter to check for errors in the format string.
+	formatter.format(TXT(""), TXT(""), TXT(""), TXT(""));
 
 	// Open the conversation.
 	CDDEClient client;
@@ -138,7 +151,7 @@ int RequestCmd::doExecute(tostream& out, tostream& /*err*/)
 		TextFormat stringFormat = (format != CF_UNICODETEXT) ? ANSI_TEXT : UNICODE_TEXT;
 		tstring    stringValue = ddeValue.GetString(stringFormat).c_str();
 
-		out << formatter.format(item, stringValue) << std::endl;
+		out << formatter.format(server, topic, item, stringValue) << std::endl;
 	}
 
 	return EXIT_SUCCESS;

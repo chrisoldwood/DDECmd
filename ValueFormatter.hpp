@@ -28,9 +28,17 @@ public:
 	//! The default multi-item format.
 	const static tstring DEFAULT_MULTI_ITEM_FORMAT;
 
+	//! The default timestamp date format.
+	const static tstring DEFAULT_DATE_FORMAT;
+	//! The default timestamp time format.
+	const static tstring DEFAULT_TIME_FORMAT;
+
 public:
 	//! Full constructor.
-	ValueFormatter(const tstring& valueFormat, bool trimValue);
+	ValueFormatter(const tstring& valueFormat,
+				   bool           trimValue,
+				   const tstring& dateFormat,
+				   const tstring& timeFormat);
 
 	//! Destructor.
 	~ValueFormatter();
@@ -40,7 +48,10 @@ public:
 	//
 
 	//! Format the value using the configured style.
-	tstring format(const tstring& item, const tstring& value) const;
+	tstring format(const tstring& server,
+				   const tstring& topic,
+				   const tstring& item,
+				   const tstring& value) const;
 
 private:
 	//
@@ -48,6 +59,8 @@ private:
 	//
 	tstring	m_valueFormat;	//!< The output format.
 	bool	m_trimValue;	//!< Trim whitespace around the value.
+	tstring m_dateFormat;	//!< The format for the timestamp date.
+	tstring m_timeFormat;	//!< The format for the timestamp time.
 };
 
 #endif // APP_VALUEFORMATTER_HPP

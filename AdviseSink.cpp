@@ -10,6 +10,7 @@
 #include <WCL/StringIO.hpp>
 #include <Core/StringUtils.hpp>
 #include "ValueFormatter.hpp"
+#include <NCL/DDEConv.hpp>
 
 ////////////////////////////////////////////////////////////////////////////////
 //! Default constructor.
@@ -32,11 +33,13 @@ AdviseSink::~AdviseSink()
 
 void AdviseSink::OnAdvise(CDDELink* link, const CDDEData* value)
 {
+	tstring    server = link->Conversation()->Service().c_str();
+	tstring    topic = link->Conversation()->Topic().c_str();
 	tstring    item = link->Item().c_str();
 	TextFormat stringFormat = (link->Format() != CF_UNICODETEXT) ? ANSI_TEXT : UNICODE_TEXT;
 	tstring    stringValue = value->GetString(stringFormat).c_str();
 
-	m_out << m_formatter.format(item, stringValue) << std::endl;
+	m_out << m_formatter.format(server, topic, item, stringValue) << std::endl;
 
 	m_out.flush();
 }
