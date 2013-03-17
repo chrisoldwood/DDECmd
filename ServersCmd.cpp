@@ -57,6 +57,8 @@ const tchar* ServersCmd::getUsage()
 
 int ServersCmd::doExecute(tostream& out, tostream& /*err*/)
 {
+	ASSERT(m_parser.getUnnamedArgs().at(0) == TXT("servers"));
+
 	CDDEClient client;
 
 	// Find the running servers.

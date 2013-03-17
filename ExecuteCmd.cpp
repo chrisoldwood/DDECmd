@@ -59,6 +59,8 @@ const tchar* ExecuteCmd::getUsage()
 
 int ExecuteCmd::doExecute(tostream& /*out*/, tostream& /*err*/)
 {
+	ASSERT(m_parser.getUnnamedArgs().at(0) == TXT("execute"));
+
 	// Validate the command line arguments.
 	if (!m_parser.isSwitchSet(SERVER))
 		throw Core::CmdLineException(TXT("No DDE server name specified [--server]"));
