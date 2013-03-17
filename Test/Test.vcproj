@@ -123,7 +123,25 @@
 			Filter="cpp;c;cxx;def;odl;idl;hpj;bat;asm;asmx"
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}">
 			<File
+				RelativePath=".\AdviseCmdTests.cpp">
+			</File>
+			<File
+				RelativePath=".\DDECmdTests.cpp">
+			</File>
+			<File
+				RelativePath=".\ExecuteCmdTests.cpp">
+			</File>
+			<File
 				RelativePath=".\pch.cpp">
+			</File>
+			<File
+				RelativePath=".\PokeCmdTests.cpp">
+			</File>
+			<File
+				RelativePath=".\RequestCmdTests.cpp">
+			</File>
+			<File
+				RelativePath=".\ServersCmdTests.cpp">
 			</File>
 			<File
 				RelativePath=".\Test.cpp">
@@ -134,6 +152,27 @@
 			<Filter
 				Name="Impl"
 				Filter="">
+				<File
+					RelativePath="..\AdviseCmd.cpp">
+				</File>
+				<File
+					RelativePath="..\AdviseSink.cpp">
+				</File>
+				<File
+					RelativePath="..\DDECmd.cpp">
+				</File>
+				<File
+					RelativePath="..\ExecuteCmd.cpp">
+				</File>
+				<File
+					RelativePath="..\PokeCmd.cpp">
+				</File>
+				<File
+					RelativePath="..\RequestCmd.cpp">
+				</File>
+				<File
+					RelativePath="..\ServersCmd.cpp">
+				</File>
 				<File
 					RelativePath="..\ValueFormatter.cpp">
 				</File>
