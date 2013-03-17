@@ -1,5 +1,5 @@
 - Record & Playback commands (need to escape data).
 
-- Value formatting, e.g. timestamp
+- Timestamp formatting.
 
-- Request using link format.
+- Switch to factory to mock DDE client implementation.

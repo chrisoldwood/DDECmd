@@ -62,38 +62,31 @@ int DDECmd::run(int argc, tchar* argv[], tistream& /*in*/, tostream& out, tostre
 		// Get command and execute.
 		WCL::ConsoleCmdPtr command = createCommand(argc, argv);
 
-		command->execute(out, err);
+		return command->execute(out, err);
 	}
-	else
+
+	m_parser.parse(argc, argv, Core::CmdLineParser::ALLOW_ANY_FORMAT);
+
+	// Request for command line syntax?
+	if (m_parser.isSwitchSet(USAGE))
 	{
-		m_parser.parse(argc, argv, Core::CmdLineParser::ALLOW_ANY_FORMAT);
-
-		// Request for command line syntax?
-		if (m_parser.isSwitchSet(USAGE))
-		{
-			showUsage(out);
-			return EXIT_SUCCESS;
-		}
-		// Request for version?
-		else if (m_parser.isSwitchSet(VERSION))
-		{
-			showVersion(out);
-			return EXIT_SUCCESS;
-		}
-		// Request for the manual?
-		else if (m_parser.isSwitchSet(MANUAL))
-		{
-			showManual(err);
-			return EXIT_SUCCESS;
-		}
-		// Empty.
-		else
-		{
-			throw Core::CmdLineException(TXT("No DDE command specified"));
-		}
+		showUsage(out);
+		return EXIT_SUCCESS;
+	}
+	// Request for version?
+	else if (m_parser.isSwitchSet(VERSION))
+	{
+		showVersion(out);
+		return EXIT_SUCCESS;
+	}
+	// Request for the manual?
+	else if (m_parser.isSwitchSet(MANUAL))
+	{
+		showManual(err);
+		return EXIT_SUCCESS;
 	}
 
-	return EXIT_SUCCESS;
+	throw Core::CmdLineException(TXT("No DDE command specified"));
 }
 
 ////////////////////////////////////////////////////////////////////////////////

@@ -3,23 +3,29 @@ rem **********************************************************************
 rem Smoke test script to invoke DDECmd with various command lines.
 rem **********************************************************************
 
+set exitCode=0
+
 echo ----------------------------------------------------------------------
 
 Debug\DDECmd --version
-if errorlevel 1 goto :failed
+if errorlevel 1 call :test_failed & set exitCode=1
 
 echo ----------------------------------------------------------------------
 
 Debug\DDECmd --help
-if errorlevel 1 goto :failed
+if errorlevel 1 call :test_failed & set exitCode=1
 
 echo ----------------------------------------------------------------------
 
 Debug\DDECmd servers
+if errorlevel 1 call :test_failed & set exitCode=1
 
 echo ----------------------------------------------------------------------
 
 Debug\DDECmd request --server PROGMAN --topic PROGMAN --item Accessories
+if errorlevel 1 call :test_failed & set exitCode=1
+
+if /i not "%exitCode%" == "0" goto failed
 
 :success
 echo.
@@ -36,3 +42,11 @@ echo One or more tests terminated abnormally
 echo **********************************************************************
 echo.
 exit /b 1
+
+:test_failed
+echo.
+echo **********************************************************************
+echo **********                 TEST FAILED                      **********
+echo **********************************************************************
+echo.
+goto :eof
