@@ -11,6 +11,9 @@
 #include <NCL/DDEClient.hpp>
 #include <NCL/DDECltConvPtr.hpp>
 #include <NCL/DDEData.hpp>
+#include <NCL/DDELink.hpp>
+#include <Core/InvalidArgException.hpp>
+#include <Core/StringUtils.hpp>
 
 ////////////////////////////////////////////////////////////////////////////////
 //! The table of command specific command line switches.
@@ -23,6 +26,7 @@ static Core::CmdLineSwitch s_switches[] =
 	{ TOPIC,	TXT("t"),	TXT("topic"), 	Core::CmdLineSwitch::ONCE,	Core::CmdLineSwitch::SINGLE,	TXT("topic"),	TXT("The DDE Server topic")			},
 	{ ITEM,		TXT("i"),	TXT("item"), 	Core::CmdLineSwitch::ONCE,	Core::CmdLineSwitch::SINGLE,	TXT("item"),	TXT("The item name(s)")				},
 	{ VALUE,	TXT("v"),	TXT("value"),	Core::CmdLineSwitch::ONCE,	Core::CmdLineSwitch::SINGLE,	TXT("value"),	TXT("The value to poke")			},
+	{ LINK,		TXT("l"),	TXT("link"),	Core::CmdLineSwitch::ONCE,	Core::CmdLineSwitch::SINGLE,	TXT("link"),	TXT("The DDE link")					},
 };
 static size_t s_switchCount = ARRAY_SIZE(s_switches);
 
@@ -54,7 +58,7 @@ const tchar* PokeCmd::getDescription()
 
 const tchar* PokeCmd::getUsage()
 {
-	return TXT("USAGE: DDECmd poke --server <server> --topic <topic> --item <item> --value <value>");
+	return TXT("USAGE: DDECmd poke [--server <server> --topic <topic> --item <item> ... | --link <link>] --value <value>");
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -62,24 +66,45 @@ const tchar* PokeCmd::getUsage()
 
 int PokeCmd::doExecute(tostream& /*out*/, tostream& /*err*/)
 {
-	// Validate the command line arguments.
-	if (!m_parser.isSwitchSet(SERVER))
-		throw Core::CmdLineException(TXT("No DDE server name specified [--server]"));
+	ASSERT(m_parser.getUnnamedArgs().at(0) == TXT("poke"));
 
-	if (!m_parser.isSwitchSet(TOPIC))
-		throw Core::CmdLineException(TXT("No DDE server topic specified [--topic]"));
+	tstring server;
+	tstring topic;
+	tstring item;
 
-	if (!m_parser.isSwitchSet(ITEM))
-		throw Core::CmdLineException(TXT("No item specified [--item]"));
+	// Validate and extract the command line arguments.
+	if (m_parser.isSwitchSet(LINK))
+	{
+		if (m_parser.isSwitchSet(SERVER) || m_parser.isSwitchSet(TOPIC) || m_parser.isSwitchSet(ITEM))
+			throw Core::CmdLineException(TXT("The --link switch cannot be mixed with --server, --topic & --item"));
+
+		tstring link = m_parser.getSwitchValue(LINK);
+
+		if (!CDDELink::ParseLink(link, server, topic, item))
+			throw Core::InvalidArgException(Core::fmt(TXT("Invalid DDE link format '%s'"), link.c_str()));
+	}
+	else
+	{
+		ASSERT(!m_parser.isSwitchSet(LINK));
+
+		if (!m_parser.isSwitchSet(SERVER))
+			throw Core::CmdLineException(TXT("No DDE server name specified [--server]"));
+
+		if (!m_parser.isSwitchSet(TOPIC))
+			throw Core::CmdLineException(TXT("No DDE server topic specified [--topic]"));
+
+		if (!m_parser.isSwitchSet(ITEM))
+			throw Core::CmdLineException(TXT("No item specified [--item]"));
+
+		server = m_parser.getSwitchValue(SERVER);
+		topic  = m_parser.getSwitchValue(TOPIC);
+		tstring item   = m_parser.getSwitchValue(ITEM);
+	}
 
 	if (!m_parser.isSwitchSet(VALUE))
 		throw Core::CmdLineException(TXT("No value specified [--value]"));
 
-	// Extract command line argument values.
-	tstring server = m_parser.getSwitchValue(SERVER);
-	tstring topic  = m_parser.getSwitchValue(TOPIC);
-	tstring item   = m_parser.getSwitchValue(ITEM);
-	tstring value  = m_parser.getSwitchValue(VALUE);
+	tstring value = m_parser.getSwitchValue(VALUE);
 
 	// Open the conversation.
 	CDDEClient client;
