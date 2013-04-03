@@ -19,12 +19,6 @@
 #include <ostream>
 
 ////////////////////////////////////////////////////////////////////////////////
-// Global variables.
-
-//! The application object.
-DDECmd g_app;
-
-////////////////////////////////////////////////////////////////////////////////
 //! The table of command line switches.
 
 static Core::CmdLineSwitch s_switches[] =
@@ -110,7 +104,7 @@ WCL::ConsoleCmdPtr DDECmd::createCommand(int argc, tchar* argv[])
 	}
 	else if (tstricmp(command, TXT("advise")) == 0)
 	{
-		return WCL::ConsoleCmdPtr(new AdviseCmd(argc, argv));
+		return WCL::ConsoleCmdPtr(new AdviseCmd(argc, argv, *this));
 	}
 	else if (tstricmp(command, TXT("poke")) == 0)
 	{

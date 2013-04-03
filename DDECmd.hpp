@@ -54,7 +54,4 @@ private:
 	WCL::ConsoleCmdPtr createCommand(int argc, tchar* argv[]); // throw(CmdLineException)
 };
 
-//! The application object.
-extern DDECmd g_app;
-
 #endif // DDECMD_HPP

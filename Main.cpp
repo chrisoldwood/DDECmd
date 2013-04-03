@@ -13,5 +13,5 @@
 
 int _tmain(int argc, tchar* argv[])
 {
-	return g_app.main(argc, argv, tcin, tcout, tcerr);
+	return DDECmd().main(argc, argv, tcin, tcout, tcerr);
 }
