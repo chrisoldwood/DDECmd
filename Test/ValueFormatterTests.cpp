@@ -162,15 +162,16 @@ TEST_CASE_END
 TEST_CASE("%d in format string should output datetime in ISO format by default")
 {
 	const tstring format = TXT("%d");
-	//const tstring expected = TXT("YYYY-MM-DDTHH:MM:SS");
+//	const tstring expected = TXT("YYYY-MM-DD HH:MM:SS");
 
 	const ValueFormatter formatter(format, NO_TRIM_VALUE, DEFAULT_DATE_FORMAT, DEFAULT_TIME_FORMAT);
 
 	const tstring actual = formatter.format(SERVER_NAME, TOPIC_NAME, ITEM_NAME, TEST_VALUE);
 
+	TEST_TRUE(actual.length() == 19);
 	TEST_TRUE(actual[ 4] == TXT('-'));
 	TEST_TRUE(actual[ 7] == TXT('-'));
-	TEST_TRUE(actual[10] == TXT('T'));
+	TEST_TRUE(actual[10] == TXT(' '));
 	TEST_TRUE(actual[13] == TXT(':'));
 	TEST_TRUE(actual[16] == TXT(':'));
 }

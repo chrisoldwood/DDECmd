@@ -32,15 +32,18 @@ static Core::CmdLineSwitch s_switches[] =
 	{ FORMAT,	TXT("f"),	TXT("format"),	Core::CmdLineSwitch::ONCE,	Core::CmdLineSwitch::SINGLE,	TXT("format"),	TXT("The clipboard format to use")	},
 	{ LINK,		TXT("l"),	TXT("link"),	Core::CmdLineSwitch::ONCE,	Core::CmdLineSwitch::SINGLE,	TXT("link"),	TXT("The DDE link")					},
 	{ NO_TRIM,	TXT("nt"),	TXT("no-trim"),	Core::CmdLineSwitch::ONCE,	Core::CmdLineSwitch::NONE,		NULL,			TXT("Don't trim whitespace")		},
-	{ OUT_FMT,	TXT("of"),	TXT("output-format"),	Core::CmdLineSwitch::ONCE,	Core::CmdLineSwitch::SINGLE,	TXT("format"),	TXT("The output format (%i,%v,%t)")	},
+	{ OUT_FMT,	TXT("of"),	TXT("output-format"),	Core::CmdLineSwitch::ONCE,	Core::CmdLineSwitch::SINGLE,	TXT("format"),	TXT("The output format")			},
+	{ DATE_FMT,	TXT("df"),	TXT("date-format"),		Core::CmdLineSwitch::ONCE,	Core::CmdLineSwitch::SINGLE,	TXT("format"),	TXT("The timestamp date format")	},
+	{ TIME_FMT,	TXT("tf"),	TXT("time-format"),		Core::CmdLineSwitch::ONCE,	Core::CmdLineSwitch::SINGLE,	TXT("format"),	TXT("The timestamp time format")	},
 };
 static size_t s_switchCount = ARRAY_SIZE(s_switches);
 
 ////////////////////////////////////////////////////////////////////////////////
 //! Constructor.
 
-AdviseCmd::AdviseCmd(int argc, tchar* argv[])
+AdviseCmd::AdviseCmd(int argc, tchar* argv[], WCL::ConsoleApp& app)
 	: WCL::ConsoleCmd(s_switches, s_switches+s_switchCount, argc, argv, USAGE)
+	, m_app(app)
 {
 }
 
@@ -132,7 +135,14 @@ int AdviseCmd::doExecute(tostream& out, tostream& /*err*/)
 		valueFormat = m_parser.getSwitchValue(OUT_FMT);
 
 	tstring dateFormat = ValueFormatter::DEFAULT_DATE_FORMAT;
+
+	if (m_parser.isSwitchSet(DATE_FMT))
+		dateFormat = m_parser.getSwitchValue(DATE_FMT);
+
 	tstring timeFormat = ValueFormatter::DEFAULT_TIME_FORMAT;
+
+	if (m_parser.isSwitchSet(TIME_FMT))
+		timeFormat = m_parser.getSwitchValue(TIME_FMT);
 
 	const ValueFormatter formatter(valueFormat, trimValue, dateFormat, timeFormat);
 
@@ -155,8 +165,8 @@ int AdviseCmd::doExecute(tostream& out, tostream& /*err*/)
 		conv->CreateLink(item.c_str(), format);
 	}
 
-	CMsgThread& thread = g_app.mainThread();
-	CEvent&     abortEvent = g_app.getAbortEvent();
+	CMsgThread& thread = m_app.mainThread();
+	CEvent&     abortEvent = m_app.getAbortEvent();
 
 	// Pump messages until the user presses Ctrl-C.
 	while (!abortEvent.IsSignalled() && thread.ProcessMsgQueue())

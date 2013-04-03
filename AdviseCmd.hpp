@@ -12,6 +12,7 @@
 #endif
 
 #include <WCL/ConsoleCmd.hpp>
+#include <WCL/ConsoleApp.hpp>
 #include <NCL/DefDDEClientListener.hpp>
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -21,12 +22,17 @@ class AdviseCmd : public WCL::ConsoleCmd
 {
 public:
 	//! Constructor.
-	AdviseCmd(int argc, tchar* argv[]);
+	AdviseCmd(int argc, tchar* argv[], WCL::ConsoleApp& app);
 
 	//! Destructor.
 	virtual ~AdviseCmd();
 	
 private:
+	//
+	// Members.
+	//
+	WCL::ConsoleApp&	m_app;	//!< The hosting application.
+
 	//
 	// Command methods.
 	//

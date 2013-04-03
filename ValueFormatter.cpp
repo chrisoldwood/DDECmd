@@ -8,6 +8,7 @@
 #include <Core/StringUtils.hpp>
 #include <Core/ParseException.hpp>
 #include <WCL/DateTime.hpp>
+#include <WCL/Win32Exception.hpp>
 
 ////////////////////////////////////////////////////////////////////////////////
 // Constants.
@@ -18,9 +19,9 @@ const tstring ValueFormatter::DEFAULT_SINGLE_ITEM_FORMAT = TXT("%v");
 const tstring ValueFormatter::DEFAULT_MULTI_ITEM_FORMAT = TXT("%i: %v");
 
 //! The default timestamp date format.
-const tstring ValueFormatter::DEFAULT_DATE_FORMAT = TXT("date");
+const tstring ValueFormatter::DEFAULT_DATE_FORMAT = TXT("yyyy'-'MM'-'dd");
 //! The default timestamp time format.
-const tstring ValueFormatter::DEFAULT_TIME_FORMAT = TXT("time");
+const tstring ValueFormatter::DEFAULT_TIME_FORMAT = TXT("hh':'mm':'ss");
 
 ////////////////////////////////////////////////////////////////////////////////
 //! Full constructor.
@@ -46,9 +47,49 @@ ValueFormatter::~ValueFormatter()
 ////////////////////////////////////////////////////////////////////////////////
 //! Format the value using the configured style.
 
-static tstring formatTimestamp(const tstring& /*dateFormat*/, const tstring& /*timeFormat*/)
+static tstring formatTimestamp(const tstring& dateFormat, const tstring& timeFormat)
 {
-	return CDateTime::Current().ToString(CDate::FMT_ISO, CTime::FMT_ISO).c_str();
+	SYSTEMTIME now = { 0 };
+
+	::GetLocalTime(&now);
+
+	tstring date;
+
+	if (!dateFormat.empty())
+	{
+		size_t length = ::GetDateFormat(LOCALE_USER_DEFAULT, 0, &now, dateFormat.c_str(), nullptr, 0);
+		tchar* buffer = static_cast<tchar*>(alloca(Core::numBytes<tchar>(length)));
+
+		int result = ::GetDateFormat(LOCALE_USER_DEFAULT, 0, &now, dateFormat.c_str(), buffer, static_cast<int>(length));
+
+		if (result == 0)
+			throw new WCL::Win32Exception(TXT("Failed to format date"));
+
+		date = buffer;
+	}
+	
+	tstring time;
+
+	if (!timeFormat.empty())
+	{
+		size_t length = ::GetTimeFormat(LOCALE_USER_DEFAULT, 0, &now, timeFormat.c_str(), nullptr, 0);
+		tchar* buffer = static_cast<tchar*>(alloca(Core::numBytes<tchar>(length)));
+
+		int result = ::GetTimeFormat(LOCALE_USER_DEFAULT, 0, &now, timeFormat.c_str(), buffer, static_cast<int>(length));
+
+		if (result == 0)
+			throw new WCL::Win32Exception(TXT("Failed to format time"));
+
+		time = buffer;
+	}
+
+	if (date.empty())
+		return time;
+
+	if (time.empty())
+		return date;
+
+	return date + TXT(" ") + time;
 }
 
 ////////////////////////////////////////////////////////////////////////////////

@@ -25,6 +25,11 @@ echo ----------------------------------------------------------------------
 Debug\DDECmd request --server PROGMAN --topic PROGMAN --item Accessories
 if errorlevel 1 call :test_failed & set exitCode=1
 
+echo ----------------------------------------------------------------------
+
+Debug\DDECmd request -l "PROGMAN|PROGMAN!Accessories" -of "%%d %%s %%t %%i %%v" -df "ddd dd MMM yy" -tf "hh':'mm tt"
+if errorlevel 1 call :test_failed & set exitCode=1
+
 if /i not "%exitCode%" == "0" goto failed
 
 :success

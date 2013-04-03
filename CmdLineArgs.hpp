@@ -28,6 +28,8 @@ enum CmdLineArgType
 	LINK		= 9,	//!< The DDE link.
 	NO_TRIM		= 10,	//!< Don't trim whitespace around the value.
 	OUT_FMT		= 11,	//!< The output format.
+	DATE_FMT	= 12,	//!< The date format for the timestamp.
+	TIME_FMT	= 13,	//!< The time format for the timestamp.
 };
 
 #endif // APP_CMDLINEARGS_HPP

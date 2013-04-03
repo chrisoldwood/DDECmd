@@ -8,8 +8,26 @@
 #include "AdviseCmd.hpp"
 #include <sstream>
 
+class AdviseCmdTestApp : public WCL::ConsoleApp
+{
+	virtual int run(int /*nArgc*/, tchar* /*apszArgv*/[], tistream& /*in*/, tostream& /*out*/, tostream& /*err*/)
+	{
+		return -1;
+	}
+
+	virtual tstring applicationName() const
+	{
+		return TXT("test");
+	}
+
+	virtual void showUsage(tostream& /*out*/) const
+	{
+	}
+};
+
 TEST_SET(AdviseCmd)
 {
+	AdviseCmdTestApp app;
 
 TEST_CASE("The command should display error and usage if the server name is missing")
 {
@@ -18,7 +36,7 @@ TEST_CASE("The command should display error and usage if the server name is miss
 	tchar*    argv[] = { TXT("Test.exe"), TXT("advise"), TXT("--topic"), TXT("PROGMAN"), TXT("--item"), TXT("Accessories") };
 	const int argc = ARRAY_SIZE(argv);
 
-	AdviseCmd command(argc, argv);
+	AdviseCmd command(argc, argv, app);
 
 	int result = command.execute(out, err);
 
@@ -35,7 +53,7 @@ TEST_CASE("The command should display error and usage if the topic name is missi
 	tchar*    argv[] = { TXT("Test.exe"), TXT("advise"), TXT("--server"), TXT("PROGMAN"), TXT("--item"), TXT("Accessories") };
 	const int argc = ARRAY_SIZE(argv);
 
-	AdviseCmd command(argc, argv);
+	AdviseCmd command(argc, argv, app);
 
 	int result = command.execute(out, err);
 
@@ -52,7 +70,7 @@ TEST_CASE("The command should display error and usage if the item name is missin
 	tchar*    argv[] = { TXT("Test.exe"), TXT("advise"), TXT("--server"), TXT("PROGMAN"), TXT("--topic"), TXT("PROGMAN") };
 	const int argc = ARRAY_SIZE(argv);
 
-	AdviseCmd command(argc, argv);
+	AdviseCmd command(argc, argv, app);
 
 	int result = command.execute(out, err);
 
@@ -69,7 +87,7 @@ TEST_CASE("The command should display error and usage if a link and server/topic
 	tchar*    argv[] = { TXT("Test.exe"), TXT("advise"), TXT("--server"), TXT("PROGMAN"), TXT("--topic"), TXT("PROGMAN"), TXT("--item"), TXT("Accessories"), TXT("--link"), TXT("PROGMAN|PROGMAN!Accessories") };
 	const int argc = ARRAY_SIZE(argv);
 
-	AdviseCmd command(argc, argv);
+	AdviseCmd command(argc, argv, app);
 
 	int result = command.execute(out, err);
 
@@ -86,7 +104,7 @@ TEST_CASE("The command should succeed if the server, topic and item name are val
 	tchar*    argv[] = { TXT("Test.exe"), TXT("advise"), TXT("--server"), TXT("PROGMAN"), TXT("--topic"), TXT("PROGMAN"), TXT("--item"), TXT("Accessories") };
 	const int argc = ARRAY_SIZE(argv);
 
-	AdviseCmd command(argc, argv);
+	AdviseCmd command(argc, argv, app);
 
 	int result = command.execute(out, err);
 
@@ -102,7 +120,7 @@ TEST_CASE("The command should fail if the clipboard format is unknown")
 	tchar*    argv[] = { TXT("Test.exe"), TXT("advise"), TXT("--server"), TXT("PROGMAN"), TXT("--topic"), TXT("PROGMAN"), TXT("--item"), TXT("Accessories"), TXT("--format"), TXT("CF_INVALID_FORMAT") };
 	const int argc = ARRAY_SIZE(argv);
 
-	AdviseCmd command(argc, argv);
+	AdviseCmd command(argc, argv, app);
 
 	TEST_THROWS(command.execute(out, err));
 }
@@ -115,7 +133,7 @@ TEST_CASE("The command should fail if the dde link is malformed")
 	tchar*    argv[] = { TXT("Test.exe"), TXT("advise"), TXT("--link"), TXT("invalid link") };
 	const int argc = ARRAY_SIZE(argv);
 
-	AdviseCmd command(argc, argv);
+	AdviseCmd command(argc, argv, app);
 
 	TEST_THROWS(command.execute(out, err));
 }
@@ -128,7 +146,7 @@ TEST_CASE("The command should succeed if the dde link is valid")
 	tchar*    argv[] = { TXT("Test.exe"), TXT("advise"), TXT("--link"), TXT("PROGMAN|PROGMAN!Accessories") };
 	const int argc = ARRAY_SIZE(argv);
 
-	AdviseCmd command(argc, argv);
+	AdviseCmd command(argc, argv, app);
 
 	int result = command.execute(out, err);
 
@@ -144,7 +162,7 @@ TEST_CASE("The command should fail if the output format is malformed")
 	tchar*    argv[] = { TXT("Test.exe"), TXT("advise"), TXT("--server"), TXT("PROGMAN"), TXT("--topic"), TXT("PROGMAN"), TXT("--item"), TXT("Accessories"), TXT("--output-format"), TXT("%?") };
 	const int argc = ARRAY_SIZE(argv);
 
-	AdviseCmd command(argc, argv);
+	AdviseCmd command(argc, argv, app);
 
 	TEST_THROWS(command.execute(out, err));
 }

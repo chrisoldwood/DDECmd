@@ -150,5 +150,59 @@ TEST_CASE("The command should fail if the output format is malformed")
 }
 TEST_CASE_END
 
+TEST_CASE("The command should output the date using the custom format when specified")
+{
+	tostringstream out, err;
+
+	tchar*    argv[] = { TXT("Test.exe"), TXT("request"), TXT("-l"), TXT("PROGMAN|PROGMAN!Accessories"), TXT("-of"), TXT("%d"), TXT("--date-format"), TXT("ddd dd MMM yy") };
+	const int argc = ARRAY_SIZE(argv);
+
+	RequestCmd command(argc, argv);
+
+	int result = command.execute(out, err);
+
+	TEST_TRUE(result == EXIT_SUCCESS);
+
+//	const tstring expected = TXT("ddd dd MMM yy HH:MM:SS\n");
+	const tstring output = out.str();
+
+	TEST_TRUE(output.length() == 23);
+	TEST_TRUE(output[ 3] == TXT(' '));
+	TEST_TRUE(output[ 6] == TXT(' '));
+	TEST_TRUE(output[10] == TXT(' '));
+	TEST_TRUE(output[13] == TXT(' '));
+	TEST_TRUE(output[16] == TXT(':'));
+	TEST_TRUE(output[19] == TXT(':'));
+	TEST_TRUE(output[22] == TXT('\n'));
+}
+TEST_CASE_END
+
+TEST_CASE("The command should output the time using the custom format when specified")
+{
+	tostringstream out, err;
+
+	tchar*    argv[] = { TXT("Test.exe"), TXT("request"), TXT("-l"), TXT("PROGMAN|PROGMAN!Accessories"), TXT("-of"), TXT("%d"), TXT("--time-format"), TXT("hh mm ss tt") };
+	const int argc = ARRAY_SIZE(argv);
+
+	RequestCmd command(argc, argv);
+
+	int result = command.execute(out, err);
+
+	TEST_TRUE(result == EXIT_SUCCESS);
+
+//	const tstring expected = TXT("YYYY-MM-DD hh mm ss tt\n");
+	const tstring output = out.str();
+
+	TEST_TRUE(output.length() == 23);
+	TEST_TRUE(output[ 4] == TXT('-'));
+	TEST_TRUE(output[ 7] == TXT('-'));
+	TEST_TRUE(output[10] == TXT(' '));
+	TEST_TRUE(output[13] == TXT(' '));
+	TEST_TRUE(output[16] == TXT(' '));
+	TEST_TRUE(output[19] == TXT(' '));
+	TEST_TRUE(output[22] == TXT('\n'));
+}
+TEST_CASE_END
+
 }
 TEST_SET_END
