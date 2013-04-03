@@ -1,11 +1,13 @@
+Version 1.5
+===========
+
+- ???
+
 Version 1.0
 ===========
 
 - Unicode text handling supported on XTYP_REQUEST and XTYP_ADVSTART.
 - Handles XTYP_REQUEST, XTYP_ADVSTART, XTYP_POKE and XTYP_EXECUTE transaction types.
 
-
 Chris Oldwood 
-[gort@cix.co.uk]
-
 15th December 2008

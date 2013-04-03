@@ -1,36 +1,26 @@
-DDE Command v1.0
+DDE Command v1.5
 ================
 
+Introduction
+------------
 
-1: Installation
----------------
+???
 
-Run setup.exe.
+Installation
+------------
 
-or
+???
 
-Copy the files DDECmd.* to a folder.
+Documentation
+-------------
 
+???
 
-2: Uninstallation
------------------
-
-Delete the files listed above.
-
-
-3: Help/Manual
---------------
-
-There is a HelpFile - DDECmd.mht.
-
-
-4: Contact Details
+Contact Details
 ------------------
 
 Email: gort@cix.co.uk
-Web:   http://www.cix.co.uk/~gort
-
+Web:   http://www.chrisoldwood.com
 
 Chris Oldwood 
-
 15th December 2008

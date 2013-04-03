@@ -1,5 +1,5 @@
 - Record & Playback commands (need to escape data).
 
-- Timestamp formatting.
-
 - Switch to factory to mock DDE client implementation.
+
+- What happens if conversation lost on advise command?
