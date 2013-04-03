@@ -6,8 +6,8 @@
 #include <winver.h>
 
 VS_VERSION_INFO VERSIONINFO
-FILEVERSION		1,0,1,0
-PRODUCTVERSION	1,0,1,0
+FILEVERSION		1,5,0,0
+PRODUCTVERSION	1,5,0,0
 FILEFLAGSMASK	VS_FFI_FILEFLAGSMASK
 #ifdef _DEBUG
 FILEFLAGS		VS_FF_DEBUG | VS_FF_PRERELEASE
@@ -23,12 +23,12 @@ BEGIN
 		BLOCK "080904E4"
 		BEGIN
 			VALUE "FileDescription",  "DDE Command\0"
-			VALUE "FileVersion",      "1.0.1\0"
+			VALUE "FileVersion",      "1.5 Beta\0"
 			VALUE "InternalName",     "DDECmd.exe\0"
 			VALUE "LegalCopyright",   "(C) Chris Oldwood 2008-2013\0"
 			VALUE "OriginalFilename", "DDECmd.exe\0"
 			VALUE "ProductName",      "DDE Command\0"
-			VALUE "ProductVersion",   "1.0.1\0"
+			VALUE "ProductVersion",   "1.5 Beta\0"
 #ifdef _DEBUG
 			VALUE "Comments",         "Debug Build\0"
 #endif
