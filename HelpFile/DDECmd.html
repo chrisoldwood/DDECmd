@@ -14,19 +14,19 @@ td		{ font-family: Verdana, Arial; font-size: 10pt; border: 1px solid black; ver
 
 <body>
 
-<h3 align="center">DDE Command v1.0</h3>
+<h3 align="center">DDE Command v1.5</h3>
 
 <a name="Introduction"></a>
-<h5>Introduction</h5>
+<h4>Introduction</h4>
 
 <p>
 This is a command line (aka console) based tool for querying text data from DDE
-servers. It is the counterpart to my much older GUI based tool called DDE Query,
-which is available here, <a href="http://www.cix.co.uk/~gort/win32.htm#DDEQuery">http://www.cix.co.uk/~gort/win32.htm#DDEQuery</a>.
+servers. It is the counterpart to my much older GUI based tool called
+<a href="http://www.chrisoldwood.com/win32.htm#DDEQuery">DDE Query</a>.
 </p>
 
 <a name="Commands"></a>
-<h5>Commands</h5>
+<h4>Commands</h4>
 
 <p>
 The tool supports all the major DDE command types, such as XTYP_REQUEST,
@@ -39,14 +39,14 @@ C:\> ddecmd command --option1 value1 --option2 value2
 </pre>
 <p>
 The arguments can be specified using either Windows style (e.g. /option) or the
-more common style (e.g. --option). Each switch has both a short name and a
+more modern style (e.g. --option). Each switch has both a short name and a
 longer name and you can see the list of all supported commands using "ddecmd -?".
 Each command has its own help topic that describes it and lists the switches
-that are applicable to it, e.g. ddecmd request -?.
+that are applicable, e.g. <code>ddecmd request -?</code>.
 </p>
 
 <a name="ServersCommand"></a>
-<h5>The Servers Command</h5>
+<h4>The Servers Command</h4>
 
 <p>
 This command invokes the XTYP_WILDCONNECT transaction type to list the running
@@ -56,7 +56,7 @@ one server and topic per line, separated by a '|', the normal separator used
 for DDE Links, e.g.
 </p>
 <pre>
-C:\>ddecmd servers
+C:\> ddecmd servers
 Excel|System
 Excel|[Book1]Sheet3
 Excel|[Book1]Sheet2
@@ -64,7 +64,7 @@ Excel|[Book1]Sheet1
 </pre>
 
 <a name="RequestCommand"></a>
-<h5>The Request Command</h5>
+<h4>The Request Command</h4>
 
 <p>
 The request command is used to retrieve the value for one or more items from
@@ -72,29 +72,48 @@ the server. This is the XTYP_REQUEST transaction type. The items must all be
 from the same server as only a single server and topic can be specified. 
 </p>
 <pre>
-C:\>ddecmd request --server REUTER --topic IDN_RWS --item "GBP=,BID ASK" --item "EUR=,BID ASK"
+C:\> ddecmd request --server REUTER --topic IDN_RWS --item "GBP=,BID ASK" --item "EUR=,BID ASK"
 +1.9058 +1.9062
 +1.2981 +1.2982
 </pre>
 <p>
-By default the request assumes CF_TEXT (i.e. ANSI text) for the value format,
-but this can be overridden by using the --format switch. See below for the format
-names.
+By default the request assumes <code>CF_TEXT</code> (i.e. ANSI text) for the
+value format, but this can be overridden by using the <code>--format</code>
+switch. <a href="#ClipboardFormats">See below</a> for the format names.
+</p><p>
+When a single item is requested the output is just the value by itself. When
+multiple items are requested each value is prefixed by the item name. For
+complete control over the display format use the <code>--output-format</code>
+switch which is <a href="#OutputFormat">detailed later</a>, e.g.
+</p><pre>
+C:\> ddecmd request --server REUTER --topic IDN_RWS --item "GBP=,MID" --output-format "%d %i -> %v"
+2010-02-01 22:32:15 GBP=,MID -> +1.9058
+</pre><p>
+Excel provides another way of expressing a DDE link that is more compact. The
+<code>--link</code> switch can be used instead of specifying the server, topic
+and item separately, e.g.
+</p><pre>
+C:\> ddecmd request --link "REUTER|IDN_RWS!GBP=,BID ASK"
++1.9058 +1.9062
+</pre><p>
+<i>Note: You can currently only specify a single item with the --link switch
+because it includes the server and topic, and only a single conversation is
+supported.</i>
 </p>
 
 <a name="AdviseCommand"></a>
-<h5>The Advise Command</h5>
+<h4>The Advise Command</h4>
 
 <p>
 To set up one or more advise loops with the server use the advise command. This
-allows you to monitor the updates for a number of items. This corresponds to the
+allows you to monitor the updates for a number of items and corresponds to the
 XTYP_ADVSTART transaction type. The same basic switches that are used with the
-request command can also be used with this one. However, unlike the other
-commands, this causes ddecmd to run indefinitely and so can only be stopped by
-pressing Ctrl+C. 
+<a href="#RequestCommand">Request command</a> can also be used with this one.
+However, unlike the other commands, this causes ddecmd to run indefinitely and
+so can only be stopped by pressing Ctrl+C. 
 </p>
 <pre>
-C:\>ddecmd advise -s REUTER -t IDN_RWS -i "GBP=,BID ASK" -i "EUR=,BID ASK"
+C:\> ddecmd advise -s REUTER -t IDN_RWS -i "GBP=,BID ASK" -i "EUR=,BID ASK"
 +1.9060 +1.9062
 +1.2981 +1.2986
 +1.2980 +1.2982
@@ -106,44 +125,149 @@ C:\>ddecmd advise -s REUTER -t IDN_RWS -i "GBP=,BID ASK" -i "EUR=,BID ASK"
 </pre>
 
 <a name="PokeCommand"></a>
-<h5>The Poke Command</h5>
+<h4>The Poke Command</h4>
 
 <p>
 The poke command allows you to set a value for an item on servers that support
 it. Unlike the previous request and advise commands you can only set the value
-for a single item and that value will be passed in CF_TEXT format.
+for a single item and that value will be passed in CF_TEXT format, e.g.
 </p>
 <pre>
-C:\>ddecmd poke -s excel -t [book1]sheet1 -i R1C1 --value "test"
-</pre>
+C:\> ddecmd poke -s excel -t [book1]sheet1 -i R1C1 --value "test"
+</pre><p>
+<i>Note: The Poke command also supports the --link switch as described earlier.</i>
+</p>
 
 <a name="ExecuteCommand"></a>
-<h5>The Execute Command</h5>
+<h4>The Execute Command</h4>
 
 <p>
 The final transaction type supported is XTYP_EXECUTE via the execute command.
-This is used to send a command string to a server.
+This is used to send a command string to a server, e.g.
 </p>
 <pre>
-C:\>ddecmd execute -s excel -t [book1]sheet1 --command "[App.Minimize]"
+C:\> ddecmd execute -s excel -t [book1]sheet1 --command "[App.Minimize]"
 </pre>
 
 <a name="ClipboardFormats"></a>
-<h5>Clipboard Formats</h5>
+<h4>Clipboard Formats</h4>
 
 <p>
+The table below lists the common formats (i.e. text based) that you can request
+with the <code>--format</code> switch.
+</p><p>
 <table>
 <tr>
-<th>Format</th>
-<th>Description</th>
+<th>Format</th><th>Description</th>
+</tr><tr>
+<td>CF_TEXT</td><td>ANSI text</td>
+</tr><tr>
+<td>CF_UNICODETEXT</td><td>Unicode text</td>
 </tr>
+</table>
+</p>
+
+<a name="OutputFormat"></a>
+<h4>Output Format</h4>
+
+<p>
+The table below lists the variables can be used within the <code>--output-format</code>
+switch. To include a '%' character in the ouptut you need to escape it with
+another '%', just as you would in a batch file, e.g. '%%'. All other characters
+in the string are output verbatim.
+</p><p>
+<table>
 <tr>
-<td>CF_TEXT</td>
-<td>ANSI text.</td>
+<th>Variable</th><th>Description</th>
+</tr><tr>
+<td>%s</td><td>The name of the DDE service</td>
+</tr><tr>
+<td>%t</td><td>The name of the DDE topic</td>
+</tr><tr>
+<td>%i</td><td>The name of the DDE item</td>
+</tr><tr>
+<td>%v</td><td>The value of the DDE item</td>
+</tr><tr>
+<td>%d</td><td>The timestamp of when the value was received</td>
 </tr>
+</table>
+</p><p>
+For example, if an advise loop is started for a link <code>SERVICE|TOPIC!ITEM</code>
+with the <code>--output-format</code> specified as <code>"%d: (%s,%t,%i) = %v"</code>,
+the output might look like this:-
+</p><pre>
+2013-02-01 17:33:45: (SERVICE,TOPIC,ITEM) = 42.0
+</pre>
+
+<a name="TimestampFormat"></a>
+<h4>Timestamp Format</h4>
+
+<p>
+The '%d' variable that can be used in the <code>--output-format</code> switch
+causes a timestamp to be output. As shown in the example above it defaults to
+the ISO format "YYYY-MM-DD HH:MM:SS". However the format can be customised with
+the <code>--date-format</code> and <code>--time-format</code> switches. The
+format strings are effectively passed directly to the
+<a href="http://msdn.microsoft.com/en-gb/library/windows/desktop/dd318086(v=vs.85).aspx"><code>GetDateFormat()</code></a>
+and <a href="http://msdn.microsoft.com/en-gb/library/windows/desktop/dd318130(v=vs.85).aspx"><code>GetTimeFormat()</code></a>
+Windows API functions. To avoid either the date or time being output at all
+specify an empty format, e.g. <code>--time-format ""</code>.
+</p><p>
+This table lists the placeholders that can be used in the date picture format.
+<table>
 <tr>
-<td>CF_UNICODETEXT</td>
-<td>Unicode text.</td>
+<th>Type</th><th>Description</th>
+</tr><tr>
+<td>d</td><td>Day of month as digits with no leading zero for single-digit days</td>
+</tr><tr>
+<td>dd</td><td>Day of month as digits with leading zero for single-digit days</td>
+</tr><tr>
+<td>ddd</td><td>Day of week as a three-letter abbreviation</td>
+</tr><tr>
+<td>dddd</td><td>Day of week as its full name</td>
+</tr><tr>
+<td>M</td><td>Month as digits with no leading zero for single-digit months</td>
+</tr><tr>
+<td>MM</td><td>Month as digits with leading zero for single-digit months</td>
+</tr><tr>
+<td>MMM</td><td>Month as a three-letter abbreviation</td>
+</tr><tr>
+<td>MMMM</td><td>Month as its full name</td>
+</tr><tr>
+<td>y</td><td>Year as last two digits, but with no leading zero for years less than 10</td>
+</tr><tr>
+<td>yy</td><td>Year as last two digits, but with leading zero for years less than 10</td>
+</tr><tr>
+<td>yyyy</td><td>Year represented by full four digits</td>
+</tr><tr>
+<td>gg</td><td>Period/era string</td>
+</tr>
+</table>
+</p><p>
+This table lists the placeholders that can be used in the time picture format.
+<table>
+<tr>
+<th>Type</th><th>Description</th>
+</tr><tr>
+<td>h</td><td>Hours with no leading zero for single-digit hours; 12-hour clock</td>
+</tr><tr>
+<td>hh</td><td>Hours with leading zero for single-digit hours; 12-hour clock</td>
+</tr><tr>
+<td>H</td><td>Hours with no leading zero for single-digit hours; 24-hour clock</td>
+</tr><tr>
+<td>HH</td><td>Hours with leading zero for single-digit hours; 24-hour clock</td>
+</tr><tr>
+<td>m</td><td>Minutes with no leading zero for single-digit minutes</td>
+</tr><tr>
+<td>mm</td><td>Minutes with leading zero for single-digit minutes</td>
+</tr><tr>
+<td>s</td><td>Seconds with no leading zero for single-digit seconds</td>
+</tr><tr>
+<td>ss</td><td>Seconds with leading zero for single-digit seconds</td>
+</tr><tr>
+<td>t</td><td>One character time-marker string, such as A or P</td>
+</tr><tr>
+<td>tt</td><td>Multicharacter time-marker string, such as AM or PM</td>
 </tr>
 </table>
 </p>
@@ -151,7 +275,7 @@ C:\>ddecmd execute -s excel -t [book1]sheet1 --command "[App.Minimize]"
 <hr>
 
 <a name="Warranty"></a>
-<h5>License & Warranty</h5>
+<h4>License & Warranty</h4>
 
 <p>
 This application is freeware - you get what you pay for, nothing more, nothing
@@ -159,24 +283,24 @@ less.
 </p>
 
 <a name="SourceCode"></a>
-<h5>Source Code</h5>
+<h4>Source Code</h4>
 
 <p>
 The full source code (C++) is available from my web site listed below.
 </p>
 
 <a name="Contact"></a>
-<h5>Contact Details</h5>
+<h4>Contact Details</h4>
 
 <p>
 Using the --version switch will also display my contact details. Please check the
 web site for updates.
 </p><p>
 Email: <a href="mailto://gort@cix.co.uk">gort@cix.co.uk</a><br>
-Web: <a href="http://www.cix.co.uk/~gort">www.cix.co.uk/~gort</a><br>
+Web: <a href="http://www.chrisoldwood.com">www.chrisoldwood.com</a><br>
 </p><p>
 Chris Oldwood<br>
-15th December 2008<br>
+25th March 2013<br>
 </p>
 
 </body>
