@@ -241,13 +241,16 @@
 			</File>
 		</Filter>
 		<File
+			RelativePath=".\DDECmd.wxl">
+		</File>
+		<File
+			RelativePath=".\DDECmd.wxs">
+		</File>
+		<File
 			RelativePath=".\ReadMe.txt">
 		</File>
 		<File
 			RelativePath=".\RelNotes.txt">
-		</File>
-		<File
-			RelativePath=".\Setup.ini">
 		</File>
 		<File
 			RelativePath=".\TestScript.cmd">
