@@ -3,3 +3,5 @@
 - Switch to factory to mock DDE client implementation.
 
 - What happens if conversation lost on advise command?
+
+- Document escaping the format string in batch files.

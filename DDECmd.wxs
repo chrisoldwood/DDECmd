@@ -1,11 +1,11 @@
 <?xml version="1.0"?>
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
-    <Product Id="DEC6DFCC-66BA-47c7-A1F9-F599FE54814E"
+    <Product Id="178DB72A-2576-4f2d-BB8A-A0C6A6AFF6B3"
              Name="DDE Command v1.5"
              Language="1033"
              Version="1.5.0"
              Manufacturer="Chris Oldwood"
-             UpgradeCode="D3BDC380-A199-497c-BC0E-04261FF81127">
+             UpgradeCode="DD110351-09EE-48f4-8578-30349E384E74">
 
         <Package Compressed="yes"/>
 
@@ -14,19 +14,21 @@
         <Directory Name="SourceDir" Id="TARGETDIR">
             <Directory Name="ProgramFilesFolder" Id="ProgramFilesFolder">
                 <Directory Name="DDE Command" Id="PRODUCT_DIR">
-                    <Component Id="_1" Guid="ACC60CBE-DC65-45f9-ADD7-3338A38B43B1">
+                    <Component Id="_1" Guid="FFC50FD7-A66C-4ba3-929C-2F46C2024032">
+
+                        <RemoveFile Id="DDECmd.mht" Name="DDECmd.mht" On="install"/>
 
                         <File Source="$(env.build)\DDECmd.exe"/>
-						<File Source="HelpFile\DDECmd.html"/>
-						<File Source="RelNotes.txt"/>
-						<File Source="ReadMe.txt"/>
+                        <File Source="HelpFile\DDECmd.html"/>
+                        <File Source="RelNotes.txt"/>
+                        <File Source="ReadMe.txt"/>
 
                     </Component>
                 </Directory>
             </Directory>
         </Directory>
 
-		<Property Id="WIXUI_INSTALLDIR" Value="PRODUCT_DIR" />
+        <Property Id="WIXUI_INSTALLDIR" Value="PRODUCT_DIR" />
 
         <Feature Id="_1" Level="1">
             <ComponentRef Id="_1"/>
