@@ -30,6 +30,8 @@ enum CmdLineArgType
 	OUT_FMT		= 11,	//!< The output format.
 	DATE_FMT	= 12,	//!< The date format for the timestamp.
 	TIME_FMT	= 13,	//!< The time format for the timestamp.
+	DELAY		= 14,	//!< The delay before responding to the request.
+	TIMEOUT		= 15,	//!< The timeout to wait for a reply.
 };
 
 #endif // APP_CMDLINEARGS_HPP
