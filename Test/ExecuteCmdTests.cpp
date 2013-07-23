@@ -77,6 +77,22 @@ TEST_CASE("The command should succeed if the server, topic and command are valid
 	TEST_FALSE(out.str().empty());
 }
 TEST_CASE_END
+*//*
+TEST_CASE("The clipboard format can be specfied to override the default")
+{
+	tostringstream out, err;
+
+	tchar*    argv[] = { TXT("Test.exe"), TXT("execute"), TXT("--server"), TXT("PROGMAN"), TXT("--topic"), TXT("PROGMAN"), TXT("--command"), TXT("something"), TXT("--format"), TXT("CF_UNICODETEXT") };
+	const int argc = ARRAY_SIZE(argv);
+
+	ExecuteCmd command(argc, argv);
+
+	int result = command.execute(out, err);
+
+	TEST_TRUE(result == EXIT_SUCCESS);
+	TEST_FALSE(out.str().empty());
+}
+TEST_CASE_END
 */
 }
 TEST_SET_END
