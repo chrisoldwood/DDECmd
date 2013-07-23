@@ -31,9 +31,10 @@ static Core::CmdLineSwitch s_switches[] =
 	{ FORMAT,	TXT("f"),	TXT("format"),	Core::CmdLineSwitch::ONCE,	Core::CmdLineSwitch::SINGLE,	TXT("format"),	TXT("The clipboard format to use")	},
 	{ LINK,		TXT("l"),	TXT("link"),	Core::CmdLineSwitch::ONCE,	Core::CmdLineSwitch::SINGLE,	TXT("link"),	TXT("The DDE link")					},
 	{ NO_TRIM,	TXT("nt"),	TXT("no-trim"),	Core::CmdLineSwitch::ONCE,	Core::CmdLineSwitch::NONE,		NULL,			TXT("Don't trim whitespace")		},
-	{ OUT_FMT,	TXT("of"),	TXT("output-format"),	Core::CmdLineSwitch::ONCE,	Core::CmdLineSwitch::SINGLE,	TXT("format"),	TXT("The output format")			},
+	{ OUT_FMT,	TXT("of"),	TXT("output-format"),	Core::CmdLineSwitch::ONCE,	Core::CmdLineSwitch::SINGLE,	TXT("format"),	TXT("The output format")	},
 	{ DATE_FMT,	TXT("df"),	TXT("date-format"),		Core::CmdLineSwitch::ONCE,	Core::CmdLineSwitch::SINGLE,	TXT("format"),	TXT("The timestamp date format")	},
 	{ TIME_FMT,	TXT("tf"),	TXT("time-format"),		Core::CmdLineSwitch::ONCE,	Core::CmdLineSwitch::SINGLE,	TXT("format"),	TXT("The timestamp time format")	},
+	{ TIMEOUT,	NULL,		TXT("timeout"),	Core::CmdLineSwitch::ONCE,	Core::CmdLineSwitch::SINGLE,	TXT("timeout"),	TXT("The timeout (ms) to wait for reply")	},
 };
 static size_t s_switchCount = ARRAY_SIZE(s_switches);
 
@@ -147,9 +148,17 @@ int RequestCmd::doExecute(tostream& out, tostream& /*err*/)
 	// Test the formatter to check for errors in the format string.
 	formatter.format(TXT(""), TXT(""), TXT(""), TXT(""));
 
+	DWORD timeout = 0;
+
+	if (m_parser.isSwitchSet(TIMEOUT))
+		timeout = Core::parse<uint>(m_parser.getSwitchValue(TIMEOUT));
+
 	// Open the conversation.
 	CDDEClient client;
 	DDE::CltConvPtr conv(client.CreateConversation(server.c_str(), topic.c_str()));
+
+	if (timeout != 0)
+		conv->SetTimeOut(timeout);
 
 	// Request the items...
 	for (ItemConstIter it = items.begin(); it != items.end(); ++it)

@@ -27,6 +27,7 @@ static Core::CmdLineSwitch s_switches[] =
 	{ ITEM,		TXT("i"),	TXT("item"), 	Core::CmdLineSwitch::ONCE,	Core::CmdLineSwitch::SINGLE,	TXT("item"),	TXT("The item name(s)")				},
 	{ VALUE,	TXT("v"),	TXT("value"),	Core::CmdLineSwitch::ONCE,	Core::CmdLineSwitch::SINGLE,	TXT("value"),	TXT("The value to poke")			},
 	{ LINK,		TXT("l"),	TXT("link"),	Core::CmdLineSwitch::ONCE,	Core::CmdLineSwitch::SINGLE,	TXT("link"),	TXT("The DDE link")					},
+	{ TIMEOUT,	NULL,		TXT("timeout"),	Core::CmdLineSwitch::ONCE,	Core::CmdLineSwitch::SINGLE,	TXT("timeout"),	TXT("The timeout (ms) to wait for reply")	},
 };
 static size_t s_switchCount = ARRAY_SIZE(s_switches);
 
@@ -98,7 +99,7 @@ int PokeCmd::doExecute(tostream& /*out*/, tostream& /*err*/)
 
 		server = m_parser.getSwitchValue(SERVER);
 		topic  = m_parser.getSwitchValue(TOPIC);
-		tstring item   = m_parser.getSwitchValue(ITEM);
+		item   = m_parser.getSwitchValue(ITEM);
 	}
 
 	if (!m_parser.isSwitchSet(VALUE))
@@ -106,9 +107,17 @@ int PokeCmd::doExecute(tostream& /*out*/, tostream& /*err*/)
 
 	tstring value = m_parser.getSwitchValue(VALUE);
 
+	DWORD timeout = 0;
+
+	if (m_parser.isSwitchSet(TIMEOUT))
+		timeout = Core::parse<uint>(m_parser.getSwitchValue(TIMEOUT));
+
 	// Open the conversation.
 	CDDEClient client;
 	DDE::CltConvPtr conv(client.CreateConversation(server.c_str(), topic.c_str()));
+
+	if (timeout != 0)
+		conv->SetTimeOut(timeout);
 
 	// Set the value.
 	std::string ansiValue(T2A(value.c_str()));
