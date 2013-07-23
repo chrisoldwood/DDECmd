@@ -4,6 +4,10 @@
 	Version="7.10"
 	Name="Test"
 	ProjectGUID="{A45C5206-309C-4F36-974C-182B27AE3F1B}"
+	SccProjectName="&quot;$/Win32/DDECmd&quot;, EWEAAAAA"
+	SccAuxPath=""
+	SccLocalPath=".."
+	SccProvider="MSSCCI:Microsoft Visual SourceSafe"
 	Keyword="Win32Proj">
 	<Platforms>
 		<Platform
@@ -132,6 +136,9 @@
 				RelativePath=".\ExecuteCmdTests.cpp">
 			</File>
 			<File
+				RelativePath=".\ListenCmdTests.cpp">
+			</File>
+			<File
 				RelativePath=".\pch.cpp">
 			</File>
 			<File
@@ -163,6 +170,12 @@
 				</File>
 				<File
 					RelativePath="..\ExecuteCmd.cpp">
+				</File>
+				<File
+					RelativePath="..\ListenCmd.cpp">
+				</File>
+				<File
+					RelativePath="..\ListenSink.cpp">
 				</File>
 				<File
 					RelativePath="..\PokeCmd.cpp">
