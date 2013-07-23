@@ -151,6 +151,12 @@
 				RelativePath=".\ExecuteCmd.cpp">
 			</File>
 			<File
+				RelativePath=".\ListenCmd.cpp">
+			</File>
+			<File
+				RelativePath=".\ListenSink.cpp">
+			</File>
+			<File
 				RelativePath=".\Main.cpp">
 			</File>
 			<File
@@ -202,6 +208,12 @@
 			</File>
 			<File
 				RelativePath=".\ExecuteCmd.hpp">
+			</File>
+			<File
+				RelativePath=".\ListenCmd.hpp">
+			</File>
+			<File
+				RelativePath=".\ListenSink.hpp">
 			</File>
 			<File
 				RelativePath=".\PokeCmd.hpp">
