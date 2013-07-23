@@ -13,7 +13,7 @@
 #include <NCL/DDEConv.hpp>
 
 ////////////////////////////////////////////////////////////////////////////////
-//! Default constructor.
+//! Constructor.
 
 AdviseSink::AdviseSink(tostream& out, const ValueFormatter& formatter)
 	: m_out(out)

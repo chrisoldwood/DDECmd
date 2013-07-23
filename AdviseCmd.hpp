@@ -13,7 +13,6 @@
 
 #include <WCL/ConsoleCmd.hpp>
 #include <WCL/ConsoleApp.hpp>
-#include <NCL/DefDDEClientListener.hpp>
 
 ////////////////////////////////////////////////////////////////////////////////
 //! The DDE command used to listen for updates the items.
