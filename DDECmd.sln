@@ -27,7 +27,7 @@ Global
 		DPCodeReviewSolutionGUID = {00000000-0000-0000-0000-000000000000}
 	EndGlobalSection
 	GlobalSection(SourceCodeControl) = preSolution
-		SccNumberOfProjects = 5
+		SccNumberOfProjects = 6
 		SccLocalPath0 = .
 		CanCheckoutShared = true
 		SolutionUniqueID = {5BF3C830-4210-4FCE-A86A-741BF3C388F2}
@@ -46,6 +46,10 @@ Global
 		SccProjectUniqueName4 = DDECmd.vcproj
 		SccLocalPath4 = .
 		CanCheckoutShared = true
+		SccProjectUniqueName5 = Test\\Test.vcproj
+		SccLocalPath5 = .
+		CanCheckoutShared = true
+		SccProjectFilePathRelativizedFromConnection5 = Test\\
 	EndGlobalSection
 	GlobalSection(SolutionConfiguration) = preSolution
 		Debug = Debug
