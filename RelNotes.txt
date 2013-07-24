@@ -1,7 +1,12 @@
 Version 1.5
 ===========
 
-- ???
+- Added --timeout switch to override the transaction reply wait time.
+- Added a 'listen' command so it can act as a DDE server for testing.
+- Fixed a bug where the exit code was wrong for an invalid command line.
+- Added --output-format switch to allow the display to be customised.
+- Items can now be specified in DDE link format "SERVICE|TOPIC!ITEM" instead.
+- Changed the --help switch to --manual to be more consistent with other tools.
 
 Version 1.0
 ===========
@@ -10,4 +15,4 @@ Version 1.0
 - Handles XTYP_REQUEST, XTYP_ADVSTART, XTYP_POKE and XTYP_EXECUTE transaction types.
 
 Chris Oldwood 
-15th December 2008
+24th July 2013
