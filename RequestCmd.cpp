@@ -158,7 +158,7 @@ int RequestCmd::doExecute(tostream& out, tostream& /*err*/)
 	DDE::CltConvPtr conv(client.CreateConversation(server.c_str(), topic.c_str()));
 
 	if (timeout != 0)
-		conv->SetTimeOut(timeout);
+		conv->SetTimeout(timeout);
 
 	// Request the items...
 	for (ItemConstIter it = items.begin(); it != items.end(); ++it)

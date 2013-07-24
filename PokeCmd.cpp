@@ -117,7 +117,7 @@ int PokeCmd::doExecute(tostream& /*out*/, tostream& /*err*/)
 	DDE::CltConvPtr conv(client.CreateConversation(server.c_str(), topic.c_str()));
 
 	if (timeout != 0)
-		conv->SetTimeOut(timeout);
+		conv->SetTimeout(timeout);
 
 	// Set the value.
 	std::string ansiValue(T2A(value.c_str()));
