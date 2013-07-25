@@ -1,6 +1,7 @@
 Version 1.5
 ===========
 
+- Fixed a bug where the app was sluggish responding to advise loop updates.
 - Added --timeout switch to override the transaction reply wait time.
 - Added a 'listen' command so it can act as a DDE server for testing.
 - Fixed a bug where the exit code was wrong for an invalid command line.
