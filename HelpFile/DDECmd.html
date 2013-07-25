@@ -38,20 +38,20 @@ provide any arguments using switches, e.g.
 C:\> ddecmd command --option1 value1 --option2 value2
 </pre>
 <p>
-The arguments can be specified using either Windows style (e.g. /option) or the
-more modern style (e.g. --option). Each switch has both a short name and a
-longer name and you can see the list of all supported commands using "ddecmd -?".
-Each command has its own help topic that describes it and lists the switches
-that are applicable, e.g. <code>ddecmd request -?</code>.
+The arguments can be specified using either Windows style (e.g. <code>/option</code>) or the
+more modern style (e.g. <code>--option</code>). Each switch has both a short name and a
+longer name and you can see the list of all supported commands using "<code>ddecmd --help</code>".
+Each command has its own help topic that describes itself and lists the switches
+that are applicable, e.g. <code>ddecmd request --help</code>.
 </p>
 
 <a name="ServersCommand"></a>
 <h4>The Servers Command</h4>
 
 <p>
-This command invokes the XTYP_WILDCONNECT transaction type to list the running
+This command invokes the <code>XTYP_WILDCONNECT</code> transaction type to list the running
 DDE servers and their supported topics. This transaction type is not always
-supported by servers, and is included more for development use. The output is
+supported by servers and is included more for development use. The output is
 one server and topic per line, separated by a '|', the normal separator used
 for DDE Links, e.g.
 </p>
@@ -67,8 +67,8 @@ Excel|[Book1]Sheet1
 <h4>The Request Command</h4>
 
 <p>
-The request command is used to retrieve the value for one or more items from
-the server. This is the XTYP_REQUEST transaction type. The items must all be
+The <code>request</code> command is used to retrieve the value for one or more items from
+the server. This is the <code>XTYP_REQUEST</code> transaction type. The items must all be
 from the same server as only a single server and topic can be specified. 
 </p>
 <pre>
@@ -98,16 +98,17 @@ C:\> ddecmd request --link "REUTER|IDN_RWS!GBP=,BID ASK"
 </pre><p>
 <i>Note: You can currently only specify a single item with the --link switch
 because it includes the server and topic, and only a single conversation is
-supported.</i>
+currently supported.</i>
 </p>
 
 <a name="AdviseCommand"></a>
 <h4>The Advise Command</h4>
 
 <p>
-To set up one or more advise loops with the server use the advise command. This
+To set up one or more advise loops with the server use the <code>advise</code> command. This
 allows you to monitor the updates for a number of items and corresponds to the
-XTYP_ADVSTART transaction type. The same basic switches that are used with the
+<code>XTYP_ADVSTART</code> & <code>XTYP_ADVDATA</code> transaction types.
+The same basic switches that are used with the
 <a href="#RequestCommand">Request command</a> can also be used with this one.
 However, unlike the other commands, this causes ddecmd to run indefinitely and
 so can only be stopped by pressing Ctrl+C. 
@@ -129,24 +130,61 @@ C:\> ddecmd advise -s REUTER -t IDN_RWS -i "GBP=,BID ASK" -i "EUR=,BID ASK"
 
 <p>
 The poke command allows you to set a value for an item on servers that support
-it. Unlike the previous request and advise commands you can only set the value
+it (<code>XTYP_POKE</code>). Unlike the previous request and advise commands you can only set the value
 for a single item and that value will be passed in CF_TEXT format, e.g.
 </p>
 <pre>
 C:\> ddecmd poke -s excel -t [book1]sheet1 -i R1C1 --value "test"
 </pre><p>
-<i>Note: The Poke command also supports the --link switch as described earlier.</i>
+<i>Note: The Poke command also supports the <code>--link</code> switch as described earlier.</i>
 </p>
 
 <a name="ExecuteCommand"></a>
 <h4>The Execute Command</h4>
 
 <p>
-The final transaction type supported is XTYP_EXECUTE via the execute command.
+The final transaction type supported is <code>XTYP_EXECUTE</code> via the <code>execute</code> command.
 This is used to send a command string to a server, e.g.
 </p>
 <pre>
 C:\> ddecmd execute -s excel -t [book1]sheet1 --command "[App.Minimize]"
+</pre><p>
+<i>Note: Although the command supports the <code>--format</code> switch the DDE
+transaction type <code>XTYP_EXECUTE</code> discards it. The server will likely
+expect CF_UNICODETEXT commands on the NT lineage.</i>
+</p>
+
+<a name="ListenCommand"></a>
+<h4>The Listen Command</h4>
+
+<p>
+The previous commands have all been for acting as as DDE client. The
+<code>listen</code> command however is for acting as a DDE server. Its use is
+intended for testing DDE clients as it just logs the interactions made by a DDE
+client with it, e.g.
+</p><pre>
+C:\> ddecmd listen -s TestServer
+XTYP_CONNECT: 'TestServer', 'TestTopic'
+XTYP_CONNECT_CONFIRM: 'TestServer', 'TestTopic'
+XTYP_REQUEST: 'TestServer', 'TestTopic', 'TestItem', '1'
+XTYP_DISCONNECT: 'TestServer', 'TestTopic'
+&lt;CTRL+C&gt;
+</pre><p>
+The only additional switch supported is <code>--delay</code> which causes the
+DDE server to pause before replying to simulate a slow-running server.
+</p>
+
+<a name="Timeouts"></a>
+<h4>Transaction Timeouts</h4>
+
+<p>
+The default timeout for any DDE transaction is set to 30,000 ms (30 secs). If
+your DDE server is slow at returning responses you might receive one of the DDE
+timeout errors - <code>DMLERR_DATAACKTIMEOUT</code>, <code>DMLERR_EXECACKTIMEOUT</code>,
+etc. You can increase the timeout for any transaction (except the <code>servers</code>
+command) with the <code>--timoeut</code> switch, e.g.
+</p><pre>
+C:\> ddecmd execute -s excel -t [book1]sheet1 -c "[App.Minimize]" --timeout 60000
 </pre>
 
 <a name="ClipboardFormats"></a>
@@ -197,7 +235,13 @@ with the <code>--output-format</code> specified as <code>"%d: (%s,%t,%i) = %v"</
 the output might look like this:-
 </p><pre>
 2013-02-01 17:33:45: (SERVICE,TOPIC,ITEM) = 42.0
-</pre>
+</pre><p>
+<i>Note: If you are executing commands from within a batch file you need to
+remember to escape the '%' characters with another '%'. So the example above
+would then become <code>"%%d: (%%s,%%t,%%i) = %%v"</code>. That also means to
+escape a single literal '%' in the format string would require the sequence
+'%%%%'!</i>
+</p>
 
 <a name="TimestampFormat"></a>
 <h4>Timestamp Format</h4>
@@ -300,7 +344,7 @@ Email: <a href="mailto://gort@cix.co.uk">gort@cix.co.uk</a><br>
 Web: <a href="http://www.chrisoldwood.com">www.chrisoldwood.com</a><br>
 </p><p>
 Chris Oldwood<br>
-25th March 2013<br>
+24th July 2013<br>
 </p>
 
 </body>
