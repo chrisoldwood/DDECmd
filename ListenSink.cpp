@@ -8,6 +8,7 @@
 #include <NCL/DDESvrConv.hpp>
 #include <NCL/DDEData.hpp>
 #include <WCL/StrArray.hpp>
+#include <ostream>
 
 ////////////////////////////////////////////////////////////////////////////////
 //! Constructor.

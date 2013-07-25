@@ -84,6 +84,10 @@
 		<Unit filename="ExecuteCmd.cpp" />
 		<Unit filename="ExecuteCmd.hpp" />
 		<Unit filename="HelpFile\DDECmd.html" />
+		<Unit filename="ListenCmd.cpp" />
+		<Unit filename="ListenCmd.hpp" />
+		<Unit filename="ListenSink.cpp" />
+		<Unit filename="ListenSink.hpp" />
 		<Unit filename="Main.cpp" />
 		<Unit filename="PokeCmd.cpp" />
 		<Unit filename="PokeCmd.hpp" />

@@ -8,6 +8,11 @@
 #include "AdviseCmd.hpp"
 #include <sstream>
 
+#if __GNUC__
+// deprecated conversion from string constant to 'tchar* {aka char*}'
+#pragma GCC diagnostic ignored "-Wwrite-strings"
+#endif
+
 class AdviseCmdTestApp : public WCL::ConsoleApp
 {
 	virtual int run(int /*nArgc*/, tchar* /*apszArgv*/[], tistream& /*in*/, tostream& /*out*/, tostream& /*err*/)

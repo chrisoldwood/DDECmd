@@ -8,6 +8,11 @@
 #include "ServersCmd.hpp"
 #include <sstream>
 
+#if __GNUC__
+// deprecated conversion from string constant to 'tchar* {aka char*}'
+#pragma GCC diagnostic ignored "-Wwrite-strings"
+#endif
+
 TEST_SET(ServersCmd)
 {
 

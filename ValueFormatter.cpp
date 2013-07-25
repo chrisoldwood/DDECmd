@@ -9,6 +9,12 @@
 #include <Core/ParseException.hpp>
 #include <WCL/DateTime.hpp>
 #include <WCL/Win32Exception.hpp>
+#include <malloc.h>
+
+#if __GNUC__
+// missing initializer for member 'X'
+#pragma GCC diagnostic ignored "-Wmissing-field-initializers"
+#endif
 
 ////////////////////////////////////////////////////////////////////////////////
 // Constants.
@@ -67,7 +73,7 @@ static tstring formatTimestamp(const tstring& dateFormat, const tstring& timeFor
 
 		date = buffer;
 	}
-	
+
 	tstring time;
 
 	if (!timeFormat.empty())
