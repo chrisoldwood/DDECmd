@@ -14,7 +14,7 @@ td		{ font-family: Verdana, Arial; font-size: 10pt; border: 1px solid black; ver
 
 <body>
 
-<h3 align="center">DDE Command v1.5</h3>
+<h3 align="center">DDE Command v1.5.1</h3>
 
 <a name="Introduction"></a>
 <h4>Introduction</h4>
@@ -149,9 +149,12 @@ This is used to send a command string to a server, e.g.
 <pre>
 C:\> ddecmd execute -s excel -t [book1]sheet1 --command "[App.Minimize]"
 </pre><p>
-<i>Note: Although the command supports the <code>--format</code> switch the DDE
-transaction type <code>XTYP_EXECUTE</code> discards it. The server will likely
-expect CF_UNICODETEXT commands on the NT lineage.</i>
+<i>Note: The command doesn't support the <code>--format</code> switch because
+the DDE transaction type <code>XTYP_EXECUTE</code> ignores it. Consequently the
+command is always sent in CF_TEXT for an ANSI build and CF_UNICODETEXT for a
+Unicode build. This is to work around a bug in Windows/DDEML that shows up when
+sending a CF_TEXT format command from a Unicode DDE client to an ANSI DDE
+server.</i>
 </p>
 
 <a name="ListenCommand"></a>
@@ -344,7 +347,7 @@ Email: <a href="mailto://gort@cix.co.uk">gort@cix.co.uk</a><br>
 Web: <a href="http://www.chrisoldwood.com">www.chrisoldwood.com</a><br>
 </p><p>
 Chris Oldwood<br>
-24th July 2013<br>
+8th August 2013<br>
 </p>
 
 </body>
