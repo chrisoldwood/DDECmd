@@ -23,7 +23,6 @@ static Core::CmdLineSwitch s_switches[] =
 	{ SERVER,	TXT("s"),	TXT("server"),	Core::CmdLineSwitch::ONCE,	Core::CmdLineSwitch::SINGLE,	TXT("server"),	TXT("The DDE Server name")			},
 	{ TOPIC,	TXT("t"),	TXT("topic"), 	Core::CmdLineSwitch::ONCE,	Core::CmdLineSwitch::SINGLE,	TXT("topic"),	TXT("The DDE Server topic")			},
 	{ COMMAND,	TXT("c"),	TXT("command"),	Core::CmdLineSwitch::ONCE,	Core::CmdLineSwitch::SINGLE,	TXT("command"),	TXT("The command to execute")		},
-	{ FORMAT,	TXT("f"),	TXT("format"),	Core::CmdLineSwitch::ONCE,	Core::CmdLineSwitch::SINGLE,	TXT("format"),	TXT("The clipboard format to use")	},
 	{ TIMEOUT,	NULL,		TXT("timeout"),	Core::CmdLineSwitch::ONCE,	Core::CmdLineSwitch::SINGLE,	TXT("timeout"),	TXT("The timeout (ms) to wait for reply")	},
 };
 static size_t s_switchCount = ARRAY_SIZE(s_switches);
@@ -81,16 +80,6 @@ int ExecuteCmd::doExecute(tostream& /*out*/, tostream& /*err*/)
 	tstring topic   = m_parser.getSwitchValue(TOPIC);
 	tstring command = m_parser.getSwitchValue(COMMAND);
 
-	tstring formatName = TXT("CF_TEXT");
-
-	if (m_parser.isSwitchSet(FORMAT))
-		formatName = m_parser.getSwitchValue(FORMAT);
-
-	uint format = CClipboard::FormatHandle(formatName.c_str());
-
-	if (format == CF_NONE)
-		throw Core::InvalidArgException(Core::fmt(TXT("Invalid clipboard format '%s'"), formatName.c_str()));
-
 	DWORD timeout = 0;
 
 	if (m_parser.isSwitchSet(TIMEOUT))
@@ -103,7 +92,7 @@ int ExecuteCmd::doExecute(tostream& /*out*/, tostream& /*err*/)
 	if (timeout != 0)
 		conv->SetTimeout(timeout);
 
-	conv->ExecuteString(command.c_str(), format);
+	conv->ExecuteString(command.c_str());
 
 	return EXIT_SUCCESS;
 }
