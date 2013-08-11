@@ -1,5 +1,5 @@
-DDE Command v1.5
-================
+DDE Command v1.5.1
+==================
 
 Introduction
 ------------
@@ -27,4 +27,4 @@ Email: gort@cix.co.uk
 Web:   http://www.chrisoldwood.com
 
 Chris Oldwood 
-24th July 2013
+8th August 2013

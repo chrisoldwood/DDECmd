@@ -1,3 +1,8 @@
+Version 1.5.1
+=============
+
+- Worked around a XTYP_EXECUTE bug in Windows/DDEML for a CF_TEXT command.
+
 Version 1.5
 ===========
 
@@ -16,4 +21,4 @@ Version 1.0
 - Handles XTYP_REQUEST, XTYP_ADVSTART, XTYP_POKE and XTYP_EXECUTE transaction types.
 
 Chris Oldwood 
-24th July 2013
+8th August 2013
