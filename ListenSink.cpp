@@ -37,7 +37,7 @@ bool ListenSink::OnWildConnect(CStrArray& services, CStrArray& topics)
 	      << std::endl;
 
 	services.Add(m_server.c_str());
-	topics.Add(m_topic.c_str());
+	topics.Add(!m_topic.empty() ? m_topic.c_str() : TXT("*"));
 
 //	if (m_delay != 0)
 //		::Sleep(m_delay);
@@ -54,7 +54,7 @@ bool ListenSink::OnWildConnectService(const tchar* service, CStrArray& topics)
 	      << service << TXT("'")
 	      << std::endl;
 
-	topics.Add(m_topic.c_str());
+	topics.Add(!m_topic.empty() ? m_topic.c_str() : TXT("*"));
 
 //	if (m_delay != 0)
 //		::Sleep(m_delay);
