@@ -4,10 +4,10 @@
 	Version="7.10"
 	Name="Test"
 	ProjectGUID="{A45C5206-309C-4F36-974C-182B27AE3F1B}"
-	SccProjectName="&quot;$/Win32/DDECmd&quot;, EWEAAAAA"
+	SccProjectName=""
 	SccAuxPath=""
-	SccLocalPath=".."
-	SccProvider="MSSCCI:Microsoft Visual SourceSafe"
+	SccLocalPath=""
+	SccProvider=""
 	Keyword="Win32Proj">
 	<Platforms>
 		<Platform
