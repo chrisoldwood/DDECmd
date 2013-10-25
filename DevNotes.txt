@@ -1,0 +1,25 @@
+Development Structure
+---------------------
+
+The source folder structure is required by the solution & projects to be like
+this:-
+
++-DDECmd
+| +-Test
++-Lib
+  +-Core
+  +-NCL
+  +-WCL
+
+The following commands will create that structure by cloning the various
+application and library repositories:-
+
+C:\> mkdir Win32
+C:\> git clone https://github.com/chrisoldwood/DDECmd.git Win32\DDECmd
+C:\> mkdir Win32\Lib
+C:\> git clone https://github.com/chrisoldwood/Core.git Win32\Lib\Core
+C:\> git clone https://github.com/chrisoldwood/NCL.git Win32\Lib\NCL
+C:\> git clone https://github.com/chrisoldwood/WCL.git Win32\Lib\WCL
+
+Chris Oldwood 
+22nd October 2013

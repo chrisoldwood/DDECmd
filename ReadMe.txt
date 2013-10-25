@@ -20,8 +20,13 @@ Documentation
 
 There is an HTML based manual - DDECmd.html.
 
+Development
+-----------
+
+See DevNotes.txt.
+
 Contact Details
-------------------
+---------------
 
 Email: gort@cix.co.uk
 Web:   http://www.chrisoldwood.com
