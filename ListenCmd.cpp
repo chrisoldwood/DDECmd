@@ -75,7 +75,7 @@ int ListenCmd::doExecute(tostream& out, tostream& /*err*/)
 	DWORD delay = 0;
 
 	if (m_parser.isSwitchSet(DELAY))
-		delay = Core::parse<uint>(m_parser.getSwitchValue(DELAY));
+		delay = Core::parse<DWORD>(m_parser.getSwitchValue(DELAY));
 
 	// Start listening for updates.
 	CDDEServer service;

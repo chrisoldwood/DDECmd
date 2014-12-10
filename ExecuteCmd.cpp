@@ -83,7 +83,7 @@ int ExecuteCmd::doExecute(tostream& /*out*/, tostream& /*err*/)
 	DWORD timeout = 0;
 
 	if (m_parser.isSwitchSet(TIMEOUT))
-		timeout = Core::parse<uint>(m_parser.getSwitchValue(TIMEOUT));
+		timeout = Core::parse<DWORD>(m_parser.getSwitchValue(TIMEOUT));
 
 	// Open the conversation and send the command.
 	CDDEClient client;
