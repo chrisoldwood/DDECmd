@@ -152,9 +152,9 @@ C:\> ddecmd execute -s excel -t [book1]sheet1 --command "[App.Minimize]"
 <i>Note: The command doesn't support the <code>--format</code> switch because
 the DDE transaction type <code>XTYP_EXECUTE</code> ignores it. Consequently the
 command is always sent in CF_TEXT for an ANSI build and CF_UNICODETEXT for a
-Unicode build. This is to work around a bug in Windows/DDEML that shows up when
-sending a CF_TEXT format command from a Unicode DDE client to an ANSI DDE
-server.</i>
+Unicode build. This is to work around <a href="http://chrisoldwood.blogspot.co.uk/2013/11/dde-xtypexecute-command-corruption.html">an apparent bug</a>
+in Windows/DDEML that shows up when sending a <code>CF_TEXT</code> format
+command from a Unicode DDE client to an ANSI DDE server.</i>
 </p>
 
 <a name="ListenCommand"></a>
@@ -347,7 +347,7 @@ Email: <a href="mailto://gort@cix.co.uk">gort@cix.co.uk</a><br>
 Web: <a href="http://www.chrisoldwood.com">www.chrisoldwood.com</a><br>
 </p><p>
 Chris Oldwood<br>
-8th August 2013<br>
+18th March 2015<br>
 </p>
 
 </body>

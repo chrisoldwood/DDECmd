@@ -1,13 +1,15 @@
 <?xml version="1.0"?>
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
-    <Product Id="178DB72A-2576-4f2d-BB8A-A0C6A6AFF6B3"
-             Name="DDE Command v1.5"
+    <Product Id="*"
+             Name="DDE Command v1.5.1"
              Language="1033"
-             Version="1.5.0"
+             Version="1.5.1"
              Manufacturer="Chris Oldwood"
              UpgradeCode="DD110351-09EE-48f4-8578-30349E384E74">
 
         <Package Compressed="yes"/>
+
+        <MajorUpgrade DowngradeErrorMessage="A newer version of [ProductName] is already installed." />
 
         <Media Id="1" Cabinet="product.cab" EmbedCab="yes"/>
 

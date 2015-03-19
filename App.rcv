@@ -25,7 +25,7 @@ BEGIN
 			VALUE "FileDescription",  "DDE Command\0"
 			VALUE "FileVersion",      "1.5.1\0"
 			VALUE "InternalName",     "DDECmd.exe\0"
-			VALUE "LegalCopyright",   "(C) Chris Oldwood 2008-2013\0"
+			VALUE "LegalCopyright",   "(C) Chris Oldwood 2008-2015\0"
 			VALUE "OriginalFilename", "DDECmd.exe\0"
 			VALUE "ProductName",      "DDE Command\0"
 			VALUE "ProductVersion",   "1.5.1\0"

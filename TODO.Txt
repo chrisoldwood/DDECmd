@@ -1,4 +1,4 @@
-- Record & Playback commands (need to escape data).
+#2 Add verb to record and play back data from advise loops.
 
 - Switch to factory to mock DDE client implementation.
 
