@@ -81,6 +81,8 @@
 		<Unit filename="DDECmd.rc">
 			<Option compilerVar="WINDRES" />
 		</Unit>
+		<Unit filename="DDECmd.wxl" />
+		<Unit filename="DDECmd.wxs" />
 		<Unit filename="ExecuteCmd.cpp" />
 		<Unit filename="ExecuteCmd.hpp" />
 		<Unit filename="HelpFile\DDECmd.html" />
@@ -97,7 +99,6 @@
 		<Unit filename="RequestCmd.hpp" />
 		<Unit filename="ServersCmd.cpp" />
 		<Unit filename="ServersCmd.hpp" />
-		<Unit filename="Setup.ini" />
 		<Unit filename="TODO.Txt" />
 		<Unit filename="TestScript.cmd" />
 		<Unit filename="ValueFormatter.cpp" />
