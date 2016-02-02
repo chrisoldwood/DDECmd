@@ -4,6 +4,7 @@
 	Version="9.00"
 	Name="Test"
 	ProjectGUID="{A45C5206-309C-4F36-974C-182B27AE3F1B}"
+	RootNamespace="Test"
 	Keyword="Win32Proj"
 	TargetFrameworkVersion="131072"
 	>
@@ -40,11 +41,14 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
+				AdditionalOptions="/EHa"
 				Optimization="0"
 				AdditionalIncludeDirectories="..;../../Lib"
 				PreprocessorDefinitions="WIN32;_DEBUG;_CONSOLE"
 				MinimalRebuild="true"
+				ExceptionHandling="0"
 				BasicRuntimeChecks="3"
+				SmallerTypeCheck="true"
 				RuntimeLibrary="1"
 				TreatWChar_tAsBuiltInType="true"
 				ForceConformanceInForLoopScope="true"
@@ -53,7 +57,6 @@
 				PrecompiledHeaderThrough="Common.hpp"
 				WarningLevel="4"
 				WarnAsError="true"
-				Detect64BitPortabilityProblems="false"
 				DebugInformationFormat="3"
 			/>
 			<Tool
@@ -67,10 +70,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				OutputFile="$(OutDir)/Test.exe"
-				LinkIncremental="2"
 				GenerateDebugInformation="true"
-				ProgramDatabaseFile="$(OutDir)/Test.pdb"
 				SubSystem="1"
 				RandomizedBaseAddress="1"
 				DataExecutionPrevention="0"
@@ -123,8 +123,11 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
+				AdditionalOptions="/EHa"
 				AdditionalIncludeDirectories="..;../../Lib"
 				PreprocessorDefinitions="WIN32;NDEBUG;_CONSOLE"
+				StringPooling="true"
+				ExceptionHandling="0"
 				RuntimeLibrary="0"
 				TreatWChar_tAsBuiltInType="true"
 				ForceConformanceInForLoopScope="true"
@@ -133,7 +136,6 @@
 				PrecompiledHeaderThrough="Common.hpp"
 				WarningLevel="4"
 				WarnAsError="true"
-				Detect64BitPortabilityProblems="false"
 				DebugInformationFormat="3"
 			/>
 			<Tool
@@ -147,8 +149,6 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				OutputFile="$(OutDir)/Test.exe"
-				LinkIncremental="1"
 				GenerateDebugInformation="true"
 				SubSystem="1"
 				OptimizeReferences="2"

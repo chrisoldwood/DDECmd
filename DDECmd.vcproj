@@ -4,6 +4,7 @@
 	Version="9.00"
 	Name="DDECmd"
 	ProjectGUID="{521103EC-E75A-42A4-A144-67489D2C04C3}"
+	RootNamespace="DDECmd"
 	Keyword="Win32Proj"
 	TargetFrameworkVersion="131072"
 	>
@@ -63,6 +64,7 @@
 			/>
 			<Tool
 				Name="VCResourceCompilerTool"
+				PreprocessorDefinitions="_DEBUG"
 				AdditionalIncludeDirectories="../Lib"
 			/>
 			<Tool
@@ -143,6 +145,7 @@
 			/>
 			<Tool
 				Name="VCResourceCompilerTool"
+				PreprocessorDefinitions="NDEBUG"
 				AdditionalIncludeDirectories="../Lib"
 			/>
 			<Tool
@@ -184,12 +187,15 @@
 	<References>
 		<ProjectReference
 			ReferencedProjectIdentifier="{790BC113-52FB-4565-8968-79B8B011C520}"
+			RelativePathToProject="..\Lib\Core\Core.vcproj"
 		/>
 		<ProjectReference
 			ReferencedProjectIdentifier="{FAB8D717-85EC-4896-B5DC-FDF0A0B67C92}"
+			RelativePathToProject="..\Lib\NCL\NCL.vcproj"
 		/>
 		<ProjectReference
 			ReferencedProjectIdentifier="{9B0335B6-93BE-4604-8497-27431874D758}"
+			RelativePathToProject="..\Lib\WCL\Wcl.vcproj"
 		/>
 	</References>
 	<Files>
