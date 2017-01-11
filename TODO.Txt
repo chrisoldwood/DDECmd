@@ -3,3 +3,5 @@
 - Switch to factory to mock DDE client implementation.
 
 - What happens if conversation lost on advise command?
+
+- Enhance listening options to respond with a value and format.

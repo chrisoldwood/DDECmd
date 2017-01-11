@@ -201,6 +201,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\FetchCmdTests.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\ListenCmdTests.cpp"
 				>
 			</File>
@@ -261,6 +265,14 @@
 				</File>
 				<File
 					RelativePath="..\ExecuteCmd.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\FetchCmd.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\FetchSink.cpp"
 					>
 				</File>
 				<File

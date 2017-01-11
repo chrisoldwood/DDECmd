@@ -221,6 +221,14 @@
 				>
 			</File>
 			<File
+				RelativePath=".\FetchCmd.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\FetchSink.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\ListenCmd.cpp"
 				>
 			</File>
@@ -296,6 +304,14 @@
 			</File>
 			<File
 				RelativePath=".\ExecuteCmd.hpp"
+				>
+			</File>
+			<File
+				RelativePath=".\FetchCmd.hpp"
+				>
+			</File>
+			<File
+				RelativePath=".\FetchSink.hpp"
 				>
 			</File>
 			<File

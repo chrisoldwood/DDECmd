@@ -1,40 +1,44 @@
 ////////////////////////////////////////////////////////////////////////////////
-//! \file   AdviseSink.hpp
-//! \brief  The AdviseSink class declaration.
+//! \file   FetchSink.hpp
+//! \brief  The FetchSink class declaration.
 //! \author Chris Oldwood
 
 // Check for previous inclusion
-#ifndef APP_ADVISESINK_HPP
-#define APP_ADVISESINK_HPP
+#ifndef APP_FETCHSINK_HPP
+#define APP_FETCHSINK_HPP
 
 #if _MSC_VER > 1000
 #pragma once
 #endif
 
-#include <Core/tiosfwd.hpp>
+#include <map>
 #include <NCL/DefDDEClientListener.hpp>
 
 // Forward declarations.
 class ValueFormatter;
 
 ////////////////////////////////////////////////////////////////////////////////
-//!	The sink used to handle updates from the DDE server when just advising.
+//! The sink used to handle updates from the DDE server when fetching values.
 
-class AdviseSink : public CDefDDEClientListener
+class FetchSink : public CDefDDEClientListener
 {
 public:
+	// Type aliases.
+	typedef std::map<tstring, tstring> Values;
+
+public:
 	//! Constructor.
-	AdviseSink(tostream& out, const ValueFormatter& formatter);
+	FetchSink(const ValueFormatter& formatter, Values& values);
 
 	//! Destructor.
-	~AdviseSink();
+	~FetchSink();
 	
 private:
 	//
 	// Members.
 	//
-	tostream&				m_out;			//!< The output stream.
 	const ValueFormatter&	m_formatter;	//!< The value formatter.
+	Values&					m_values;		//!< The values for advised links.
 
 	//
 	// IDDEClientListener Methods.
@@ -44,4 +48,4 @@ private:
 	virtual void OnAdvise(CDDELink* link, const CDDEData* value);
 };
 
-#endif // APP_ADVISESINK_HPP
+#endif // APP_FETCHSINK_HPP

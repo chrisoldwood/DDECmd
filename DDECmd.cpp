@@ -16,6 +16,7 @@
 #include "PokeCmd.hpp"
 #include "ExecuteCmd.hpp"
 #include "ListenCmd.hpp"
+#include "FetchCmd.hpp"
 #include "CmdLineArgs.hpp"
 #include <ostream>
 
@@ -119,6 +120,10 @@ WCL::ConsoleCmdPtr DDECmd::createCommand(int argc, tchar* argv[])
 	{
 		return WCL::ConsoleCmdPtr(new ListenCmd(argc, argv, *this));
 	}
+	else if (tstricmp(command, TXT("fetch")) == 0)
+	{
+		return WCL::ConsoleCmdPtr(new FetchCmd(argc, argv, *this));
+	}
 
 	throw Core::CmdLineException(Core::fmt(TXT("Unknown DDE command: '%s'"), command));
 }
@@ -150,6 +155,7 @@ void DDECmd::showUsage(tostream& out) const
 	out << TXT("poke")    << tstring(width-4, TXT(' ')) << ("Set the value for a single item") << std::endl;
 	out << TXT("execute") << tstring(width-7, TXT(' ')) << ("Send a command for execution") << std::endl;
 	out << TXT("listen")  << tstring(width-6, TXT(' ')) << ("Act as a DDE server") << std::endl;
+	out << TXT("fetch")   << tstring(width-5, TXT(' ')) << ("Fetch the value for one or more items") << std::endl;
 	out << std::endl;
 
 	out << TXT("For help on an individual command use:-") << std::endl;
