@@ -36,7 +36,8 @@ static Core::CmdLineSwitch s_switches[] =
 	{ OUT_FMT,	TXT("of"),	TXT("output-format"),	Core::CmdLineSwitch::ONCE,	Core::CmdLineSwitch::SINGLE,	TXT("format"),	TXT("The output format")			},
 	{ DATE_FMT,	TXT("df"),	TXT("date-format"),		Core::CmdLineSwitch::ONCE,	Core::CmdLineSwitch::SINGLE,	TXT("format"),	TXT("The timestamp date format")	},
 	{ TIME_FMT,	TXT("tf"),	TXT("time-format"),		Core::CmdLineSwitch::ONCE,	Core::CmdLineSwitch::SINGLE,	TXT("format"),	TXT("The timestamp time format")	},
-	{ TIMEOUT,	nullptr,	TXT("timeout"),	Core::CmdLineSwitch::ONCE,	Core::CmdLineSwitch::SINGLE,	TXT("timeout"),	TXT("The timeout (ms) to wait for reply")	},
+	{ TIMEOUT,	nullptr,	TXT("timeout"),	Core::CmdLineSwitch::ONCE,	Core::CmdLineSwitch::SINGLE,	TXT("timeout"),	TXT("The timeout (ms) for the DDE reply")	},
+	{ DELAY,	nullptr,	TXT("delay"),	Core::CmdLineSwitch::ONCE,	Core::CmdLineSwitch::SINGLE,	TXT("delay"),	TXT("The delay (ms) between advise & request")	},
 };
 static size_t s_switchCount = ARRAY_SIZE(s_switches);
 
@@ -156,6 +157,11 @@ int FetchCmd::doExecute(tostream& out, tostream& /*err*/)
 	if (m_parser.isSwitchSet(TIMEOUT))
 		timeout = Core::parse<DWORD>(m_parser.getSwitchValue(TIMEOUT));
 
+	DWORD delay = 0;
+
+	if (m_parser.isSwitchSet(DELAY))
+		delay = Core::parse<DWORD>(m_parser.getSwitchValue(DELAY));
+
 	// Open the conversation.
 	CDDEClient client;
 	DDE::CltConvPtr conv(client.CreateConversation(server.c_str(), topic.c_str()));
@@ -182,7 +188,7 @@ int FetchCmd::doExecute(tostream& out, tostream& /*err*/)
 
 	// Briefly pump messages to catch any advised values.
 	DWORD now = ::GetTickCount();
-	DWORD expireAt = now + 1000;
+	DWORD expireAt = now + delay;
 
 	while (!abortEvent.IsSignalled() && thread.ProcessMsgQueue() && (::GetTickCount() < expireAt))
 		;
