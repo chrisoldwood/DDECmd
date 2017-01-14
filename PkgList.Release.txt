@@ -1,0 +1,4 @@
+.\ReadMe.txt
+.\RelNotes.txt
+.\Release\DDECmd.exe
+.\HelpFile\DDECmd.html

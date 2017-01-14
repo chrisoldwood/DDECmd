@@ -369,12 +369,28 @@
 				>
 			</File>
 		</Filter>
-		<File
-			RelativePath=".\DDECmd.wxl"
+		<Filter
+			Name="Install"
 			>
-		</File>
+			<File
+				RelativePath=".\DDECmd.wxl"
+				>
+			</File>
+			<File
+				RelativePath=".\DDECmd.wxs"
+				>
+			</File>
+			<File
+				RelativePath=".\PkgList.Debug.txt"
+				>
+			</File>
+			<File
+				RelativePath=".\PkgList.Release.txt"
+				>
+			</File>
+		</Filter>
 		<File
-			RelativePath=".\DDECmd.wxs"
+			RelativePath=".\DevNotes.txt"
 			>
 		</File>
 		<File
