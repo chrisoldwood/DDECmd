@@ -1,9 +1,9 @@
 <?xml version="1.0"?>
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
     <Product Id="*"
-             Name="DDE Command v1.5.1"
+             Name="DDE Command v1.6"
              Language="1033"
-             Version="1.5.1"
+             Version="1.6"
              Manufacturer="Chris Oldwood"
              UpgradeCode="DD110351-09EE-48f4-8578-30349E384E74">
 

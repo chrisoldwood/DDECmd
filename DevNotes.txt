@@ -29,13 +29,21 @@ Command Line Builds
 
 Included in the scripts folder is one for building via the command line:-
 
-C:\> Win32\Scripts\SetVars vc71
+C:\> Win32\Scripts\SetVars vc90
 C:\> Win32\Scripts\Build debug Win32\DDECmd\DDECmd.sln
 
 There is also one for upgrading to a later version of Visual C++:-
 
-C:\> Win32\Scripts\SetVars vc100
+C:\> Win32\Scripts\SetVars vc140
 C:\> Win32\Scripts\Upgrade Win32\DDECmd\DDECmd.sln
 
+Release Check-list
+------------------
+
+- Update version number (App.rcv & DDECmd.wxs).
+- Update documentation (ReadMe.txt, RelNotes.txt & manual).
+- Synchronize Code::Blocks build.
+- Tag repository.
+
 Chris Oldwood 
-22nd October 2013
+13th January 2017

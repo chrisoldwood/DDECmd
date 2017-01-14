@@ -1,5 +1,5 @@
-DDE Command v1.5.1
-==================
+DDE Command v1.6
+================
 
 Introduction
 ------------
@@ -27,7 +27,8 @@ https://github.com/chrisoldwood/DDECmd
 Documentation
 -------------
 
-There is an HTML based manual - DDECmd.html.
+There is an HTML based manual (DDECmd.html) which can be launched using the
+--manual switch.
 
 Development
 -----------
@@ -41,4 +42,4 @@ Email: gort@cix.co.uk
 Web:   http://www.chrisoldwood.com
 
 Chris Oldwood 
-18th March 2015
+13th January 2017

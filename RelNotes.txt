@@ -1,25 +1,30 @@
-Version 1.5.1
-=============
+??/??/2017: v1.6
+================
+
+- Added a 'fetch' command to request a value using an advise followed by a request.
+
+19/03/2015: v1.5.1
+==================
 
 - Removed the --format switch from "execute" due to a possible bug in Windows/DDEML with CF_TEXT commands (#1).
 - Fixed handling of OnWildConnect() when listening and no topic specified.
 
-Version 1.5
-===========
+25/07/2013: v1.5
+================
 
 - Fixed a bug where the app was sluggish responding to advise loop updates.
 - Added --timeout switch to override the transaction reply wait time.
 - Added a 'listen' command so it can act as a DDE server for testing.
 - Fixed a bug where the exit code was wrong for an invalid command line.
-- Added --output-format switch to allow the display to be customised.
+- Added --output-format switch to allow the display to be customized.
 - Items can now be specified in DDE link format "SERVICE|TOPIC!ITEM" instead.
 - Changed the --help switch to --manual to be more consistent with other tools.
 
-Version 1.0
-===========
+06/01/2009: v1.0
+================
 
 - Unicode text handling supported on XTYP_REQUEST and XTYP_ADVSTART.
 - Handles XTYP_REQUEST, XTYP_ADVSTART, XTYP_POKE and XTYP_EXECUTE transaction types.
 
 Chris Oldwood 
-18th March 2015
+13th January 2017
