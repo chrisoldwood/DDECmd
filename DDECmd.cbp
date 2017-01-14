@@ -94,6 +94,10 @@
 		<Unit filename="DDECmd.wxs" />
 		<Unit filename="ExecuteCmd.cpp" />
 		<Unit filename="ExecuteCmd.hpp" />
+		<Unit filename="FetchCmd.cpp" />
+		<Unit filename="FetchCmd.hpp" />
+		<Unit filename="FetchSink.cpp" />
+		<Unit filename="FetchSink.hpp" />
 		<Unit filename="HelpFile/DDECmd.html" />
 		<Unit filename="ListenCmd.cpp" />
 		<Unit filename="ListenCmd.hpp" />

@@ -79,6 +79,8 @@
 		<Unit filename="../AdviseSink.cpp" />
 		<Unit filename="../DDECmd.cpp" />
 		<Unit filename="../ExecuteCmd.cpp" />
+		<Unit filename="../FetchCmd.cpp" />
+		<Unit filename="../FetchSink.cpp" />
 		<Unit filename="../ListenCmd.cpp" />
 		<Unit filename="../ListenSink.cpp" />
 		<Unit filename="../PokeCmd.cpp" />
@@ -88,6 +90,7 @@
 		<Unit filename="AdviseCmdTests.cpp" />
 		<Unit filename="DDECmdTests.cpp" />
 		<Unit filename="ExecuteCmdTests.cpp" />
+		<Unit filename="FetchCmdTests.cpp" />
 		<Unit filename="ListenCmdTests.cpp" />
 		<Unit filename="PokeCmdTests.cpp" />
 		<Unit filename="RequestCmdTests.cpp" />
