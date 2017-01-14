@@ -14,7 +14,7 @@ td		{ font-family: Verdana, Arial; font-size: 10pt; border: 1px solid black; ver
 
 <body>
 
-<h3 align="center">DDE Command v1.5.1</h3>
+<h3 align="center">DDE Command v1.6</h3>
 
 <a name="Introduction"></a>
 <h4>Introduction</h4>
@@ -177,6 +177,22 @@ The only additional switch supported is <code>--delay</code> which causes the
 DDE server to pause before replying to simulate a slow-running server.
 </p>
 
+<a name="FetchCommand"></a>
+<h4>The Fetch Command</h4>
+
+<p>
+This command is not a native DDE transaction type but a hybrid that combines
+the XTYP_ADVSTART and XTYP_REQUEST transactions to request a value in much the
+same way as Excel links to data. The delay between the two DDE transactions is
+configurable but defaults to 0 ms.
+</p><pre>
+C:\> ddecmd fetch -s excel -t [book1]sheet1 -i R1C1
+</pre><p>
+<i>Note: This command was added specifically to cater for the MetaTrader DDE
+Server which fails an XTYP_REQUEST with N/A unless an XTYP_ADVSTART has already
+been invoked on the item.</i>
+</p>
+
 <a name="Timeouts"></a>
 <h4>Transaction Timeouts</h4>
 
@@ -213,7 +229,7 @@ with the <code>--format</code> switch.
 
 <p>
 The table below lists the variables can be used within the <code>--output-format</code>
-switch. To include a '%' character in the ouptut you need to escape it with
+switch. To include a '%' character in the output you need to escape it with
 another '%', just as you would in a batch file, e.g. '%%'. All other characters
 in the string are output verbatim.
 </p><p>
@@ -252,7 +268,7 @@ escape a single literal '%' in the format string would require the sequence
 <p>
 The '%d' variable that can be used in the <code>--output-format</code> switch
 causes a timestamp to be output. As shown in the example above it defaults to
-the ISO format "YYYY-MM-DD HH:MM:SS". However the format can be customised with
+the ISO format "YYYY-MM-DD HH:MM:SS". However the format can be customized with
 the <code>--date-format</code> and <code>--time-format</code> switches. The
 format strings are effectively passed directly to the
 <a href="http://msdn.microsoft.com/en-gb/library/windows/desktop/dd318086(v=vs.85).aspx"><code>GetDateFormat()</code></a>
@@ -260,7 +276,7 @@ and <a href="http://msdn.microsoft.com/en-gb/library/windows/desktop/dd318130(v=
 Windows API functions. To avoid either the date or time being output at all
 specify an empty format, e.g. <code>--time-format ""</code>.
 </p><p>
-This table lists the placeholders that can be used in the date picture format.
+This table lists the place-holders that can be used in the date picture format.
 <table>
 <tr>
 <th>Type</th><th>Description</th>
@@ -291,7 +307,7 @@ This table lists the placeholders that can be used in the date picture format.
 </tr>
 </table>
 </p><p>
-This table lists the placeholders that can be used in the time picture format.
+This table lists the place-holders that can be used in the time picture format.
 <table>
 <tr>
 <th>Type</th><th>Description</th>
@@ -314,7 +330,7 @@ This table lists the placeholders that can be used in the time picture format.
 </tr><tr>
 <td>t</td><td>One character time-marker string, such as A or P</td>
 </tr><tr>
-<td>tt</td><td>Multicharacter time-marker string, such as AM or PM</td>
+<td>tt</td><td>Multi-character time-marker string, such as AM or PM</td>
 </tr>
 </table>
 </p>
@@ -347,7 +363,7 @@ Email: <a href="mailto://gort@cix.co.uk">gort@cix.co.uk</a><br>
 Web: <a href="http://www.chrisoldwood.com">www.chrisoldwood.com</a><br>
 </p><p>
 Chris Oldwood<br>
-18th March 2015<br>
+13th January 2017<br>
 </p>
 
 </body>
