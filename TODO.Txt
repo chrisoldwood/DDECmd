@@ -1,7 +1,7 @@
 #2 Add verb to record and play back data from advise loops.
 
+#3 Advise command does not terminate when conversation closed.
+
+#4 Enhance listen command to respond with a user provided value and format.
+
 - Switch to factory to mock DDE client implementation.
-
-- What happens if conversation lost on advise command?
-
-- Enhance listening options to respond with a value and format.
