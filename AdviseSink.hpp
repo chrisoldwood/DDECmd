@@ -13,6 +13,7 @@
 
 #include <Core/tiosfwd.hpp>
 #include <NCL/DefDDEClientListener.hpp>
+#include <WCL/Event.hpp>
 
 // Forward declarations.
 class ValueFormatter;
@@ -24,7 +25,7 @@ class AdviseSink : public CDefDDEClientListener
 {
 public:
 	//! Constructor.
-	AdviseSink(tostream& out, const ValueFormatter& formatter);
+	AdviseSink(tostream& out, const ValueFormatter& formatter, CEvent& abortEvent);
 
 	//! Destructor.
 	~AdviseSink();
@@ -35,6 +36,7 @@ private:
 	//
 	tostream&				m_out;			//!< The output stream.
 	const ValueFormatter&	m_formatter;	//!< The value formatter.
+	CEvent&					m_abortEvent;	//!< Event used to signal termination.
 
 	//
 	// IDDEClientListener Methods.
@@ -42,6 +44,9 @@ private:
 
 	//! Handle a link being updated.
 	virtual void OnAdvise(CDDELink* link, const CDDEData* value);
+
+	//! Handle the conversation closing.
+	virtual void OnDisconnect(CDDECltConv* conv);
 };
 
 #endif // APP_ADVISESINK_HPP

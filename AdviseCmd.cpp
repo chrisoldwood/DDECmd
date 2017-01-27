@@ -162,8 +162,10 @@ int AdviseCmd::doExecute(tostream& out, tostream& /*err*/)
 	if (timeout != 0)
 		conv->SetTimeout(timeout);
 
+	CEvent& abortEvent = m_app.getAbortEvent();
+
 	// Start listening for updates.
-	AdviseSink sink(out, formatter);
+	AdviseSink sink(out, formatter, abortEvent);
 	client.AddListener(&sink);
 
 	// Create the links...
@@ -175,7 +177,6 @@ int AdviseCmd::doExecute(tostream& out, tostream& /*err*/)
 	}
 
 	CMsgThread& thread = m_app.mainThread();
-	CEvent&     abortEvent = m_app.getAbortEvent();
 
 	// Pump messages until the user presses Ctrl-C.
 	while (!abortEvent.IsSignalled() && thread.ProcessMsgQueue())

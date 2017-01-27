@@ -15,9 +15,10 @@
 ////////////////////////////////////////////////////////////////////////////////
 //! Constructor.
 
-AdviseSink::AdviseSink(tostream& out, const ValueFormatter& formatter)
+AdviseSink::AdviseSink(tostream& out, const ValueFormatter& formatter, CEvent& abortEvent)
 	: m_out(out)
 	, m_formatter(formatter)
+	, m_abortEvent(abortEvent)
 {
 }
 
@@ -42,4 +43,13 @@ void AdviseSink::OnAdvise(CDDELink* link, const CDDEData* value)
 	m_out << m_formatter.format(server, topic, item, stringValue) << std::endl;
 
 	m_out.flush();
+}
+
+
+////////////////////////////////////////////////////////////////////////////////
+//! Handle the conversation closing.
+
+void AdviseSink::OnDisconnect(CDDECltConv* /*conv*/)
+{
+	m_abortEvent.Signal();
 }
