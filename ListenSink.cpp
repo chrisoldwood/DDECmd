@@ -9,6 +9,8 @@
 #include <NCL/DDEData.hpp>
 #include <WCL/StrArray.hpp>
 #include <ostream>
+#include <WCL/Clipboard.hpp>
+#include <WCL/StringIO.hpp>
 
 ////////////////////////////////////////////////////////////////////////////////
 //! Constructor.
@@ -133,8 +135,8 @@ bool ListenSink::OnRequest(CDDESvrConv* conv, const tchar* item, uint format, CD
 	m_out << TXT("XTYP_REQUEST: '")
 	      << conv->Service().c_str() << TXT("', '")
 	      << conv->Topic().c_str() << TXT("', '")
-	      << item << TXT("', '")
-	      << format << TXT("'")
+	      << item << TXT("', ")
+	      << format << TXT(" [") << CClipboard::FormatName(format) << TXT("]")
 	      << std::endl;
 
 	data.SetData("\0\0", 2, 0);
@@ -153,8 +155,8 @@ bool ListenSink::OnAdviseStart(CDDESvrConv* conv, const tchar* item, uint format
 	m_out << TXT("XTYP_ADVSTART: '")
 	      << conv->Service().c_str() << TXT("', '")
 	      << conv->Topic().c_str() << TXT("', '")
-	      << item << TXT("', '")
-	      << format << TXT("'")
+	      << item << TXT("', ")
+	      << format << TXT(" [") << CClipboard::FormatName(format) << TXT("]")
 	      << std::endl;
 
 //	if (m_delay != 0)
@@ -171,8 +173,8 @@ bool ListenSink::OnAdviseRequest(CDDESvrConv* conv, CDDELink* link, CDDEData& da
 	m_out << TXT("XTYP_ADVREQ: '")
 	      << conv->Service().c_str() << TXT("', '")
 	      << conv->Topic().c_str() << TXT("', '")
-	      << link->Item().c_str() << TXT("', '")
-	      << link->Format() << TXT("'")
+	      << link->Item().c_str() << TXT("', ")
+	      << link->Format() << TXT(" [") << CClipboard::FormatName(link->Format()) << TXT("]")
 	      << std::endl;
 
 	data.SetData("\0\0", 2, 0);
@@ -192,7 +194,7 @@ void ListenSink::OnAdviseStop(CDDESvrConv* conv, CDDELink* link)
 	      << conv->Service().c_str() << TXT("', '")
 	      << conv->Topic().c_str() << TXT("', '")
 	      << link->Item().c_str() << TXT("', '")
-	      << link->Format() << TXT("'")
+	      << link->Format() << TXT(" [") << CClipboard::FormatName(link->Format()) << TXT("]")
 	      << std::endl;
 
 //	if (m_delay != 0)
@@ -224,9 +226,9 @@ bool ListenSink::OnPoke(CDDESvrConv* conv, const tchar* item, uint format, const
 	m_out << TXT("XTYP_POKE: '")
 	      << conv->Service().c_str() << TXT("', '")
 	      << conv->Topic().c_str() << TXT("', '")
-	      << item << TXT("', '")
-	      << format << TXT("', '")
-	      << data.Size() << TXT(" bytes'")
+	      << item << TXT("', ")
+	      << format << TXT(" [") << CClipboard::FormatName(format) << TXT("], ")
+	      << data.Size() << TXT(" bytes")
 	      << std::endl;
 
 	if (m_delay != 0)

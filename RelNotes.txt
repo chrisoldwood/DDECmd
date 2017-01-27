@@ -1,6 +1,7 @@
 ??/??/2017: v1.6
 ================
 
+- Enhanced the listen command output to show the symbolic clipboard name.
 - Fixed bug where advise didn't terminate when the server conversation was closed (#3).
 - Added a 'fetch' command to request a value using an advise followed by a request.
 
