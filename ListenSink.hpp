@@ -13,6 +13,7 @@
 
 #include <Core/tiosfwd.hpp>
 #include <NCL/DefDDEServerListener.hpp>
+#include <map>
 
 ////////////////////////////////////////////////////////////////////////////////
 //! The sink used to handle requests for the DDE server.
@@ -20,12 +21,16 @@
 class ListenSink : public CDefDDEServerListener
 {
 public:
+	//! A map of DDE link to value.
+	typedef std::map<CDDELink*, tstring> LinkValues;
+
+public:
 	//! Constructor.
-	ListenSink(const tstring& server, const tstring& topic, tostream& out, DWORD delay);
+	ListenSink(const tstring& server, const tstring& topic, tostream& out, DWORD delay, LinkValues& values);
 
 	//! Destructor.
 	~ListenSink();
-	
+
 private:
 	//
 	// Members.
@@ -34,6 +39,7 @@ private:
 	tstring		m_topic;	//!< The topic name.
 	tostream&	m_out;		//!< The output stream.
 	DWORD		m_delay;	//!< The delay before replying.
+	LinkValues&	m_values;	//!< The current value for each link.
 
 	//
 	// IDDEServerListener Methods.

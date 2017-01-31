@@ -10,6 +10,7 @@
 #include <NCL/DDEServer.hpp>
 #include "ListenSink.hpp"
 #include <Core/StringUtils.hpp>
+#include <NCL/DDESvrConv.hpp>
 
 ////////////////////////////////////////////////////////////////////////////////
 //! The table of command specific command line switches.
@@ -63,6 +64,10 @@ int ListenCmd::doExecute(tostream& out, tostream& /*err*/)
 {
 	ASSERT(m_parser.getUnnamedArgs().at(0) == TXT("listen"));
 
+	// Type alises.
+	typedef CDDESvrConvs::const_iterator ConvIter;
+	typedef CDDESvrLinks::const_iterator LinkIter;
+
 	if (!m_parser.isSwitchSet(SERVER))
 		throw Core::CmdLineException(TXT("No DDE server name specified [--server]"));
 
@@ -81,15 +86,46 @@ int ListenCmd::doExecute(tostream& out, tostream& /*err*/)
 	CDDEServer service;
 	service.Register(server.c_str());
 
-	ListenSink sink(server, topic, out, delay);
+	ListenSink::LinkValues values;
+	ListenSink sink(server, topic, out, delay, values);
 	service.AddListener(&sink);
 
+	// Pump messages until the user presses Ctrl-C.
 	CMsgThread& thread = m_app.mainThread();
 	CEvent&     abortEvent = m_app.getAbortEvent();
+	const DWORD adviseFreq = 1000;       
+	uint        nextValue = 1;
 
-	// Pump messages until the user presses Ctrl-C.
-	while (!abortEvent.IsSignalled() && thread.ProcessMsgQueue())
-		thread.WaitForMessageOrSignal(abortEvent.Handle());
+	while (!abortEvent.IsSignalled())
+	{
+		DWORD now = ::GetTickCount();
+		DWORD expireAt = now + adviseFreq;
+
+		while(thread.ProcessMsgQueue() && (::GetTickCount() < expireAt))
+			::Sleep(0);
+
+		// Send an advise out on all links.
+		CDDESvrConvs conversations;
+
+		service.GetAllConversations(conversations);
+
+		for (ConvIter convIt = conversations.begin(); convIt != conversations.end(); ++convIt)
+		{
+			CDDESvrConv* conversation = *convIt;
+			CDDESvrLinks links;
+			
+			conversation->GetAllLinks(links);
+
+			for (LinkIter linkIt = links.begin(); linkIt != links.end(); ++linkIt)
+			{
+				CDDELink* link = *linkIt;
+				tstring   value = Core::format<uint>(nextValue++);
+
+				values[link] = value;
+				conversation->PostLinkUpdate(link);
+			}
+		}
+	}
 
 	return EXIT_SUCCESS;
 }

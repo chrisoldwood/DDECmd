@@ -1,5 +1,3 @@
 #2 Add verb to record and play back data from advise loops.
 
-#4 Enhance listen command to respond with a user provided value and format.
-
 - Switch to factory to mock DDE client implementation.

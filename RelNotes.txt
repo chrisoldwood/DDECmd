@@ -1,6 +1,8 @@
 ??/??/2017: v1.6
 ================
 
+- Added support to the listen command for generating dummy advises (#4).
+- Changed the listen command to only accept CF_TEXT links (#4).
 - Enhanced the listen command output to show the symbolic clipboard name.
 - Fixed bug where advise didn't terminate when the server conversation was closed (#3).
 - Added a 'fetch' command to request a value using an advise followed by a request.

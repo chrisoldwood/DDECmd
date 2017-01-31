@@ -11,15 +11,17 @@
 #include <ostream>
 #include <WCL/Clipboard.hpp>
 #include <WCL/StringIO.hpp>
+#include <Core/AnsiWide.hpp>
 
 ////////////////////////////////////////////////////////////////////////////////
 //! Constructor.
 
-ListenSink::ListenSink(const tstring& server, const tstring& topic, tostream& out, DWORD delay)
+ListenSink::ListenSink(const tstring& server, const tstring& topic, tostream& out, DWORD delay, LinkValues& values)
 	: m_server(server)
 	, m_topic(topic)
 	, m_out(out)
 	, m_delay(delay)
+	, m_values(values)
 {
 }
 
@@ -139,6 +141,9 @@ bool ListenSink::OnRequest(CDDESvrConv* conv, const tchar* item, uint format, CD
 	      << format << TXT(" [") << CClipboard::FormatName(format) << TXT("]")
 	      << std::endl;
 
+	if (format != CF_TEXT)
+		return false;
+
 	data.SetData("\0\0", 2, 0);
 
 	if (m_delay != 0)
@@ -159,6 +164,9 @@ bool ListenSink::OnAdviseStart(CDDESvrConv* conv, const tchar* item, uint format
 	      << format << TXT(" [") << CClipboard::FormatName(format) << TXT("]")
 	      << std::endl;
 
+	if (format != CF_TEXT)
+		return false;
+
 //	if (m_delay != 0)
 //		::Sleep(m_delay);
 
@@ -177,7 +185,15 @@ bool ListenSink::OnAdviseRequest(CDDESvrConv* conv, CDDELink* link, CDDEData& da
 	      << link->Format() << TXT(" [") << CClipboard::FormatName(link->Format()) << TXT("]")
 	      << std::endl;
 
-	data.SetData("\0\0", 2, 0);
+	if (link->Format() != CF_TEXT)
+		return false;
+
+	LinkValues::const_iterator it = m_values.find(link);
+
+	if (it != m_values.end())
+		data.SetAnsiString(CString(it->second.c_str()), ANSI_TEXT);
+	else
+		data.SetData("\0\0", 2, 0);
 
 //	if (m_delay != 0)
 //		::Sleep(m_delay);
@@ -230,6 +246,9 @@ bool ListenSink::OnPoke(CDDESvrConv* conv, const tchar* item, uint format, const
 	      << format << TXT(" [") << CClipboard::FormatName(format) << TXT("], ")
 	      << data.Size() << TXT(" bytes")
 	      << std::endl;
+
+	if (format != CF_TEXT)
+		return false;
 
 	if (m_delay != 0)
 		::Sleep(m_delay);
