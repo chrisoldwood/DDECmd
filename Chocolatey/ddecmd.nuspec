@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!-- Do not remove this test for UTF-8: if “Ω” doesn’t appear as greek uppercase omega letter enclosed in quotation marks, you should use an editor that supports UTF-8, not this one. -->
+<package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
+  <metadata>
+    <id>ddecmd</id>
+    <version>1.6.0</version>
+    <!--<packageSourceUrl>http://www.chrisoldwood.com/win32/ddecmd/ddecmd.1.6.0.nupkg</packageSourceUrl>-->
+    <owners>Chris Oldwood</owners>
+    <title>DDECmd (Install)</title>
+    <authors>Chris Oldwood</authors>
+    <projectUrl>https://github.com/chrisoldwood/DDECmd</projectUrl>
+    <copyright>2017</copyright>
+    <projectSourceUrl>https://github.com/chrisoldwood/DDECmd</projectSourceUrl>
+    <docsUrl>http://www.chrisoldwood.com/win32/ddecmd/ddecmd.html</docsUrl>
+    <tags>dde</tags>
+    <summary>A command line tool for querying DDE servers</summary>
+    <description>This utility allows you to send various DDE messages to a DDE server, such as a request, advise, poke or execute.</description>
+  </metadata>
+  <files>
+    <file src="bin\**" target="bin" />
+  </files>
+</package>

@@ -9,3 +9,7 @@
 *.layout
 *.depend
 *.gch
+
+# Chocolatey
+/Chocolatey/*.nupkg
+/Chocolatey/bin

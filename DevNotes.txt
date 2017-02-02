@@ -40,7 +40,7 @@ C:\> Win32\Scripts\Upgrade Win32\DDECmd\DDECmd.sln
 Release Check-list
 ------------------
 
-- Update version number (App.rcv & DDECmd.wxs).
+- Update version number (App.rcv, DDECmd.wxs and ddecmd.nuspec).
 - Update documentation (ReadMe.txt, RelNotes.txt & manual).
 - Synchronize Code::Blocks build.
 - Tag repository.
