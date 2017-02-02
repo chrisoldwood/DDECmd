@@ -3,16 +3,16 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
   <metadata>
     <id>ddecmd</id>
-    <version>1.6.0</version>
-    <!--<packageSourceUrl>http://www.chrisoldwood.com/win32/ddecmd/ddecmd.1.6.0.nupkg</packageSourceUrl>-->
+    <version>1.5.1</version>
+    <!--<packageSourceUrl>http://www.chrisoldwood.com/win32/ddecmd/ddecmd.1.5.1.nupkg</packageSourceUrl>-->
     <owners>Chris Oldwood</owners>
-    <title>DDECmd (Install)</title>
+    <title>DDE Command</title>
     <authors>Chris Oldwood</authors>
     <projectUrl>https://github.com/chrisoldwood/DDECmd</projectUrl>
-    <copyright>2017</copyright>
+    <copyright>2015</copyright>
     <projectSourceUrl>https://github.com/chrisoldwood/DDECmd</projectSourceUrl>
     <docsUrl>http://www.chrisoldwood.com/win32/ddecmd/ddecmd.html</docsUrl>
-    <tags>dde</tags>
+    <tags>DDE</tags>
     <summary>A command line tool for querying DDE servers</summary>
     <description>This utility allows you to send various DDE messages to a DDE server, such as a request, advise, poke or execute.</description>
   </metadata>
