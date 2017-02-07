@@ -191,7 +191,7 @@ bool ListenSink::OnAdviseRequest(CDDESvrConv* conv, CDDELink* link, CDDEData& da
 	LinkValues::const_iterator it = m_values.find(link);
 
 	if (it != m_values.end())
-		data.SetAnsiString(CString(it->second.c_str()), ANSI_TEXT);
+		data.SetString(CString(it->second.c_str()), ANSI_TEXT);
 	else
 		data.SetData("\0\0", 2, 0);
 
