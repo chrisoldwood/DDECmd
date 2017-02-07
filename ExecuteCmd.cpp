@@ -12,6 +12,7 @@
 #include <WCL/Clipboard.hpp>
 #include <Core/InvalidArgException.hpp>
 #include <Core/StringUtils.hpp>
+#include <NCL/DDEClientFactory.hpp>
 
 ////////////////////////////////////////////////////////////////////////////////
 //! The table of command specific command line switches.
@@ -87,6 +88,7 @@ int ExecuteCmd::doExecute(tostream& /*out*/, tostream& /*err*/)
 
 	// Open the conversation and send the command.
 	CDDEClient client;
+	//DDE::IDDEClientPtr client = DDE::DDEClientFactory::create();
 	DDE::CltConvPtr conv(client.CreateConversation(server.c_str(), topic.c_str()));
 
 	if (timeout != 0)

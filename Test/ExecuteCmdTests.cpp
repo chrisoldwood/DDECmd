@@ -7,14 +7,24 @@
 #include <Core/UnitTest.hpp>
 #include "ExecuteCmd.hpp"
 #include <sstream>
+#include <NCL/DDEClientFactory.hpp>
+#include "MockDDEClient.hpp"
 
 #if __GNUC__
 // deprecated conversion from string constant to 'tchar* {aka char*}'
 #pragma GCC diagnostic ignored "-Wwrite-strings"
 #endif
 
+static Core::SharedPtr<MockDDEClient> mockClient(new MockDDEClient);
+
+static DDE::IDDEClientPtr createClient(DWORD /*flags*/)
+{
+	return mockClient;
+}
+
 TEST_SET(ExecuteCmd)
 {
+	DDE::DDEClientFactory::registerFactory(createClient);
 
 TEST_CASE("The command should display error and usage if the server name is missing")
 {

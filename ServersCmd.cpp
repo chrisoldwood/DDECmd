@@ -10,6 +10,7 @@
 #include <WCL/StrArray.hpp>
 #include "CmdLineArgs.hpp"
 #include <WCL/StringIO.hpp>
+#include <NCL/DDEClientFactory.hpp>
 
 ////////////////////////////////////////////////////////////////////////////////
 //! The table of command specific command line switches.
@@ -59,12 +60,12 @@ int ServersCmd::doExecute(tostream& out, tostream& /*err*/)
 {
 	ASSERT(m_parser.getUnnamedArgs().at(0) == TXT("servers"));
 
-	CDDEClient client;
+	DDE::IDDEClientPtr client = DDE::DDEClientFactory::create();
 
 	// Find the running servers.
 	CStrArray servers, topics;
 
-	client.QueryAll(servers, topics);
+	client->QueryAll(servers, topics);
 
 	// Display results.
 	for (size_t i = 0, size = servers.Size(); i != size; ++i)
