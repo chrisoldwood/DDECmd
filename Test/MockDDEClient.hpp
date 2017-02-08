@@ -18,7 +18,10 @@
 ////////////////////////////////////////////////////////////////////////////////
 //! A fake DDE client for use in unit tests.
 
-class MockDDEClient : public DDE::IDDEClient
+class MockDDEClient
+#ifdef USE_DDE_INTERFACES
+                    : public DDE::IDDEClient
+#endif
 {
 public:
 	//! Default constructor.

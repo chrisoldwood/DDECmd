@@ -15,16 +15,20 @@
 #pragma GCC diagnostic ignored "-Wwrite-strings"
 #endif
 
+#ifdef USE_DDE_INTERFACES
 static Core::SharedPtr<MockDDEClient> mockClient(new MockDDEClient);
 
 static DDE::IDDEClientPtr createClient(DWORD /*flags*/)
 {
 	return mockClient;
 }
+#endif
 
 TEST_SET(ServersCmd)
 {
+#ifdef USE_DDE_INTERFACES
 	DDE::DDEClientFactory::registerFactory(createClient);
+#endif
 
 TEST_CASE("The command requires no arguments by default")
 {
@@ -41,6 +45,7 @@ TEST_CASE("The command requires no arguments by default")
 }
 TEST_CASE_END
 
+#ifdef USE_DDE_INTERFACES
 TEST_CASE("The command lists all running servers")
 {
 	const tstring server(TXT("test_server"));
@@ -67,6 +72,7 @@ TEST_CASE("The command lists all running servers")
 	TEST_TRUE(output.find(topic) != tstring::npos)
 }
 TEST_CASE_END
+#endif
 
 }
 TEST_SET_END

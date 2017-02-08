@@ -15,16 +15,20 @@
 #pragma GCC diagnostic ignored "-Wwrite-strings"
 #endif
 
+#ifdef USE_DDE_INTERFACES
 static Core::SharedPtr<MockDDEClient> mockClient(new MockDDEClient);
 
 static DDE::IDDEClientPtr createClient(DWORD /*flags*/)
 {
 	return mockClient;
 }
+#endif
 
 TEST_SET(ExecuteCmd)
 {
+#ifdef USE_DDE_INTERFACES
 	DDE::DDEClientFactory::registerFactory(createClient);
+#endif
 
 TEST_CASE("The command should display error and usage if the server name is missing")
 {
