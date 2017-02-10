@@ -4,11 +4,11 @@
   <metadata>
     <id>ddecmd</id>
     <version>1.5.1</version>
-    <packageSourceUrl>https://chocolatey.org/packages/ddecmd</packageSourceUrl>
+    <packageSourceUrl>https://github.com/chrisoldwood/DDECmd/tree/master/Chocolatey</packageSourceUrl>
     <owners>Chris Oldwood</owners>
     <title>DDE Command</title>
     <authors>Chris Oldwood</authors>
-    <projectUrl>https://github.com/chrisoldwood/DDECmd</projectUrl>
+    <projectUrl>http://www.chrisoldwood.com/win32.htm#ddecommand</projectUrl>
     <copyright>Chris Oldwood 2015</copyright>
     <projectSourceUrl>https://github.com/chrisoldwood/DDECmd</projectSourceUrl>
     <licenseUrl>http://www.chrisoldwood.com/default.htm#licence</licenseUrl>
