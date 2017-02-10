@@ -87,9 +87,8 @@ int ExecuteCmd::doExecute(tostream& /*out*/, tostream& /*err*/)
 		timeout = Core::parse<DWORD>(m_parser.getSwitchValue(TIMEOUT));
 
 	// Open the conversation and send the command.
-	CDDEClient client;
-	//DDE::IDDEClientPtr client = DDE::DDEClientFactory::create();
-	DDE::CltConvPtr conv(client.CreateConversation(server.c_str(), topic.c_str()));
+	DDE::IDDEClientPtr client = DDE::DDEClientFactory::create();
+	DDE::CltConvPtr conv(client->CreateConversation(server.c_str(), topic.c_str()));
 
 	if (timeout != 0)
 		conv->SetTimeout(timeout);

@@ -6,6 +6,9 @@
 #include "Common.hpp"
 #include "MockDDEClient.hpp"
 #include <WCL/StrArray.hpp>
+#include "MockDDECltConv.hpp"
+
+using namespace DDE;
 
 ////////////////////////////////////////////////////////////////////////////////
 //! Default constructor.
@@ -24,9 +27,29 @@ MockDDEClient::~MockDDEClient()
 ////////////////////////////////////////////////////////////////////////////////
 //! Create a conversation for the service and topic.
 
-CDDECltConv* MockDDEClient::CreateConversation(const tchar* /*service*/, const tchar* /*topic*/)
+DDE::IDDECltConv* MockDDEClient::CreateConversation(const tchar* service, const tchar* topic)
 {
+	ServiceTopicPtr conversation = ServiceTopicPtr(new ServiceTopic(service, topic));
+
+	m_established.push_back(conversation);
+
+#ifdef USE_DDE_INTERFACES
+	return new MockDDECltConv(this, conversation);
+#else
 	return nullptr;
+#endif
+}
+
+////////////////////////////////////////////////////////////////////////////////
+//! Close the conversation.
+
+void MockDDEClient::DestroyConversation(DDE::IDDECltConv* conversation)
+{
+#ifdef USE_DDE_INTERFACES
+	delete conversation;
+#else
+	conversation = nullptr;
+#endif
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -34,11 +57,13 @@ CDDECltConv* MockDDEClient::CreateConversation(const tchar* /*service*/, const t
 
 void MockDDEClient::QueryAll(CStrArray& servers, CStrArray& topics) const
 {
-	typedef std::vector<tstring>::const_iterator const_iter;
+	typedef ServiceTopics::const_iterator const_iter;
 
-	for (const_iter it = m_servers.begin(); it != m_servers.end(); ++it)
-		servers.Add(it->c_str());
+	for (const_iter it = m_runningServers.begin(); it != m_runningServers.end(); ++it)
+	{
+		ServiceTopicPtr conversation = *it;
 
-	for (const_iter it = m_topics.begin(); it != m_topics.end(); ++it)
-		topics.Add(it->c_str());
+		servers.Add(conversation->m_server.c_str());
+		topics.Add(conversation->m_topic.c_str());
+	}
 }

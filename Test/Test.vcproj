@@ -324,6 +324,18 @@
 				RelativePath=".\MockDDEClient.hpp"
 				>
 			</File>
+			<File
+				RelativePath=".\MockDDECltConv.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\MockDDECltConv.hpp"
+				>
+			</File>
+			<File
+				RelativePath=".\ServiceTopic.hpp"
+				>
+			</File>
 		</Filter>
 	</Files>
 	<Globals>

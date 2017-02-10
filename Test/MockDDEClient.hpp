@@ -13,6 +13,7 @@
 
 #include <NCL/DDEFwd.hpp>
 #include <NCL/IDDEClient.hpp>
+#include "ServiceTopic.hpp"
 #include <vector>
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -24,21 +25,28 @@ class MockDDEClient
 #endif
 {
 public:
+	//! A collection of conversations.
+	typedef std::vector<ServiceTopicPtr> ServiceTopics;
+
+public:
 	//! Default constructor.
 	MockDDEClient();
 
 	//! Destructor.
 	virtual ~MockDDEClient();
 	
-	std::vector<tstring> m_servers;
-	std::vector<tstring> m_topics;
+	ServiceTopics m_runningServers;
+	ServiceTopics m_established;
 
 	//
 	// IDDEClient methods.
 	//
 
 	//! Create a conversation for the service and topic.
-	virtual CDDECltConv* CreateConversation(const tchar* service, const tchar* topic);
+	virtual DDE::IDDECltConv* CreateConversation(const tchar* service, const tchar* topic);
+
+	//! Close the conversation.
+	virtual void DestroyConversation(DDE::IDDECltConv* conv);
 
 	//! Query for all running servers and topics.
 	virtual void QueryAll(CStrArray& servers, CStrArray& topics) const;

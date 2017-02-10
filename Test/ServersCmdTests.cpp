@@ -46,6 +46,7 @@ TEST_CASE("The command requires no arguments by default")
 TEST_CASE_END
 
 #ifdef USE_DDE_INTERFACES
+
 TEST_CASE("The command lists all running servers")
 {
 	const tstring server(TXT("test_server"));
@@ -58,10 +59,8 @@ TEST_CASE("The command lists all running servers")
 
 	ServersCmd command(argc, argv);
 
-	mockClient->m_servers.clear();
-	mockClient->m_servers.push_back(server);
-	mockClient->m_topics.clear();
-	mockClient->m_topics.push_back(topic);
+	mockClient->m_runningServers.clear();
+	mockClient->m_runningServers.push_back(ServiceTopicPtr(new ServiceTopic(server, topic)));
 
 	command.execute(out, err);
 
@@ -72,6 +71,7 @@ TEST_CASE("The command lists all running servers")
 	TEST_TRUE(output.find(topic) != tstring::npos)
 }
 TEST_CASE_END
+
 #endif
 
 }
