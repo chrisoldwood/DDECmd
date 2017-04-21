@@ -15,27 +15,39 @@ this:-
 The following commands will create that structure by cloning the various
 application and library repositories:-
 
-C:\> mkdir Win32
-C:\> git clone https://github.com/chrisoldwood/DDECmd.git Win32\DDECmd
-C:\> mkdir Win32\Lib
-C:\> git clone https://github.com/chrisoldwood/Core.git Win32\Lib\Core
-C:\> git clone https://github.com/chrisoldwood/NCL.git Win32\Lib\NCL
-C:\> git clone https://github.com/chrisoldwood/WCL.git Win32\Lib\WCL
+> mkdir Win32
+> git clone https://github.com/chrisoldwood/DDECmd.git Win32\DDECmd
+> mkdir Win32\Lib
+> git clone https://github.com/chrisoldwood/Core.git Win32\Lib\Core
+> git clone https://github.com/chrisoldwood/NCL.git Win32\Lib\NCL
+> git clone https://github.com/chrisoldwood/WCL.git Win32\Lib\WCL
 <optional>
-C:\> git clone https://github.com/chrisoldwood/Scripts.git Win32\Scripts
+> git clone https://github.com/chrisoldwood/Scripts.git Win32\Scripts
 
 Command Line Builds
 -------------------
 
 Included in the scripts folder is one for building via the command line:-
 
-C:\> Win32\Scripts\SetVars vc90
-C:\> Win32\Scripts\Build debug Win32\DDECmd\DDECmd.sln
+> pushd Win32
+> Scripts\SetVars vc90
+> Scripts\Build debug DDECmd\DDECmd.sln
 
 There is also one for upgrading to a later version of Visual C++:-
 
-C:\> Win32\Scripts\SetVars vc140
-C:\> Win32\Scripts\Upgrade Win32\DDECmd\DDECmd.sln
+> Scripts\SetVars vc140
+> Scripts\Upgrade DDECmd\DDECmd.sln
+
+Tests
+-----
+
+A separate project exists in the solution with unit tests:-
+
+> DDECmd\Test\Debug\Test.exe
+
+There is also a script that runs a few smoke tests too:-
+
+> DDECmd\TestScript debug
 
 Release Checklist
 -----------------
