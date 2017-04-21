@@ -37,13 +37,16 @@ There is also one for upgrading to a later version of Visual C++:-
 C:\> Win32\Scripts\SetVars vc140
 C:\> Win32\Scripts\Upgrade Win32\DDECmd\DDECmd.sln
 
-Release Check-list
-------------------
+Release Checklist
+-----------------
 
 - Update version number (App.rcv, DDECmd.wxs and ddecmd.nuspec).
-- Update documentation (ReadMe.txt, RelNotes.txt & manual).
+- Update documentation (ReadMe.txt, RelNotes.txt and manual).
+- Build and run tests.
+- Build packages (MSI, zip and Chocolatey).
 - Synchronize Code::Blocks build.
 - Tag repository.
+- Upload packages.
 
 Chris Oldwood 
-13th January 2017
+21st April 2017

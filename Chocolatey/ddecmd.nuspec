@@ -3,13 +3,13 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
   <metadata>
     <id>ddecmd</id>
-    <version>1.5.1</version>
+    <version>1.6</version>
     <packageSourceUrl>https://github.com/chrisoldwood/DDECmd/tree/master/Chocolatey</packageSourceUrl>
     <owners>Chris Oldwood</owners>
     <title>DDE Command</title>
     <authors>Chris Oldwood</authors>
     <projectUrl>http://www.chrisoldwood.com/win32.htm#ddecommand</projectUrl>
-    <copyright>Chris Oldwood 2015</copyright>
+    <copyright>Chris Oldwood 2017</copyright>
     <projectSourceUrl>https://github.com/chrisoldwood/DDECmd</projectSourceUrl>
     <licenseUrl>http://www.chrisoldwood.com/default.htm#licence</licenseUrl>
     <docsUrl>http://www.chrisoldwood.com/win32/ddecmd/ddecmd.html</docsUrl>
