@@ -1,1 +1,5 @@
 ..\Release\DDECmd.exe
+..\HelpFile\DDECmd.html
+..\RelNotes.txt
+LICENSE.txt
+VERIFICATION.txt

@@ -1,0 +1,23 @@
+VERIFICATION
+Verification is intended to assist the Chocolatey moderators and community in
+verifying that this package's contents are trustworthy.
+
+The software in this package has been downloaded from the following location:
+http://www.chrisoldwood.com/win32.htm#ddecommand
+
+It can be verified by performing the following:
+
+1. Download the original binary from:
+   http://www.chrisoldwood.com/win32/ddecmd/ddecmd16r.zip
+   
+2. Generate the checksum using one of the following methods:
+  - Using the PowerShell function: 'Get-FileHash DDECmd.exe'
+  - Using the chocolatey utility: 'checksum -t sha256 DDECmd.exe'
+
+3. The checksums should match the following:
+
+  type    : sha256
+  checksum: BA11DE7B16B9439312C18FBC438131E7A31AAB96AE9F0897DD766C38EBAF5627
+
+The file 'LICENSE.txt' was obtained from the source code repository at:
+https://github.com/chrisoldwood/DDECmd/blob/master/Chocolatey/LICENSE.txt
