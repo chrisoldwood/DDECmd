@@ -10,7 +10,7 @@
 #include <NCL/DDEClientFactory.hpp>
 #include "MockDDEClient.hpp"
 
-#if __GNUC__
+#if (__GNUC__ > 4) || ((__GNUC__ == 4) && (__GNUC_MINOR__ >= 2)) // GCC 4.2+
 // deprecated conversion from string constant to 'tchar* {aka char*}'
 #pragma GCC diagnostic ignored "-Wwrite-strings"
 #endif
