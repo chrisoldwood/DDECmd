@@ -11,6 +11,12 @@ if /i "%~1" == "--help" call :usage & exit /b 0
 :check_args
 if /i "%~1" == "" call :usage & exit /b 1
 
+:verify_platform
+if /i "%VC_PLATFORM%" == "" (
+	echo ERROR: VC_PLATFORM variable not set. Run 'SetVars' or set it to 'Win32' or 'x64'.
+	exit /b 1
+)
+
 :set_build
 if /i "%~1" == "debug"   set build=Debug
 if /i "%~1" == "release" set build=Release
@@ -21,8 +27,12 @@ if /i "%build%"== "" (
 )
 
 set root=%~dp0
-set folder=%root%%build%
+set folder=%root%%build%\%VC_PLATFORM%
 set exitCode=0
+
+echo ----------------------------------------------------------------------
+
+echo Build: %VC_PLATFORM%^|%build%
 
 echo ----------------------------------------------------------------------
 
