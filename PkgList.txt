@@ -1,4 +1,4 @@
 .\ReadMe.txt
 .\RelNotes.txt
-.\Release\DDECmd.exe
+.\${BUILD}\${PLATFORM}\DDECmd.exe
 .\HelpFile\DDECmd.html
