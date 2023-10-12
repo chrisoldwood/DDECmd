@@ -17,9 +17,9 @@
 					<Add option="-D_DEBUG" />
 				</Compiler>
 				<Linker>
-					<Add library="..\Lib\NCL\Debug\libNCL.a" />
-					<Add library="..\Lib\WCL\Debug\libWCL.a" />
-					<Add library="..\Lib\Core\Debug\libCore.a" />
+					<Add library="../Lib/NCL/Debug/libNCL.a" />
+					<Add library="../Lib/WCL/Debug/libWCL.a" />
+					<Add library="../Lib/Core/Debug/libCore.a" />
 				</Linker>
 			</Target>
 			<Target title="Release Win32">
@@ -33,9 +33,9 @@
 					<Add option="-DNDEBUG" />
 				</Compiler>
 				<Linker>
-					<Add library="..\Lib\NCL\Release\libNCL.a" />
-					<Add library="..\Lib\WCL\Release\libWCL.a" />
-					<Add library="..\Lib\Core\Release\libCore.a" />
+					<Add library="../Lib/NCL/Release/libNCL.a" />
+					<Add library="../Lib/WCL/Release/libWCL.a" />
+					<Add library="../Lib/Core/Release/libCore.a" />
 				</Linker>
 			</Target>
 		</Build>
@@ -92,6 +92,7 @@
 		</Unit>
 		<Unit filename="DDECmd.wxl" />
 		<Unit filename="DDECmd.wxs" />
+		<Unit filename="DevNotes.txt" />
 		<Unit filename="ExecuteCmd.cpp" />
 		<Unit filename="ExecuteCmd.hpp" />
 		<Unit filename="FetchCmd.cpp" />
@@ -104,6 +105,7 @@
 		<Unit filename="ListenSink.cpp" />
 		<Unit filename="ListenSink.hpp" />
 		<Unit filename="Main.cpp" />
+		<Unit filename="PkgList.txt" />
 		<Unit filename="PokeCmd.cpp" />
 		<Unit filename="PokeCmd.hpp" />
 		<Unit filename="ReadMe.txt" />
@@ -118,10 +120,6 @@
 		<Unit filename="ValueFormatter.hpp" />
 		<Unit filename="pch.cpp" />
 		<Unit filename="resource.h" />
-		<Extensions>
-			<code_completion />
-			<debugger />
-			<envvars />
-		</Extensions>
+		<Extensions />
 	</Project>
 </CodeBlocks_project_file>

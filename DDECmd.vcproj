@@ -561,11 +561,7 @@
 				>
 			</File>
 			<File
-				RelativePath=".\PkgList.Debug.txt"
-				>
-			</File>
-			<File
-				RelativePath=".\PkgList.Release.txt"
+				RelativePath=".\PkgList.txt"
 				>
 			</File>
 		</Filter>
