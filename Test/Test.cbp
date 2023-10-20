@@ -17,9 +17,9 @@
 					<Add option="-D_DEBUG" />
 				</Compiler>
 				<Linker>
-					<Add library="..\..\Lib\NCL\Debug\libNCL.a" />
-					<Add library="..\..\Lib\WCL\Debug\libWCL.a" />
-					<Add library="..\..\Lib\Core\Debug\libCore.a" />
+					<Add library="../../Lib/NCL/Debug/libNCL.a" />
+					<Add library="../../Lib/WCL/Debug/libWCL.a" />
+					<Add library="../../Lib/Core/Debug/libCore.a" />
 				</Linker>
 			</Target>
 			<Target title="Release Win32">
@@ -33,9 +33,9 @@
 					<Add option="-DNDEBUG" />
 				</Compiler>
 				<Linker>
-					<Add library="..\..\Lib\NCL\Release\libNCL.a" />
-					<Add library="..\..\Lib\WCL\Release\libWCL.a" />
-					<Add library="..\..\Lib\Core\Release\libCore.a" />
+					<Add library="../../Lib/NCL/Release/libNCL.a" />
+					<Add library="../../Lib/WCL/Release/libWCL.a" />
+					<Add library="../../Lib/Core/Release/libCore.a" />
 				</Linker>
 			</Target>
 		</Build>
@@ -92,16 +92,17 @@
 		<Unit filename="ExecuteCmdTests.cpp" />
 		<Unit filename="FetchCmdTests.cpp" />
 		<Unit filename="ListenCmdTests.cpp" />
+		<Unit filename="MockDDEClient.cpp" />
+		<Unit filename="MockDDEClient.hpp" />
+		<Unit filename="MockDDECltConv.cpp" />
+		<Unit filename="MockDDECltConv.hpp" />
 		<Unit filename="PokeCmdTests.cpp" />
 		<Unit filename="RequestCmdTests.cpp" />
 		<Unit filename="ServersCmdTests.cpp" />
+		<Unit filename="ServiceTopic.hpp" />
 		<Unit filename="Test.cpp" />
 		<Unit filename="ValueFormatterTests.cpp" />
 		<Unit filename="pch.cpp" />
-		<Extensions>
-			<code_completion />
-			<debugger />
-			<envvars />
-		</Extensions>
+		<Extensions />
 	</Project>
 </CodeBlocks_project_file>
