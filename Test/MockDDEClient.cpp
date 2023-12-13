@@ -48,6 +48,7 @@ void MockDDEClient::DestroyConversation(DDE::IDDECltConv* conversation)
 #ifdef USE_DDE_INTERFACES
 	delete conversation;
 #else
+	UNUSED_VARIABLE(conversation);
 	conversation = nullptr;
 #endif
 }
