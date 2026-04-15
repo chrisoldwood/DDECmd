@@ -1,3 +1,5 @@
 #2 Add verb to record and play back data from advise loops.
 
 - Switch to factory to mock DDE client implementation.
+
+- Upgrade TestScript.cmd to use PowerShell + Pester.
